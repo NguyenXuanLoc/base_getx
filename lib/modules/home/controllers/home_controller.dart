@@ -1,11 +1,17 @@
 import 'dart:async';
 
 import 'package:docsify/components//dialogs.dart';
-import 'package:docsify/data/model/test.dart';
-import 'package:docsify/data/model/test2.dart';
+import 'package:docsify/config/constant.dart';
+import 'package:docsify/data/model/user_model.dart';
+import 'package:docsify/data/provider/user_provider.dart';
+import 'package:docsify/services/globals.dart';
+
 import 'package:docsify/utils/log_utils.dart';
+import 'package:docsify/utils/toast_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 
 class HomeController extends GetxController {
   var isCheck = true.obs;
@@ -14,42 +20,58 @@ class HomeController extends GetxController {
   var itemCount = 30.obs;
   final count = 0.obs;
 
+  final _googleSignIn = GoogleSignIn(scopes: ['email']);
+  final userProvider = UserProvider();
+
+  @override
+  void onInit() {
+    super.onInit();
+  }
+
+  void handleGoogleSignIn(BuildContext context) {
+    try {
+      _googleSignIn.signIn().then((ob) async {
+        var account = await ob?.authentication;
+        if (account != null) {
+          var token = account.accessToken;
+          if (token != null) {
+            Dialogs.showLoadingDialog(context);
+            var result = await userProvider.googleSignIn(token);
+            Dialogs.hideLoadingDialog();
+            if (result.error != null) {
+              toast(result.error);
+            } else if (result.data != null && result.statusCode == 200) {
+              var userModel = UserResponse.fromJson(result.data['data']);
+              accessToken = userModel.token;
+              await GetStorage()
+                  .write(StorageKey.AccountInfo, userModel.toJson());
+              toast(result.message.toString());
+            } else {
+              toast(result.message.toString());
+            }
+          }
+        }
+      });
+    } catch (ex) {
+      logE(ex.toString());
+    }
+  }
+
+  void handleGoogleSignOut() {
+    try {
+      _googleSignIn.signOut();
+    } catch (ex) {
+      logE(ex.toString());
+    }
+  }
+
   @override
   void onReady() {
-    _paging();
-    test();
     super.onReady();
   }
 
   @override
   void onClose() {}
-
-  void _paging() {
-    testController.addListener(() {
-      var maxScroll = testController.position.maxScrollExtent;
-      var currentScroll = testController.position.pixels;
-      if (maxScroll - currentScroll <= 200 && !isLoading) {
-        isLoading = true;
-        Timer(const Duration(seconds: 1), () {
-          itemCount.value += 10;
-          isLoading = false;
-          logE("Load more");
-        });
-      }
-    });
-  }
-
-  void test() {
-    var person =
-        Person(lastName: "a", firstName: "a", student: Student(age: 22));
-    logE(person.toJson().toString());
-    var person2 = person.copyWith(firstName: "b");
-    logE(person2.toJson().toString());
-  }
-
-  void checkChange(bool value) {
-    isCheck.value = value;
-  }
 
   void showDialog(BuildContext context) {
     WidgetsBinding.instance?.addPostFrameCallback((_) {

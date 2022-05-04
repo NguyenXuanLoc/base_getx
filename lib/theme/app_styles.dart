@@ -137,22 +137,25 @@ final styleButtonChipActive = ButtonStyle(
 final styleTextField =
     typoMediumTextRegular.copyWith(color: colorNeutralDark100);
 
+final styleTextFieldBold =
+    typoNormalTextBold.copyWith(color: colorNeutralDark100);
+
 final decorTextField = InputDecoration(
   enabledBorder: const OutlineInputBorder(
-    borderSide: BorderSide(color: colorWhite, width: 1.0),
-    borderRadius: BorderRadius.all(Radius.circular(10)),
+    borderSide: BorderSide(color: colorGreyBorder, width: 1.0),
+    borderRadius: BorderRadius.all(Radius.circular(7)),
   ),
   focusedBorder: const OutlineInputBorder(
-    borderSide: BorderSide(color: colorWhite, width: 1.0),
-    borderRadius: BorderRadius.all(Radius.circular(10)),
+    borderSide: BorderSide(color: colorGreyBorder, width: 1.0),
+    borderRadius: BorderRadius.all(Radius.circular(7)),
   ),
   errorBorder: const OutlineInputBorder(
-    borderSide: BorderSide(color: colorSemanticRed100, width: 1.0),
-    borderRadius: BorderRadius.all(Radius.circular(10)),
+    borderSide: BorderSide(color: colorGreyBorder, width: 1.0),
+    borderRadius: BorderRadius.all(Radius.circular(7)),
   ),
   focusedErrorBorder: const OutlineInputBorder(
-    borderSide: BorderSide(color: colorSemanticRed100, width: 1.0),
-    borderRadius: BorderRadius.all(Radius.circular(10)),
+    borderSide: BorderSide(color: colorGreyBorder, width: 1.0),
+    borderRadius: BorderRadius.all(Radius.circular(7)),
   ),
   contentPadding: const EdgeInsets.symmetric(vertical: 4.0, horizontal: 16),
   hintStyle: typoNormalTextRegular.copyWith(

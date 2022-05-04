@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:hexcolor/hexcolor.dart';
 
 const colorTransparent = Color(0x00000000);
 const colorWhite = Color(0xffffffff);
 const colorBlack = Color(0xff000000);
+
 const colorPrimaryGreen100 = Color(0xff203E8E);
 const colorPrimaryBlue100 = Color(0xff4654FF);
 const colorPrimaryBlue80 = Color(0xff6B76FF);
@@ -11,6 +13,7 @@ const colorPrimaryBlue40 = Color(0xffB5BBFF);
 const colorPrimaryBlue20 = Color(0xffDADDFF);
 const colorPrimaryBlue10 = Color(0xffEDEEFF);
 const colorPrimaryBlue5 = Color(0xffF5F6FF);
+
 const colorPrimaryBrand100 = Color(0xff203E8E);
 const colorPrimaryBrand80 = Color(0xff4D65A5);
 const colorPrimaryBrand60 = Color(0xff798BBB);
@@ -92,8 +95,16 @@ const colorBackgrRoyal = Color(0xffC1C7DD);
 const colorBrownBorder = Color(0xffE4B07C);
 const colorYellow = Color(0xffF2E0B4);
 const colorBlueLinkBorder = Color(0xffB3D8FF);
+const colorGreyBorder = Color(0xff909399);
+
 const colorBlueBackground = Color(0xffECF5FF);
-const colorBackgroundColor = Color(0xffECF5FF);
+const colorBackgroundColor = Color(0xffffffff);
+const colorBackgroundWhite = Color(0xfff6f6f7);
+const colorBackgroundGrey20 = Color(0xF6F7F8F7);
+
+const colorBlue100 = Color(0xFF003CA4);
+const colorBlue80 = Color(0xFF044ECC);
+
 const colorGreenGradient = [
   Color(0xff20b860),
   Color(0xff08b04f),

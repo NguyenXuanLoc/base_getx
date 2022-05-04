@@ -2,7 +2,9 @@ import 'dart:io';
 
 import 'package:docsify/config/constant.dart';
 import 'package:docsify/generated/app_translation.dart';
+import 'package:docsify/utils/device_utils.dart';
 import 'package:docsify/utils/log_utils.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
@@ -62,10 +64,12 @@ class MyHttpOverrides extends HttpOverrides {
 }
 
 Future<void> configApp() async {
-  HttpOverrides.global = MyHttpOverrides();
   WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
+  HttpOverrides.global = MyHttpOverrides();
   configOrientation();
   await GetStorage.init();
+  await DeviceUtils.getDeviceId();
   await dotenv.load(fileName: '.env.dev');
 }
 

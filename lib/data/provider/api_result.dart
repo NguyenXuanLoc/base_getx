@@ -1,9 +1,13 @@
 class ApiResult<T> {
-  dynamic error;
+  dynamic? error;
+  int? statusCode;
+  String? message;
   T? data;
 
   ApiResult({
-    required this.error,
+    this.error,
     this.data,
+    this.statusCode,
+    this.message,
   });
 }

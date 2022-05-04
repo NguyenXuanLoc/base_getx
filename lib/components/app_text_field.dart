@@ -16,6 +16,9 @@ class AppTextField extends StatefulWidget {
   final Function()? onEditingComplete;
   final Function(String)? onChanged;
   final Function()? onTap;
+  final TextStyle? textStyle;
+  final TextStyle? hintStyle;
+  final InputDecoration? decoration;
 
   const AppTextField(
       {this.controller,
@@ -32,7 +35,10 @@ class AppTextField extends StatefulWidget {
       this.onEditingComplete,
       this.onChanged,
       this.onTap,
-      Key? key})
+      Key? key,
+      this.textStyle,
+      this.hintStyle,
+      this.decoration})
       : super(key: key);
 
   @override
@@ -51,7 +57,33 @@ class _AppTextFieldState extends State<AppTextField> {
 
   @override
   Widget build(BuildContext context) {
-    return AnimatedContainer(
+    return TextField(
+      readOnly: widget.readOnly ?? false,
+      focusNode: _focusNode,
+      controller: widget.controller,
+      style: widget.textStyle ?? styleTextField,
+      obscureText: widget.obscureText ?? false,
+      keyboardType: widget.keyboardType,
+      textInputAction: widget.textInputAction,
+      maxLength: widget.maxLength,
+      autofocus: widget.autofocus ?? false,
+      autocorrect: false,
+      maxLines: widget.keyboardType == TextInputType.multiline ? 4 : 1,
+      onEditingComplete: widget.onEditingComplete,
+      onChanged: widget.onChanged,
+      onSubmitted: (text) {
+        _focusNode.unfocus();
+      },
+      onTap: widget.onTap,
+      decoration:
+          decorTextField.copyWith(
+              hintText: widget.hintText,
+              errorText: widget.errorText,
+              prefixIcon: widget.prefixIcon,
+              suffixIcon: widget.suffixIcon,
+              hintStyle: widget.hintStyle),
+    );
+    /* return AnimatedContainer(
       duration: const Duration(milliseconds: 100),
       decoration: BoxDecoration(
           boxShadow: _focusNode.hasFocus ? boxShadowFocus : boxShadow),
@@ -59,7 +91,7 @@ class _AppTextFieldState extends State<AppTextField> {
         readOnly: widget.readOnly ?? false,
         focusNode: _focusNode,
         controller: widget.controller,
-        style: styleTextField,
+        style: widget.textStyle ?? styleTextField,
         obscureText: widget.obscureText ?? false,
         keyboardType: widget.keyboardType,
         textInputAction: widget.textInputAction,
@@ -74,12 +106,12 @@ class _AppTextFieldState extends State<AppTextField> {
         },
         onTap: widget.onTap,
         decoration: decorTextField.copyWith(
-          hintText: widget.hintText,
-          errorText: widget.errorText,
-          prefixIcon: widget.prefixIcon,
-          suffixIcon: widget.suffixIcon,
-        ),
+            hintText: widget.hintText,
+            errorText: widget.errorText,
+            prefixIcon: widget.prefixIcon,
+            suffixIcon: widget.suffixIcon,
+            hintStyle: widget.hintStyle),
       ),
-    );
+    );*/
   }
 }

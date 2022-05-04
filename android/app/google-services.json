@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "405167244088",
+    "project_id": "docsify-a8ea7",
+    "storage_bucket": "docsify-a8ea7.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:405167244088:android:8b35e4b8baf0ed74cdb7cd",
+        "android_client_info": {
+          "package_name": "com.example.docsify"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "405167244088-51uv6tov9dqr3pre5fcqd9vsor8g6htf.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.docsify",
+            "certificate_hash": "cf1650545063041a3eb8bf722595f353c34d7099"
+          }
+        },
+        {
+          "client_id": "405167244088-m0g3hgpbnov50qm4o6313pt9sh6qaguk.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBlKrGDsR0hk4sIfbhSzKL6y1Qn9CQPRWs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "405167244088-m0g3hgpbnov50qm4o6313pt9sh6qaguk.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

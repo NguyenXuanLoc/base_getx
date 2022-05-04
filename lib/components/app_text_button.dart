@@ -7,8 +7,11 @@ class AppTextButton extends StatelessWidget {
   final String? buttonTitle;
   final Color? color;
   final VoidCallback? onPressed;
+  final TextStyle? textStyle;
 
-  const AppTextButton({Key? key, this.buttonTitle, this.onPressed, this.color}) : super(key: key);
+  const AppTextButton(
+      {Key? key, this.buttonTitle, this.onPressed, this.color, this.textStyle})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -16,7 +19,7 @@ class AppTextButton extends StatelessWidget {
       onPressed: onPressed,
       child: Text(
         buttonTitle ?? '',
-        style:
+        style: textStyle ??
             typoNormalTextBold.copyWith(color: color ?? colorPrimaryBrand100),
       ),
     );
