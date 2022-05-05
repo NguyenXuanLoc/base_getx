@@ -33,6 +33,8 @@ class LocaleKeys {
   static const please_input_pass = 'please_input_pass';
   static const please_input_valid_pass = 'please_input_valid_pass';
   static const network_error = 'network_error';
+  static const login_success = 'login_success';
+  static const account_not_exist = 'account_not_exist';
 }
 
 class Locales {
@@ -53,7 +55,8 @@ class Locales {
     'please_input_valid_email': 'Please enter valid Email',
     'please_input_pass': 'Please enter your Password',
     'please_input_valid_pass': 'Please enter valid Password',
-    'network_error': 'Brak połączenia z Internetem.'
+    'network_error': 'Network error, please try again.',
+    'login_success': 'Successfully logged in.'
   };
   static const vi_VN = {
     'ask_existing_page': 'Việt Nam',
@@ -72,7 +75,8 @@ class Locales {
     'please_input_valid_email': 'Please enter valid Email',
     'please_input_pass': 'Please enter your Password',
     'please_input_valid_pass': 'Please enter valid Password',
-    'network_error': 'Brak połączenia z Internetem.'
+    'network_error': 'Network error, please try again.',
+    'login_success': 'Successfully logged in.'
   };
 
   static const pl = {
@@ -92,6 +96,7 @@ class Locales {
     'please_input_valid_email': 'Please enter valid Email',
     'please_input_pass': 'Please enter your Password',
     ' please_input_valid_pass ': 'Please enter valid Password',
-    'network_error': 'Brak połączenia z Internetem.'
+    'network_error': 'Network error, please try again.',
+    'login_success': 'Successfully logged in.'
   };
 }

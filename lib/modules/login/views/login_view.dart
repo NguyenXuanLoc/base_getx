@@ -140,6 +140,21 @@ class LoginView extends GetView<LoginController> {
                     onPress: () => controller.handleLoginByAccount(context),
                     backgroundColor: colorBlue80,
                   ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      AppTextButton(
+                        onPressed: () =>
+                            controller.handleFacebookSignIn(context),
+                        buttonTitle: "Facebook",
+                      ),
+                      AppTextButton(
+                        onPressed: () => controller.handleGoogleSignIn(context),
+                        buttonTitle: "Google",
+                      )
+                    ],
+                  )
                 ],
               ),
             ),
@@ -184,7 +199,7 @@ class LoginView extends GetView<LoginController> {
             const Spacer(),
             Container(
               color: colorBackgroundWhite,
-              padding: EdgeInsets.all(10.h),
+              padding: EdgeInsets.all(2.h),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [

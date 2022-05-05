@@ -6,11 +6,12 @@ import 'package:docsify/data/model/user_model.dart';
 import 'package:docsify/data/provider/user_provider.dart';
 import 'package:docsify/generated/app_translation.dart';
 import 'package:docsify/services/globals.dart';
-import 'package:docsify/utils/device_utils.dart';
+import 'package:docsify/utils/connection_utils.dart';
 import 'package:docsify/utils/log_utils.dart';
 import 'package:docsify/utils/toast_utils.dart';
 import 'package:email_validator/email_validator.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:google_sign_in/google_sign_in.dart';
@@ -34,10 +35,6 @@ class LoginController extends GetxController {
   final userProvider = UserProvider();
   final _googleSignIn = GoogleSignIn(scopes: ['email']);
 
-  @override
-  void onReady() {
-    super.onReady();
-  }
 
   @override
   void onClose() {}
@@ -74,19 +71,52 @@ class LoginController extends GetxController {
       Dialogs.hideLoadingDialog();
       if (result.error != null) {
         toast(result.error);
-      } else if (result.data != null && result.statusCode == 200) {
+      } else if (result.data != null) {
         var userModel = UserResponse.fromJson(result.data['data']);
         accessToken = userModel.token;
         await GetStorage().write(StorageKey.AccountInfo, userModel.toJson());
-        toast(result.message.toString());
-      } else {
         toast(result.message.toString());
       }
     }
   }
 
-  void handleGoogleSignIn(BuildContext context) {
+  Future<void> handleLogoutByFacebook() async {
+    await FacebookAuth.instance.logOut();
+  }
+
+  Future<void> handleFacebookSignIn(BuildContext context) async {
+    if (await ConnectionUtils.isConnect() == false) {
+      toast(LocaleKeys.network_error.tr);
+      return;
+    }
+    final LoginResult loginResponse =
+        await FacebookAuth.instance.login(permissions: ['email']);
+    if (loginResponse.status == LoginStatus.success &&
+        loginResponse.accessToken?.token != null) {
+      Dialogs.showLoadingDialog(context);
+      var result =await userProvider.facebookSignIn(loginResponse.accessToken!.token);
+      logE(loginResponse.accessToken!.token.toString());
+      Dialogs.hideLoadingDialog();
+      if (result.error != null) {
+        toast(result.error);
+      } else if (result.data != null) {
+        var userModel = UserResponse.fromJson(result.data['data']);
+        accessToken = userModel.token;
+        await GetStorage().write(StorageKey.AccountInfo, userModel.toJson());
+        toast(result.message.toString());
+      }
+    } else {
+      toast(LocaleKeys.network_error.tr);
+      logD("${loginResponse.status}\n${loginResponse.message}");
+    }
+  }
+
+  Future<void> handleGoogleSignIn(BuildContext context) async {
     try {
+      if (await ConnectionUtils.isConnect() == false) {
+        toast(LocaleKeys.network_error.tr);
+        return;
+      }
       _googleSignIn.signIn().then((ob) async {
         var account = await ob?.authentication;
         if (account != null) {
@@ -97,20 +127,18 @@ class LoginController extends GetxController {
             Dialogs.hideLoadingDialog();
             if (result.error != null) {
               toast(result.error);
-            } else if (result.data != null && result.statusCode == 200) {
+            } else if (result.data != null) {
               var userModel = UserResponse.fromJson(result.data['data']);
               accessToken = userModel.token;
               await GetStorage()
                   .write(StorageKey.AccountInfo, userModel.toJson());
-              toast(result.message.toString());
-            } else {
               toast(result.message.toString());
             }
           }
         }
       });
     } catch (ex) {
-      logE(ex.toString());
+      toast(LocaleKeys.network_error.tr);
     }
   }
 
@@ -124,7 +152,7 @@ class LoginController extends GetxController {
 
   void handleAction(LoginAction action) {
     logE(action.toString());
-    switch (action) {
+     switch (action) {
       case LoginAction.REGISTER:
         {
           break;

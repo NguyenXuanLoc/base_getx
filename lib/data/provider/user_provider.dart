@@ -22,6 +22,16 @@ class UserProvider extends BaseProvider {
     return await POST('auth/login_by_google', body);
   }
 
+  Future<ApiResult> facebookSignIn(String token) async {
+    var body = {
+      ApiKey.token: token,
+      ApiKey.device_id: globals.deviceId,
+      ApiKey.device_name: globals.deviceName,
+      ApiKey.device_model: globals.deviceModel
+    };
+    return await POST('auth/login_by_facebook', body);
+  }
+
   Future<ApiResult> login(String email, String pass,
       {String loginAs = 'provider'}) async {
     var body = {

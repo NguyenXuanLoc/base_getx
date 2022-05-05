@@ -8,4 +8,4 @@ String deviceName = '';
 String deviceModel = '';
 
 int timePackageRemaining = 0;
-int timeOut = 50;
+int timeOut = 30;

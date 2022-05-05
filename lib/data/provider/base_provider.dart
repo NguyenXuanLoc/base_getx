@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:docsify/data/provider/api_result.dart';
 import 'package:docsify/generated/app_translation.dart';
 import 'package:docsify/services/globals.dart' as globals;
+import 'package:docsify/utils/connection_utils.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:get/get.dart';
 import 'package:logger/logger.dart';
@@ -10,10 +11,14 @@ import 'package:logger/logger.dart';
 class BaseProvider extends GetConnect {
   void initProvider() {
     httpClient.baseUrl = dotenv.env['BASE_API'];
+    httpClient.timeout =  Duration(seconds: globals.timeOut);
   }
 
   // ignore: non_constant_identifier_names
   Future<ApiResult> GET(String url) async {
+    if (await ConnectionUtils.isConnect() == false) {
+      return ApiResult(error: LocaleKeys.network_error.tr);
+    }
     print('============================================================');
     print('[GET] ' + httpClient.baseUrl! + url);
     print("Bearer " + globals.accessToken);
@@ -24,7 +29,7 @@ class BaseProvider extends GetConnect {
           'Authorization': 'Bearer ${globals.accessToken}',
           'Host': 'auth.com'
         },
-      ).timeout(Duration(seconds: globals.timeOut));
+      );
 
       if (response.isOk && response.body != null) {
         var result = response.body;
@@ -52,6 +57,9 @@ class BaseProvider extends GetConnect {
   }
 
   Future<ApiResult> PATCH(String url, dynamic body) async {
+    if (await ConnectionUtils.isConnect() == false) {
+      return ApiResult(error: LocaleKeys.network_error.tr);
+    }
     print('============================================================');
     print('[PATCH] ' + httpClient.baseUrl! + url);
     print('[PARAMS] ' + body.toString());
@@ -65,7 +73,7 @@ class BaseProvider extends GetConnect {
           'Authorization': 'Bearer ${globals.accessToken}',
           'Host': 'auth.com'
         },
-      ).timeout(Duration(seconds: globals.timeOut));
+      );
       if (response.isOk && response.body != null) {
         var result = response.body;
         Logger().d(result);
@@ -97,6 +105,9 @@ class BaseProvider extends GetConnect {
     String url,
     dynamic body,
   ) async {
+    if (await ConnectionUtils.isConnect() == false) {
+      return ApiResult(error: LocaleKeys.network_error.tr);
+    }
     print('============================================================');
     print('[POST] ' + httpClient.baseUrl! + url);
     print("Bearer " + globals.accessToken);
@@ -109,7 +120,7 @@ class BaseProvider extends GetConnect {
           'Authorization': 'Bearer ${globals.accessToken}',
           'Host': 'auth.com'
         },
-      ).timeout(Duration(seconds: globals.timeOut));
+      );
       if (response.isOk && response.body != null) {
         var result = response.body;
         Logger().d(result);
@@ -140,6 +151,9 @@ class BaseProvider extends GetConnect {
 
   // ignore: non_constant_identifier_names
   Future<ApiResult> PUT(String url, dynamic body) async {
+    if (await ConnectionUtils.isConnect() == false) {
+      return ApiResult(error: LocaleKeys.network_error.tr);
+    }
     print('============================================================');
     print('[PUT] ' + httpClient.baseUrl! + url);
     print('[PARAMS] ' + body.toString());
@@ -151,7 +165,7 @@ class BaseProvider extends GetConnect {
           'Authorization': 'Bearer ${globals.accessToken}',
           'Host': 'auth.com'
         },
-      ).timeout(Duration(seconds: globals.timeOut));
+      );
       if (response.isOk && response.body != null) {
         var result = response.body;
         Logger().d(result);
@@ -180,6 +194,9 @@ class BaseProvider extends GetConnect {
 
   // ignore: non_constant_identifier_names
   Future<ApiResult> DELETE(String url) async {
+    if (await ConnectionUtils.isConnect() == false) {
+      return ApiResult(error: LocaleKeys.network_error.tr);
+    }
     print('============================================================');
     print('[DELETE] ' + httpClient.baseUrl! + url);
     try {
@@ -189,7 +206,7 @@ class BaseProvider extends GetConnect {
           'Authorization': 'Bearer ${globals.accessToken}',
           'Host': 'auth.com'
         },
-      ).timeout(Duration(seconds: globals.timeOut));
+      );
       if (response.isOk && response.body != null) {
         var result = response.body;
         Logger().d(result);
