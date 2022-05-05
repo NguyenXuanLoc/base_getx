@@ -35,6 +35,9 @@ class LocaleKeys {
   static const network_error = 'network_error';
   static const login_success = 'login_success';
   static const account_not_exist = 'account_not_exist';
+  static const app_name = "app_name";
+  static const input_email_to_reset_pass = "input_email_to_reset_pass";
+  static const sent = 'sent';
 }
 
 class Locales {
@@ -43,7 +46,7 @@ class Locales {
     'have_account': 'I already have an account',
     'email_address': 'Email address',
     'pass': 'Password',
-    'forgot_pass': 'Fogot Password',
+    'forgot_pass': 'Forgot Password',
     'login': 'Login',
     'here_for_first_time': "I'm here for first time",
     'create_account': 'Create an Organize account',
@@ -56,7 +59,11 @@ class Locales {
     'please_input_pass': 'Please enter your Password',
     'please_input_valid_pass': 'Please enter valid Password',
     'network_error': 'Network error, please try again.',
-    'login_success': 'Successfully logged in.'
+    'login_success': 'Successfully logged in.',
+    'app_name': 'Docsify',
+    'sent': 'Sent',
+    'input_email_to_reset_pass':
+        'Please input your email in order to reset your password'
   };
   static const vi_VN = {
     'ask_existing_page': 'Việt Nam',
@@ -76,7 +83,11 @@ class Locales {
     'please_input_pass': 'Please enter your Password',
     'please_input_valid_pass': 'Please enter valid Password',
     'network_error': 'Network error, please try again.',
-    'login_success': 'Successfully logged in.'
+    'login_success': 'Successfully logged in.',
+    'app_name': 'Docsify',
+    'sent': 'Sent',
+    'input_email_to_reset_pass':
+        'Please input your email in order to reset your password'
   };
 
   static const pl = {
@@ -97,6 +108,10 @@ class Locales {
     'please_input_pass': 'Please enter your Password',
     ' please_input_valid_pass ': 'Please enter valid Password',
     'network_error': 'Network error, please try again.',
-    'login_success': 'Successfully logged in.'
+    'login_success': 'Successfully logged in.',
+    'app_name': 'Docsify',
+    'sent': 'Sent',
+    'input_email_to_reset_pass':
+        'Please input your email in order to reset your password'
   };
 }

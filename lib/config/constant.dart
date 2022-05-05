@@ -13,4 +13,6 @@ class ApiKey {
   static const device_name = 'device_name';
   static const device_model = 'device_model';
   static const login_as = 'login_as';
+  static const role = 'role';
+  static const provider = 'provider';
 }

@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:docsify/app/routes/app_pages.dart';
 import 'package:docsify/components/dialogs.dart';
 import 'package:docsify/config/constant.dart';
 import 'package:docsify/data/model/user_model.dart';
@@ -34,7 +35,6 @@ class LoginController extends GetxController {
   final errorPass = ''.obs;
   final userProvider = UserProvider();
   final _googleSignIn = GoogleSignIn(scopes: ['email']);
-
 
   @override
   void onClose() {}
@@ -94,7 +94,8 @@ class LoginController extends GetxController {
     if (loginResponse.status == LoginStatus.success &&
         loginResponse.accessToken?.token != null) {
       Dialogs.showLoadingDialog(context);
-      var result =await userProvider.facebookSignIn(loginResponse.accessToken!.token);
+      var result =
+          await userProvider.facebookSignIn(loginResponse.accessToken!.token);
       logE(loginResponse.accessToken!.token.toString());
       Dialogs.hideLoadingDialog();
       if (result.error != null) {
@@ -152,7 +153,7 @@ class LoginController extends GetxController {
 
   void handleAction(LoginAction action) {
     logE(action.toString());
-     switch (action) {
+    switch (action) {
       case LoginAction.REGISTER:
         {
           break;
@@ -168,6 +169,10 @@ class LoginController extends GetxController {
       case LoginAction.POLICY:
         {
           break;
+        }
+      case LoginAction.FORGOT_PASSWORD:
+        {
+          Get.toNamed(Routes.FORGOT_PASS);
         }
     }
   }

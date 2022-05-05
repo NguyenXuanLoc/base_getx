@@ -1,5 +1,7 @@
 import 'package:get/get.dart';
 
+import '../../modules/forgot_pass/bindings/forgot_pass_binding.dart';
+import '../../modules/forgot_pass/views/forgot_pass_view.dart';
 import '../../modules/home/bindings/home_binding.dart';
 import '../../modules/home/views/home_view.dart';
 import '../../modules/login/bindings/login_binding.dart';
@@ -30,14 +32,22 @@ class AppPages {
       binding: SplashBinding(),
     ),
     GetPage(
+      transition: Transition.rightToLeft,
       name: _Paths.TEST,
       page: () => TestView(),
       binding: TestBinding(),
     ),
     GetPage(
+      transition: Transition.rightToLeft,
       name: _Paths.LOGIN,
       page: () => LoginView(),
       binding: LoginBinding(),
+    ),
+    GetPage(
+      transition: Transition.rightToLeft,
+      name: _Paths.FORGOT_PASS,
+      page: () => ForgotPassView(),
+      binding: ForgotPassBinding(),
     ),
   ];
 }

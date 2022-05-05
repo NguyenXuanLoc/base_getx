@@ -44,4 +44,9 @@ class UserProvider extends BaseProvider {
     };
     return await POST('auth/login', body);
   }
+
+  Future<ApiResult> forgotPass(String email) {
+    var body = {ApiKey.email: email, ApiKey.role: ApiKey.provider};
+    return POST('auth/forgot_password', body);
+  }
 }

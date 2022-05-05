@@ -70,7 +70,7 @@ class LoginView extends GetView<LoginController> {
                     height: 5.h,
                   ),
                   Obx(() => AppTextField(
-                        autofocus: true,
+                        // autofocus: true,
                         controller: controller.emailController,
                         errorText: controller.errorEmail.value,
                         hintText: "Place holder",
@@ -125,7 +125,7 @@ class LoginView extends GetView<LoginController> {
                       onPressed: () =>
                           controller.handleAction(LoginAction.FORGOT_PASSWORD),
                       textStyle: typoNormalTextBold.copyWith(
-                          fontWeight: FontWeight.w900, color: colorBlue80),
+                          fontWeight: FontWeight.w800, color: colorBlue80),
                     ),
                   ),
                   SizedBox(
