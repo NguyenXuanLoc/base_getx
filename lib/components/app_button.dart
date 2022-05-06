@@ -13,6 +13,7 @@ class AppButton extends StatelessWidget {
   final double? borderRadius;
   final BorderSide? side;
   final EdgeInsets? padding;
+  final bool disable;
 
   const AppButton({
     Key? key,
@@ -26,10 +27,27 @@ class AppButton extends StatelessWidget {
     this.borderRadius,
     this.side,
     this.padding,
+    this.disable = false,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    if (!disable) {
+      return Container(
+        alignment: Alignment.center,
+        padding: padding,
+        height: height,
+        width: width,
+        decoration: BoxDecoration(
+            color: backgroundColor,
+            borderRadius: BorderRadius.circular(borderRadius ?? 0)),
+        child: Text(
+          title,
+          textScaleFactor: 1,
+          style: textStyle ?? typoNormalTextRegular,
+        ),
+      );
+    }
     return MaterialButton(
       padding: padding,
       height: height,

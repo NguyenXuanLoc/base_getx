@@ -11,8 +11,10 @@ class AppCheckBox extends StatelessWidget {
       this.avatar = "",
       this.label,
       this.isOnLeft = true,
-      Key? key})
+      Key? key,
+      this.icon})
       : super(key: key);
+  final Icon? icon;
   final bool value;
   final String? avatar;
   final String? label;
@@ -26,22 +28,32 @@ class AppCheckBox extends StatelessWidget {
       child: Row(
         children: [
           if (isOnLeft) ...[
-            Container(
-              decoration: BoxDecoration(
-                shape: BoxShape.circle,
-                border: Border.all(
-                    color: value ? colorPrimaryBrand100 : colorNeutralDark40,
-                    width: 2.w),
-              ),
-              child: Container(
-                decoration: BoxDecoration(
-                  shape: BoxShape.circle,
-                  color: value ? colorPrimaryBrand100 : colorWhite,
+            Stack(
+              children: [
+                Container(
+                  height: 17.h,
+                  width: 17.w,
+                  alignment: Alignment.center,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(2.h),
+                    shape: BoxShape.rectangle,
+                    border: Border.all(
+                        color: value ? colorBlackGrey : colorBlackGrey,
+                        width: 1.w),
+                  ),
                 ),
-                width: 16.w,
-                height: 16.h,
-                margin: const EdgeInsets.all(2),
-              ),
+                Positioned.fill(
+                    child: Align(
+                  child: value
+                      ? icon ??
+                          const Icon(
+                            Icons.check,
+                            size: 25,
+                          )
+                      : const SizedBox(),
+                  alignment: Alignment.center,
+                ))
+              ],
             ),
           ],
           Visibility(

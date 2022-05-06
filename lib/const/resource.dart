@@ -16,6 +16,16 @@ class R {
 
   /// ![preview](file://H:\docsify\docsify\assets\png\Crown.png)
   static const String assetsPngCrownPng = 'assets/png/Crown.png';
-  static const String assetsSvgFacebook = 'assets/svg/facebook.svg';
-  static const String assetsSvgGoogle = 'assets/svg/google.svg';
+
+  /// ![preview](file://H:\docsify\docsify\assets\png\facebook.svg)
+  static const String assetsPngFacebookSvg = 'assets/png/facebook.svg';
+
+  /// ![preview](file://H:\docsify\docsify\assets\svg\Crown.png)
+  static const String assetsSvgCrownPng = 'assets/svg/Crown.png';
+
+  /// ![preview](file://H:\docsify\docsify\assets\svg\facebook.svg)
+  static const String assetsSvgFacebookSvg = 'assets/svg/facebook.svg';
+
+  /// ![preview](file://H:\docsify\docsify\assets\svg\google.svg)
+  static const String assetsSvgGoogleSvg = 'assets/svg/google.svg';
 }

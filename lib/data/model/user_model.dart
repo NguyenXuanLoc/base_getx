@@ -24,8 +24,8 @@ class UserResponse {
 
   factory UserResponse.fromJson(Map<String, dynamic> json) => UserResponse(
         userId: json["user_id"],
-        role: json["role"],
-        refreshToken: json["refresh_token"] ?? json["resfresh_token"],
+        role: json["role"] ?? '',
+        refreshToken: json["refresh_token"] ?? json["resfresh_token"] ?? '',
         token: json["token"],
       );
 

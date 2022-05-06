@@ -46,7 +46,35 @@ class UserProvider extends BaseProvider {
   }
 
   Future<ApiResult> forgotPass(String email) {
-    var body = {ApiKey.email: email, ApiKey.role: ApiKey.provider};
+    var body = {ApiKey.email: email, ApiKey.role: ApiKey.user};
     return POST('auth/forgot_password', body);
+  }
+
+  Future<ApiResult> registerByEmail(String email, String userName, String pass,
+      {String role = ApiKey.user}) {
+    var body = {
+      ApiKey.email: email,
+      ApiKey.user_name: userName,
+      ApiKey.password: pass,
+      ApiKey.role: role
+    };
+    return POST('auth/register', body);
+  }
+
+  Future<ApiResult> createUserProfile(
+      int accountId, String fullName, String birthDate, String phone) async {
+    var body = {
+      ApiKey.account_id: accountId,
+      ApiKey.full_name: fullName,
+      ApiKey.gender: '',
+      ApiKey.birth_date: birthDate,
+      ApiKey.phone: phone,
+      ApiKey.description: '',
+      ApiKey.house_number: '',
+      ApiKey.street: '',
+      ApiKey.zip_code: '',
+      ApiKey.place: ''
+    };
+    return await POST('kuser/profiles/', body);
   }
 }

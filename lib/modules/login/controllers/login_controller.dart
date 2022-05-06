@@ -89,6 +89,7 @@ class LoginController extends GetxController {
       toast(LocaleKeys.network_error.tr);
       return;
     }
+
     final LoginResult loginResponse =
         await FacebookAuth.instance.login(permissions: ['email']);
     if (loginResponse.status == LoginStatus.success &&
@@ -96,7 +97,6 @@ class LoginController extends GetxController {
       Dialogs.showLoadingDialog(context);
       var result =
           await userProvider.facebookSignIn(loginResponse.accessToken!.token);
-      logE(loginResponse.accessToken!.token.toString());
       Dialogs.hideLoadingDialog();
       if (result.error != null) {
         toast(result.error);
@@ -156,6 +156,7 @@ class LoginController extends GetxController {
     switch (action) {
       case LoginAction.REGISTER:
         {
+          Get.toNamed(Routes.REGISTER_STEP1);
           break;
         }
       case LoginAction.CONTACT:

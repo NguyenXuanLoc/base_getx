@@ -2,7 +2,6 @@ import 'package:docsify/theme/app_styles.dart';
 import 'package:docsify/theme/colors.dart';
 import 'package:flutter/material.dart';
 
-
 class Dialogs {
   static final GlobalKey<State> _keyLoader = GlobalKey<State>();
 
@@ -15,24 +14,15 @@ class Dialogs {
             onWillPop: () async => false,
             child: SimpleDialog(
               key: _keyLoader,
-              backgroundColor: Colors.white,
-              children: <Widget>[
+              backgroundColor: Colors.transparent,
+              children: const <Widget>[
                 Center(
-                  child: Column(children: [
-                    const CircularProgressIndicator(
-                      backgroundColor: colorNeutralDark20,
-                      valueColor:
-                          AlwaysStoppedAnimation<Color>(colorPrimaryBrand100),
-                    ),
-                    const SizedBox(
-                      height: 16,
-                    ),
-                    Text(
-                      'Please Wait....',
-                      style: typoSmallTextBold,
-                    )
-                  ]),
-                ),
+                  child: CircularProgressIndicator(
+                    backgroundColor: colorNeutralDark20,
+                    valueColor:
+                        AlwaysStoppedAnimation<Color>(colorPrimaryBrand100),
+                  ),
+                )
               ],
             ),
           );

@@ -1,5 +1,8 @@
 import 'package:docsify/theme/app_styles.dart';
+import 'package:docsify/theme/colors.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class AppTextField extends StatefulWidget {
   final TextEditingController? controller;
@@ -19,6 +22,10 @@ class AppTextField extends StatefulWidget {
   final TextStyle? textStyle;
   final TextStyle? hintStyle;
   final InputDecoration? decoration;
+  final FocusNode? focusNode;
+  final Function(String)? onSubmitted;
+  final MaxLengthEnforcement? maxLengthEnforcement;
+  final bool? enable;
 
   const AppTextField(
       {this.controller,
@@ -38,7 +45,11 @@ class AppTextField extends StatefulWidget {
       Key? key,
       this.textStyle,
       this.hintStyle,
-      this.decoration})
+      this.decoration,
+      this.focusNode,
+      this.onSubmitted,
+      this.maxLengthEnforcement,
+      this.enable})
       : super(key: key);
 
   @override
@@ -58,8 +69,10 @@ class _AppTextFieldState extends State<AppTextField> {
   @override
   Widget build(BuildContext context) {
     return TextField(
+      enabled: widget.enable,
       readOnly: widget.readOnly ?? false,
-      focusNode: _focusNode,
+      maxLengthEnforcement: widget.maxLengthEnforcement,
+      focusNode: widget.focusNode,
       controller: widget.controller,
       style: widget.textStyle ?? styleTextField,
       obscureText: widget.obscureText ?? false,
@@ -72,16 +85,17 @@ class _AppTextFieldState extends State<AppTextField> {
       onEditingComplete: widget.onEditingComplete,
       onChanged: widget.onChanged,
       onSubmitted: (text) {
-        _focusNode.unfocus();
+        if (widget.onSubmitted != null) widget.onSubmitted!(text);
       },
       onTap: widget.onTap,
-      decoration:
-          decorTextField.copyWith(
-              hintText: widget.hintText,
-              errorText: widget.errorText,
-              prefixIcon: widget.prefixIcon,
-              suffixIcon: widget.suffixIcon,
-              hintStyle: widget.hintStyle),
+      decoration: decorTextField.copyWith(
+          hintText: widget.hintText,
+          errorText: widget.errorText,
+          errorStyle: typoNormalTextRegular.copyWith(
+              color: colorSemanticRed100, fontSize: 13.sp),
+          prefixIcon: widget.prefixIcon,
+          suffixIcon: widget.suffixIcon,
+          hintStyle: widget.hintStyle),
     );
     /* return AnimatedContainer(
       duration: const Duration(milliseconds: 100),

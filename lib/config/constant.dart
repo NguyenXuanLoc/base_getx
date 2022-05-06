@@ -15,4 +15,17 @@ class ApiKey {
   static const login_as = 'login_as';
   static const role = 'role';
   static const provider = 'provider';
+  static const user = 'user';
+  static const user_name = 'username';
+  static const account_id = 'account_id';
+  static const full_name = 'full_name';
+  static const gender = 'gender';
+  static const birth_date = 'birth_date';
+  static const phone = 'phone';
+  static const description = 'description';
+  static const house_number = 'house_number';
+  static const apartment_number = 'apartment_number';
+  static const street = 'street';
+  static const zip_code = 'zip_code';
+  static const place = 'place';
 }

@@ -111,7 +111,7 @@ class BaseProvider extends GetConnect {
     print('============================================================');
     print('[POST] ' + httpClient.baseUrl! + url);
     print("Bearer " + globals.accessToken);
-    print('[PARAMS] ' + body.toString());
+    print('[PARAMS] ' + jsonEncode(body.toString()));
     try {
       final response = await post(
         url,
@@ -121,9 +121,9 @@ class BaseProvider extends GetConnect {
           'Host': 'auth.com'
         },
       );
+      Logger().d(response.body);
       if (response.isOk && response.body != null) {
         var result = response.body;
-        Logger().d(result);
         return ApiResult<dynamic>(
             data: result,
             statusCode: response.statusCode,

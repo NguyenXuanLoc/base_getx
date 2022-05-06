@@ -45,7 +45,8 @@ class LoginView extends GetView<LoginController> {
               decoration: BoxDecoration(
                   color: colorBackgroundColor,
                   borderRadius: BorderRadius.all(Radius.circular(10.h))),
-              padding: EdgeInsets.all(20.h),
+              padding: EdgeInsets.only(
+                  left: 20.h, right: 20.h, top: 20.h, bottom: 10.h),
               margin: EdgeInsets.all(12.h),
               child: Column(
                 children: [
@@ -71,6 +72,7 @@ class LoginView extends GetView<LoginController> {
                   ),
                   Obx(() => AppTextField(
                         // autofocus: true,
+                        textInputAction: TextInputAction.next,
                         controller: controller.emailController,
                         errorText: controller.errorEmail.value,
                         hintText: "Place holder",
@@ -199,7 +201,7 @@ class LoginView extends GetView<LoginController> {
             const Spacer(),
             Container(
               color: colorBackgroundWhite,
-              padding: EdgeInsets.all(2.h),
+              padding: EdgeInsets.all(1.h),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [

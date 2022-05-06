@@ -1,7 +1,9 @@
 import 'dart:io';
 
 import 'package:docsify/config/constant.dart';
+import 'package:docsify/data/model/user_model.dart';
 import 'package:docsify/generated/app_translation.dart';
+import 'package:docsify/services/globals.dart' as globals;
 import 'package:docsify/utils/device_utils.dart';
 import 'package:docsify/utils/log_utils.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -71,6 +73,16 @@ Future<void> configApp() async {
   await GetStorage.init();
   await DeviceUtils.getDeviceId();
   await dotenv.load(fileName: '.env.dev');
+  checkLogin();
+}
+
+Future<void> checkLogin() async {
+  var userString = await GetStorage().read(StorageKey.AccountInfo);
+  if (userString != null) {
+    globals.isLogin = true;
+    globals.accountId = UserResponse.fromJson(userString).userId.toString();
+    globals.accessToken = UserResponse.fromJson(userString).token.toString();
+  }
 }
 
 void configOrientation() {
