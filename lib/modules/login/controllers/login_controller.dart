@@ -24,7 +24,8 @@ enum LoginAction {
   REGULATION,
   COOKIES,
   POLICY,
-  FORGOT_PASSWORD
+  FORGOT_PASSWORD,
+  GO_TO_PROVIDER
 }
 
 class LoginController extends GetxController {
@@ -170,7 +171,12 @@ class LoginController extends GetxController {
       case LoginAction.FORGOT_PASSWORD:
         {
           Get.toNamed(Routes.FORGOT_PASS);
+          break;
         }
+      case LoginAction.GO_TO_PROVIDER:{
+       logE("GO TO PROVIDER");
+        break;
+      }
     }
   }
 }

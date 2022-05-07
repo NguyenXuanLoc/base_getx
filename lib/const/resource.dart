@@ -23,6 +23,9 @@ class R {
   /// ![preview](file://H:\docsify\docsify\assets\svg\Crown.png)
   static const String assetsSvgCrownPng = 'assets/svg/Crown.png';
 
+  /// ![preview](file://H:\docsify\docsify\assets\svg\back_circle.svg)
+  static const String assetsSvgBackCircleSvg = 'assets/svg/back_circle.svg';
+
   /// ![preview](file://H:\docsify\docsify\assets\svg\facebook.svg)
   static const String assetsSvgFacebookSvg = 'assets/svg/facebook.svg';
 
@@ -31,4 +34,10 @@ class R {
 
   /// ![preview](file://H:\docsify\docsify\assets\svg\icon_app_bar.svg)
   static const String assetsSvgIconAppBarSvg = 'assets/svg/icon_app_bar.svg';
+
+  /// ![preview](file://H:\docsify\docsify\assets\svg\or.svg)
+  static const String assetsSvgOrSvg = 'assets/svg/or.svg';
+
+  /// ![preview](file://H:\docsify\docsify\assets\svg\three_dots.svg)
+  static const String assetsSvgThreeDotsSvg = 'assets/svg/three_dots.svg';
 }

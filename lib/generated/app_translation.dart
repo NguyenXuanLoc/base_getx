@@ -7,8 +7,8 @@ class AppTranslation extends Translations {
 
   @override
   Map<String, Map<String, String>> get keys => {
-        'pl': Locales.pl,
-        'vi': Locales.vi_VN,
+        'pl': Locales.en,
+        'vi': Locales.en,
         'en': Locales.en,
       };
 }
@@ -64,6 +64,10 @@ class LocaleKeys {
   static const click_here_to_resend = "click_here_to_resend";
   static const please_input_your_code = 'please_input_your_code';
   static const please_input_valid_code = 'please_input_valid_code';
+  static const go_to_provider = 'go_to_provider';
+  static const or = 'or';
+  static const facebook = 'facebook';
+  static const google = 'google';
 }
 
 class Locales {
@@ -75,7 +79,7 @@ class Locales {
     'forgot_pass': 'Forgot Password',
     'login': 'Login',
     'here_for_first_time': "I'm here for first time",
-    'create_account': 'Create an Organize account',
+    'create_account': 'Create account',
     'contact': 'Contact',
     'regulation': 'Regulation',
     'cookies': 'Cookies',
@@ -115,108 +119,10 @@ class Locales {
     'dont_receive_email': 'You dont receive email ?',
     'click_here_to_resend': 'Click here to resend',
     'please_input_your_code': 'Please input your code',
-    'please_input_valid_code': 'Please input valid code'
-  };
-
-  static const vi_VN = {
-    'ask_existing_page': 'Việt Nam',
-    'have_account': 'I already have an account',
-    'email_address': 'Email address',
-    'pass': 'Password',
-    'forgot_pass': 'Fogot Password',
-    'login': 'Login',
-    'here_for_first_time': "I'm here for first time",
-    'create_account': 'Create an Organize account',
-    'contact': 'Contact',
-    'regulation': 'Regulation',
-    'cookies': 'Cookies',
-    'privacy': 'Privacy policy',
-    'please_input_email': 'Please enter your Email',
-    'please_input_valid_email': 'Please enter valid Email',
-    'please_input_pass': 'Please enter your Password',
-    'please_input_valid_pass': 'Please enter valid Password',
-    'pass_and_confirm_pass_not_match':
-        'Password and confirm password not matched',
-    'please_enter_confirm_pass': 'Please enter Confirm Password',
-    'network_error': 'Network error, please try again.',
-    'login_success': 'Successfully logged in.',
-    'app_name': 'Docsify',
-    'sent': 'Sent',
-    'register': 'Register',
-    'register_with': 'Register with',
-    'register_step2': 'Register step 2/2',
-    'register_step1': 'Register step 1/2',
-    'retype_pass': 'Retype Password',
-    'enter': 'Enter',
-    'full_name': 'Full Name',
-    'phone_number': 'Phone Number',
-    'birth_date': 'Birth Date',
-    'i_agree_term': 'I agree with term and\nconditions',
-    'input_email_to_reset_pass':
-        'Please input your email in order to reset your password',
-    'please_input_your_name': 'Please enter your Name',
-    'please_input_phone_number': 'Please enter your phone number',
-    'please_input_date_of_birth': 'Please enter your Date of birth',
-    'please_input_valid_phone_number': 'Please enter valid phone number',
-    'register_success': 'Register\nsuccessful',
-    'message_sent_active_code':
-        'We have sent activation code to your email. Please check and fill bellow to activate your account',
-    'fill_active_code_here': 'Fill activation code here',
-    'active': 'Activate',
-    'dont_receive_email': 'You dont receive email ?',
-    'click_here_to_resend': 'Click here to resend',
-    'please_input_your_code': 'Please input your code',
-    'please_input_valid_code': 'Please input valid code'
-  };
-
-  static const pl = {
-    'ask_existing_page': 'Balan',
-    'have_account': 'I already have an account',
-    'email_address': 'Email address',
-    'pass': 'Password',
-    'forgot_pass': 'Fogot Password',
-    'login': 'Login',
-    'here_for_first_time': "I'm here for first time",
-    'create_account': 'Create an Organize account',
-    'contact': 'Contact',
-    'regulation': 'Regulation',
-    'cookies': 'Cookies',
-    'privacy': 'Privacy policy',
-    'please_input_email': 'Please enter your Email',
-    'please_input_valid_email': 'Please enter valid Email',
-    'please_input_pass': 'Please enter your Password',
-    ' please_input_valid_pass ': 'Please enter valid Password',
-    'pass_and_confirm_pass_not_match':
-        'Password and confirm password not matched',
-    'please_enter_confirm_pass': 'Please enter Confirm Password',
-    'network_error': 'Network error, please try again.',
-    'login_success': 'Successfully logged in.',
-    'app_name': 'Docsify',
-    'sent': 'Sent',
-    'register': 'Register',
-    'register_with': 'Register with',
-    'retype_pass': 'Retype Password',
-    'register_step2': 'Register step 2/2',
-    'register_step1': 'Register step 1/2',
-    'enter': 'Enter',
-    'full_name': 'Full Name',
-    'phone_number': 'Phone Number',
-    'birth_date': 'Birth Date',
-    'i_agree_term': 'I agree with term and\nconditions',
-    'input_email_to_reset_pass':
-        'Please input your email in order to reset your password',
-    'please_input_your_name': 'Please enter your Name',
-    'please_input_phone_number': 'Please enter your phone number',
-    'please_input_date_of_birth': 'Please enter your Date of birth',
-    'please_input_valid_phone_number': 'Please enter valid phone number',
-    'register_success': 'Register\nsuccessful',
-    'message_sent_active_code':
-        'We have sent activation code to your email. Please check and fill bellow to activate your account',
-    'fill_active_code_here': 'Fill activation code here',
-    'active': 'Activate',
-    'dont_receive_email': 'You dont receive email ?',
-    'click_here_to_resend': 'Click here to resend',
-    'please_input_your_code': 'Please input your code',
-    'please_input_valid_code': 'Please input valid code'
+    'please_input_valid_code': 'Please input valid code',
+    'go_to_provider': 'Go to provider',
+    'or': '  Or  ',
+    'facebook': 'Facebook',
+    'google': 'Google'
   };
 }

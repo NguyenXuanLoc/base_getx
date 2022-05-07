@@ -223,7 +223,7 @@ final boxShadowSelectBox = [
   ),
 ];
 
-final typoHeading2 = GoogleFonts.josefinSans(
+final typoHeading2 = GoogleFonts.roboto(
   fontStyle: FontStyle.normal,
   fontWeight: FontWeight.w800,
   fontSize: 48.sp,
@@ -231,7 +231,7 @@ final typoHeading2 = GoogleFonts.josefinSans(
   color: colorBlack,
 );
 
-final typoHeading4 = GoogleFonts.josefinSans(
+final typoHeading4 = GoogleFonts.roboto(
   fontStyle: FontStyle.normal,
   fontWeight: FontWeight.w700,
   fontSize: 32.sp,
@@ -239,7 +239,7 @@ final typoHeading4 = GoogleFonts.josefinSans(
   color: colorBlack,
 );
 
-final typoHeading5 = GoogleFonts.josefinSans(
+final typoHeading5 = GoogleFonts.roboto(
   fontStyle: FontStyle.normal,
   fontWeight: FontWeight.w700,
   fontSize: 24.sp,
@@ -247,7 +247,7 @@ final typoHeading5 = GoogleFonts.josefinSans(
   color: colorBlack,
 );
 
-final typoHeading6 = GoogleFonts.josefinSans(
+final typoHeading6 = GoogleFonts.roboto(
   fontStyle: FontStyle.normal,
   fontWeight: FontWeight.w700,
   fontSize: 20.sp,
@@ -255,7 +255,7 @@ final typoHeading6 = GoogleFonts.josefinSans(
   color: colorBlack,
 );
 
-final typoSuperLargeTextBold = GoogleFonts.josefinSans(
+final typoSuperLargeTextBold = GoogleFonts.roboto(
   fontStyle: FontStyle.normal,
   fontWeight: FontWeight.w700,
   fontSize: 24.sp,
@@ -263,7 +263,7 @@ final typoSuperLargeTextBold = GoogleFonts.josefinSans(
   color: colorBlack,
 );
 
-final typoLargeTextBold = GoogleFonts.josefinSans(
+final typoLargeTextBold = GoogleFonts.roboto(
   fontStyle: FontStyle.normal,
   fontWeight: FontWeight.w700,
   fontSize: 20.sp,
@@ -271,7 +271,7 @@ final typoLargeTextBold = GoogleFonts.josefinSans(
   color: colorBlack,
 );
 
-final typoLargeTextRegular = GoogleFonts.josefinSans(
+final typoLargeTextRegular = GoogleFonts.roboto(
   fontStyle: FontStyle.normal,
   fontWeight: FontWeight.w400,
   fontSize: 20.sp,
@@ -279,7 +279,7 @@ final typoLargeTextRegular = GoogleFonts.josefinSans(
   color: colorBlack,
 );
 
-final typoMediumTextBold = GoogleFonts.josefinSans(
+final typoMediumTextBold = GoogleFonts.roboto(
   fontStyle: FontStyle.normal,
   fontWeight: FontWeight.w700,
   fontSize: 18.sp,
@@ -287,7 +287,7 @@ final typoMediumTextBold = GoogleFonts.josefinSans(
   color: colorBlack,
 );
 
-final typoMediumTextRegular = GoogleFonts.josefinSans(
+final typoMediumTextRegular = GoogleFonts.roboto(
   fontStyle: FontStyle.normal,
   fontWeight: FontWeight.w400,
   fontSize: 18.sp,
@@ -295,7 +295,7 @@ final typoMediumTextRegular = GoogleFonts.josefinSans(
   color: colorBlack,
 );
 
-final typoNormalTextBold = GoogleFonts.josefinSans(
+final typoNormalTextBold = GoogleFonts.roboto(
   fontStyle: FontStyle.normal,
   fontWeight: FontWeight.w700,
   fontSize: 16.sp,
@@ -303,7 +303,7 @@ final typoNormalTextBold = GoogleFonts.josefinSans(
   color: colorBlack,
 );
 
-final typoNormalTextBEBold = GoogleFonts.josefinSans(
+final typoNormalTextBEBold = GoogleFonts.roboto(
   fontStyle: FontStyle.normal,
   fontWeight: FontWeight.w700,
   fontSize: 16.sp,
@@ -311,7 +311,7 @@ final typoNormalTextBEBold = GoogleFonts.josefinSans(
   color: colorBlack,
 );
 
-final typoNormalTextRegular = GoogleFonts.josefinSans(
+final typoNormalTextRegular = GoogleFonts.roboto(
   fontStyle: FontStyle.normal,
   fontWeight: FontWeight.w400,
   fontSize: 16.sp,
@@ -319,21 +319,21 @@ final typoNormalTextRegular = GoogleFonts.josefinSans(
   color: colorBlack,
 );
 
-final typoNormalTextRegularNoSpacing = GoogleFonts.josefinSans(
+final typoNormalTextRegularNoSpacing = GoogleFonts.roboto(
   fontStyle: FontStyle.normal,
   fontWeight: FontWeight.w400,
   fontSize: 16.sp,
   color: colorBlack,
 );
 
-final typoNormalBETextRegularNoSpacing = GoogleFonts.josefinSans(
+final typoNormalBETextRegularNoSpacing = GoogleFonts.roboto(
   fontStyle: FontStyle.normal,
   fontWeight: FontWeight.w100,
   fontSize: 16.sp,
   color: colorBlack,
 );
 
-final typoNormalTextThinRegular = GoogleFonts.josefinSans(
+final typoNormalTextThinRegular = GoogleFonts.roboto(
   fontStyle: FontStyle.normal,
   fontWeight: FontWeight.w200,
   fontSize: 16.sp,
@@ -394,13 +394,13 @@ final typoSuperSmallTextRegular = GoogleFonts.mulish(
   letterSpacing: 1.02,
   color: colorBlack,
 );
-final typoregular14infor = GoogleFonts.beVietnamPro(
+final typoregular14infor = GoogleFonts.roboto(
   color: colorInfo100,
   fontStyle: FontStyle.normal,
   fontSize: 14.sp,
   letterSpacing: 1.02,
 );
-final typoregular14orange = GoogleFonts.beVietnamPro(
+final typoregular14orange = GoogleFonts.roboto(
     fontStyle: FontStyle.normal,
     fontSize: 14.sp,
     letterSpacing: 1.02,
@@ -413,38 +413,38 @@ final typoSuperSmallTextRegularNoSpacing = GoogleFonts.mulish(
   color: colorBlack,
 );
 
-final typoVietNamProH1 = GoogleFonts.beVietnamPro(
+final typoVietNamProH1 = GoogleFonts.roboto(
   fontStyle: FontStyle.normal,
   fontWeight: FontWeight.w600,
   fontSize: 20.sp,
   color: colorBlack,
 );
 
-final typoVietNamProRegular14 = GoogleFonts.beVietnamPro(
+final typoVietNamProRegular14 = GoogleFonts.roboto(
   fontStyle: FontStyle.normal,
   fontWeight: FontWeight.w300,
   fontSize: 14.sp,
   color: colorBlack,
 );
-final typoVietNamProRegular14four = GoogleFonts.beVietnamPro(
+final typoVietNamProRegular14four = GoogleFonts.roboto(
   fontStyle: FontStyle.normal,
   fontWeight: FontWeight.w400,
   fontSize: 14.sp,
   color: colorBlack,
 );
-final typoVNregular14Green = GoogleFonts.beVietnamPro(
+final typoVNregular14Green = GoogleFonts.roboto(
   fontStyle: FontStyle.normal,
   fontWeight: FontWeight.w300,
   color: colorSuccess100,
 );
 
-final typoVietNamProRegular16 = GoogleFonts.beVietnamPro(
+final typoVietNamProRegular16 = GoogleFonts.roboto(
   fontStyle: FontStyle.normal,
   fontWeight: FontWeight.w300,
   fontSize: 16.sp,
   color: colorBlack,
 );
-final typoVietNamProRegular16Orange = GoogleFonts.beVietnamPro(
+final typoVietNamProRegular16Orange = GoogleFonts.roboto(
   fontStyle: FontStyle.normal,
   fontWeight: FontWeight.w300,
   fontSize: 16.sp,
@@ -452,123 +452,123 @@ final typoVietNamProRegular16Orange = GoogleFonts.beVietnamPro(
   letterSpacing: 1.02,
 );
 
-final typoVietNamProRegular18 = GoogleFonts.beVietnamPro(
+final typoVietNamProRegular18 = GoogleFonts.roboto(
   fontStyle: FontStyle.normal,
   fontWeight: FontWeight.w300,
   fontSize: 18.sp,
   color: colorBlack,
 );
 
-final typoVietNamProRegular20 = GoogleFonts.beVietnamPro(
+final typoVietNamProRegular20 = GoogleFonts.roboto(
   fontStyle: FontStyle.normal,
   fontWeight: FontWeight.w300,
   fontSize: 20.sp,
   color: colorBlack,
 );
 
-final typoVietNamProBold12 = GoogleFonts.beVietnamPro(
+final typoVietNamProBold12 = GoogleFonts.roboto(
   fontStyle: FontStyle.normal,
   fontWeight: FontWeight.bold,
   fontSize: 12.sp,
   color: colorBlack,
 );
 
-final typoVietNamProBold11 = GoogleFonts.beVietnamPro(
+final typoVietNamProBold11 = GoogleFonts.roboto(
   fontStyle: FontStyle.normal,
   fontWeight: FontWeight.bold,
   fontSize: 11.sp,
   color: colorBlack,
 );
 
-final typoVietNamProBold18 = GoogleFonts.beVietnamPro(
+final typoVietNamProBold18 = GoogleFonts.roboto(
   fontStyle: FontStyle.normal,
   fontWeight: FontWeight.w600,
   fontSize: 18.sp,
   color: colorBlack,
 );
-final typoVietNamProBold18orange = GoogleFonts.beVietnamPro(
+final typoVietNamProBold18orange = GoogleFonts.roboto(
   fontStyle: FontStyle.normal,
   fontWeight: FontWeight.w600,
   fontSize: 18.sp,
   color: colorPrimaryOrange100,
 );
-final typoVietNamProBold20 = GoogleFonts.beVietnamPro(
+final typoVietNamProBold20 = GoogleFonts.roboto(
   fontStyle: FontStyle.normal,
   fontWeight: FontWeight.w600,
   fontSize: 20.sp,
   color: colorBlack,
 );
 
-final typoVietNamProBold24 = GoogleFonts.beVietnamPro(
+final typoVietNamProBold24 = GoogleFonts.roboto(
   fontStyle: FontStyle.normal,
   fontWeight: FontWeight.w600,
   fontSize: 24.sp,
   color: colorBlack,
 );
 
-final typoVietNamProBold36 = GoogleFonts.beVietnamPro(
+final typoVietNamProBold36 = GoogleFonts.roboto(
   fontStyle: FontStyle.normal,
   fontWeight: FontWeight.w600,
   fontSize: 36.sp,
   color: colorBlack,
 );
 
-final typoVietNamProBold30 = GoogleFonts.beVietnamPro(
+final typoVietNamProBold30 = GoogleFonts.roboto(
   fontStyle: FontStyle.normal,
   fontWeight: FontWeight.w600,
   fontSize: 30.sp,
   color: colorBlack,
 );
 
-final typoVietNamProBold16 = GoogleFonts.beVietnamPro(
+final typoVietNamProBold16 = GoogleFonts.roboto(
   fontStyle: FontStyle.normal,
   fontWeight: FontWeight.w600,
   fontSize: 16.sp,
   color: colorBlack,
 );
-final typoVietNamProBold16Orange = GoogleFonts.beVietnamPro(
+final typoVietNamProBold16Orange = GoogleFonts.roboto(
   fontStyle: FontStyle.normal,
   fontWeight: FontWeight.w600,
   fontSize: 16.sp,
   color: colorPrimaryOrange100,
 );
 
-final typoVietNamProBold15 = GoogleFonts.beVietnamPro(
+final typoVietNamProBold15 = GoogleFonts.roboto(
   fontStyle: FontStyle.normal,
   fontWeight: FontWeight.w600,
   fontSize: 15.sp,
   color: colorBlack,
 );
 
-final typoVietNamProBold14 = GoogleFonts.beVietnamPro(
+final typoVietNamProBold14 = GoogleFonts.roboto(
   fontStyle: FontStyle.normal,
   fontWeight: FontWeight.w600,
   fontSize: 14.sp,
   color: colorBlack,
 );
 
-final typoVietNamProBold13 = GoogleFonts.beVietnamPro(
+final typoVietNamProBold13 = GoogleFonts.roboto(
   fontStyle: FontStyle.normal,
   fontWeight: FontWeight.w600,
   fontSize: 13.sp,
   color: colorBlack,
 );
 
-final typoVietNamProRegular13 = GoogleFonts.beVietnamPro(
+final typoVietNamProRegular13 = GoogleFonts.roboto(
   fontStyle: FontStyle.normal,
   fontWeight: FontWeight.w300,
   fontSize: 13.sp,
   color: colorBlack,
 );
 
-final typoVietNamProRegular12 = GoogleFonts.beVietnamPro(
+final typoVietNamProRegular12 = GoogleFonts.roboto(
   fontStyle: FontStyle.normal,
   fontWeight: FontWeight.w300,
   fontSize: 12.sp,
   color: colorBlack,
 );
 
-final typoVietNamProRegular11 = GoogleFonts.beVietnamPro(
+final typoVietNamProRegular11 = GoogleFonts.roboto(
   fontStyle: FontStyle.normal,
   fontWeight: FontWeight.w300,
   fontSize: 11.sp,
