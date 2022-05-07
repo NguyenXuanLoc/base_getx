@@ -7,6 +7,7 @@ import 'package:docsify/data/provider/user_provider.dart';
 import 'package:docsify/services/globals.dart';
 
 import 'package:docsify/utils/log_utils.dart';
+import 'package:docsify/utils/storage_utils.dart';
 import 'package:docsify/utils/toast_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -37,14 +38,12 @@ class HomeController extends GetxController {
           if (token != null) {
             Dialogs.showLoadingDialog(context);
             var result = await userProvider.googleSignIn(token);
-            Dialogs.hideLoadingDialog();
+            await Dialogs.hideLoadingDialog();
             if (result.error != null) {
               toast(result.error);
             } else if (result.data != null && result.statusCode == 200) {
               var userModel = UserResponse.fromJson(result.data['data']);
-              accessToken = userModel.token;
-              await GetStorage()
-                  .write(StorageKey.AccountInfo, userModel.toJson());
+              await StorageUtils.saveUser(userModel);
               toast(result.message.toString());
             } else {
               toast(result.message.toString());

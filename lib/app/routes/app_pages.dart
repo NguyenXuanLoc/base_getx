@@ -6,6 +6,8 @@ import '../../modules/home/bindings/home_binding.dart';
 import '../../modules/home/views/home_view.dart';
 import '../../modules/login/bindings/login_binding.dart';
 import '../../modules/login/views/login_view.dart';
+import '../../modules/register/active_code/bindings/active_code_binding.dart';
+import '../../modules/register/active_code/views/active_code_view.dart';
 import '../../modules/register/register_step1/bindings/register_step1_binding.dart';
 import '../../modules/register/register_step1/bindings/register_step1_binding.dart';
 import '../../modules/register/register_step1/views/register_step1_view.dart';
@@ -22,7 +24,7 @@ part 'app_routes.dart';
 class AppPages {
   AppPages._();
 
-  static const INITIAL = Routes.REGISTER_STEP2;
+  static const INITIAL = Routes.ACTIVE_CODE;
 
   static final routes = [
     GetPage(
@@ -62,9 +64,16 @@ class AppPages {
       binding: RegisterStep1Binding(),
     ),
     GetPage(
+      transition: Transition.rightToLeft,
       name: _Paths.REGISTER_STEP2,
       page: () => RegisterStep2View(),
       binding: RegisterStep2Binding(),
+    ),
+    GetPage(
+      transition: Transition.rightToLeft,
+      name: _Paths.ACTIVE_CODE,
+      page: () => ActiveCodeView(),
+      binding: ActiveCodeBinding(),
     ),
   ];
 }

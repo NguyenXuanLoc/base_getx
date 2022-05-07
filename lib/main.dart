@@ -6,6 +6,7 @@ import 'package:docsify/generated/app_translation.dart';
 import 'package:docsify/services/globals.dart' as globals;
 import 'package:docsify/utils/device_utils.dart';
 import 'package:docsify/utils/log_utils.dart';
+import 'package:docsify/utils/storage_utils.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -77,11 +78,13 @@ Future<void> configApp() async {
 }
 
 Future<void> checkLogin() async {
-  var userString = await GetStorage().read(StorageKey.AccountInfo);
-  if (userString != null) {
+  var userModel = await StorageUtils.getUser();
+  if (userModel != null) {
     globals.isLogin = true;
-    globals.accountId = UserResponse.fromJson(userString).userId.toString();
-    globals.accessToken = UserResponse.fromJson(userString).token.toString();
+    globals.accountId = userModel.userId.toString();
+    globals.accessToken = userModel.token.toString();
+  } else {
+    globals.isLogin = false;
   }
 }
 

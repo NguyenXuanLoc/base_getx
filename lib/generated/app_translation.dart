@@ -56,6 +56,14 @@ class LocaleKeys {
   static const please_input_date_of_birth = 'please_input_date_of_birth';
   static const please_input_valid_phone_number =
       'please_input_valid_phone_number';
+  static const register_success = "register_success";
+  static const message_sent_active_code = "message_sent_active_code";
+  static const fill_active_code_here = "fill_active_code_here";
+  static const active = "active";
+  static const dont_receive_email = "dont_receive_email";
+  static const click_here_to_resend = "click_here_to_resend";
+  static const please_input_your_code = 'please_input_your_code';
+  static const please_input_valid_code = 'please_input_valid_code';
 }
 
 class Locales {
@@ -99,6 +107,15 @@ class Locales {
     'please_input_phone_number': 'Please enter your phone number',
     'please_input_date_of_birth': 'Please enter your Date of birth',
     'please_input_valid_phone_number': 'Please enter valid phone number',
+    'register_success': 'Register\nsuccessful',
+    'message_sent_active_code':
+        'We have sent activation code to your email. Please check and fill bellow to activate your account',
+    'fill_active_code_here': 'Fill activation code here',
+    'active': 'Activate',
+    'dont_receive_email': 'You dont receive email ?',
+    'click_here_to_resend': 'Click here to resend',
+    'please_input_your_code': 'Please input your code',
+    'please_input_valid_code': 'Please input valid code'
   };
 
   static const vi_VN = {
@@ -141,6 +158,15 @@ class Locales {
     'please_input_phone_number': 'Please enter your phone number',
     'please_input_date_of_birth': 'Please enter your Date of birth',
     'please_input_valid_phone_number': 'Please enter valid phone number',
+    'register_success': 'Register\nsuccessful',
+    'message_sent_active_code':
+        'We have sent activation code to your email. Please check and fill bellow to activate your account',
+    'fill_active_code_here': 'Fill activation code here',
+    'active': 'Activate',
+    'dont_receive_email': 'You dont receive email ?',
+    'click_here_to_resend': 'Click here to resend',
+    'please_input_your_code': 'Please input your code',
+    'please_input_valid_code': 'Please input valid code'
   };
 
   static const pl = {
@@ -183,5 +209,14 @@ class Locales {
     'please_input_phone_number': 'Please enter your phone number',
     'please_input_date_of_birth': 'Please enter your Date of birth',
     'please_input_valid_phone_number': 'Please enter valid phone number',
+    'register_success': 'Register\nsuccessful',
+    'message_sent_active_code':
+        'We have sent activation code to your email. Please check and fill bellow to activate your account',
+    'fill_active_code_here': 'Fill activation code here',
+    'active': 'Activate',
+    'dont_receive_email': 'You dont receive email ?',
+    'click_here_to_resend': 'Click here to resend',
+    'please_input_your_code': 'Please input your code',
+    'please_input_valid_code': 'Please input valid code'
   };
 }

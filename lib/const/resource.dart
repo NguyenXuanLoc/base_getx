@@ -28,4 +28,7 @@ class R {
 
   /// ![preview](file://H:\docsify\docsify\assets\svg\google.svg)
   static const String assetsSvgGoogleSvg = 'assets/svg/google.svg';
+
+  /// ![preview](file://H:\docsify\docsify\assets\svg\icon_app_bar.svg)
+  static const String assetsSvgIconAppBarSvg = 'assets/svg/icon_app_bar.svg';
 }

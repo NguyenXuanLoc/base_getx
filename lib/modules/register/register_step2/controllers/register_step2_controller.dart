@@ -1,8 +1,11 @@
+import 'package:docsify/app/routes/app_pages.dart';
 import 'package:docsify/components/dialogs.dart';
 import 'package:docsify/config/constant.dart';
 import 'package:docsify/data/model/user_model.dart';
 import 'package:docsify/data/provider/user_provider.dart';
 import 'package:docsify/generated/app_translation.dart';
+import 'package:docsify/utils/log_utils.dart';
+import 'package:docsify/utils/storage_utils.dart';
 import 'package:docsify/utils/toast_utils.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
@@ -19,9 +22,11 @@ class RegisterStep2Controller extends GetxController {
   final phoneNumberController = TextEditingController();
   final birthDateController = TextEditingController();
   final count = 0.obs;
+  String email = '';
 
   @override
   void onInit() {
+    email = Get.arguments;
     super.onInit();
   }
 
@@ -39,20 +44,21 @@ class RegisterStep2Controller extends GetxController {
 
   void updateProfile(BuildContext context) async {
     if (checkValid()) {
-      var userString = await GetStorage().read(StorageKey.AccountInfo);
-      var userModel = UserResponse.fromJson(userString);
-      var userId = userModel.userId;
-      Dialogs.showLoadingDialog(context);
-      var result = await userProvider.createUserProfile(
-          userId,
-          fullNameController.text,
-          birthDateController.text,
-          phoneNumberController.text);
-      Dialogs.hideLoadingDialog();
-      if (result.error != null) {
-        toast(result.error);
-      } else {
-        toast(result.message.toString());
+      var userModel = await StorageUtils.getUser();
+      var userId = userModel?.userId;
+      if (userId != null) {
+        Dialogs.showLoadingDialog(context);
+        var result = await userProvider.createUserProfile(
+            userId,
+            fullNameController.text,
+            birthDateController.text,
+            phoneNumberController.text);
+        await Dialogs.hideLoadingDialog();
+        if (result.error != null) {
+          toast(result.error);
+        } else {
+          Get.toNamed(Routes.ACTIVE_CODE, arguments: email);
+        }
       }
     }
   }

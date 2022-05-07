@@ -4,6 +4,7 @@ import 'package:docsify/data/provider/api_result.dart';
 import 'package:docsify/generated/app_translation.dart';
 import 'package:docsify/services/globals.dart' as globals;
 import 'package:docsify/utils/connection_utils.dart';
+import 'package:docsify/utils/log_utils.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:get/get.dart';
 import 'package:logger/logger.dart';
@@ -124,6 +125,7 @@ class BaseProvider extends GetConnect {
       Logger().d(response.body);
       if (response.isOk && response.body != null) {
         var result = response.body;
+        logE("TAG RESULT: ${result}");
         return ApiResult<dynamic>(
             data: result,
             statusCode: response.statusCode,

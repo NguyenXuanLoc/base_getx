@@ -77,4 +77,18 @@ class UserProvider extends BaseProvider {
     };
     return await POST('kuser/profiles/', body);
   }
+
+  Future<ApiResult> sentActiveEmail(String email) async {
+    return await POST("auth/send_active_email/$email", null);
+  }
+
+  Future<ApiResult> resentActiveEmail(String email) async {
+    var body = {ApiKey.email: email};
+    return await POST('auth/resend_activate_mail', body);
+  }
+
+  Future<ApiResult> activeCode(String code) async {
+    var body = {ApiKey.code: code};
+    return await POST('auth/active/code', body);
+  }
 }

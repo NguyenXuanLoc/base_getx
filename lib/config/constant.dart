@@ -28,4 +28,5 @@ class ApiKey {
   static const street = 'street';
   static const zip_code = 'zip_code';
   static const place = 'place';
+  static const code = 'code';
 }

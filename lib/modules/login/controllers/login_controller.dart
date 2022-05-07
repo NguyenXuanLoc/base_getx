@@ -9,6 +9,7 @@ import 'package:docsify/generated/app_translation.dart';
 import 'package:docsify/services/globals.dart';
 import 'package:docsify/utils/connection_utils.dart';
 import 'package:docsify/utils/log_utils.dart';
+import 'package:docsify/utils/storage_utils.dart';
 import 'package:docsify/utils/toast_utils.dart';
 import 'package:email_validator/email_validator.dart';
 import 'package:flutter/cupertino.dart';
@@ -68,13 +69,12 @@ class LoginController extends GetxController {
     if (isValid) {
       Dialogs.showLoadingDialog(context);
       var result = await userProvider.login(email, pass);
-      Dialogs.hideLoadingDialog();
+      await Dialogs.hideLoadingDialog();
       if (result.error != null) {
         toast(result.error);
       } else if (result.data != null) {
         var userModel = UserResponse.fromJson(result.data['data']);
-        accessToken = userModel.token;
-        await GetStorage().write(StorageKey.AccountInfo, userModel.toJson());
+        await StorageUtils.saveUser(userModel);
         toast(result.message.toString());
       }
     }
@@ -97,13 +97,12 @@ class LoginController extends GetxController {
       Dialogs.showLoadingDialog(context);
       var result =
           await userProvider.facebookSignIn(loginResponse.accessToken!.token);
-      Dialogs.hideLoadingDialog();
+      await Dialogs.hideLoadingDialog();
       if (result.error != null) {
         toast(result.error);
       } else if (result.data != null) {
         var userModel = UserResponse.fromJson(result.data['data']);
-        accessToken = userModel.token;
-        await GetStorage().write(StorageKey.AccountInfo, userModel.toJson());
+        await StorageUtils.saveUser(userModel);
         toast(result.message.toString());
       }
     } else {
@@ -125,14 +124,12 @@ class LoginController extends GetxController {
           if (token != null) {
             Dialogs.showLoadingDialog(context);
             var result = await userProvider.googleSignIn(token);
-            Dialogs.hideLoadingDialog();
+            await Dialogs.hideLoadingDialog();
             if (result.error != null) {
               toast(result.error);
             } else if (result.data != null) {
               var userModel = UserResponse.fromJson(result.data['data']);
-              accessToken = userModel.token;
-              await GetStorage()
-                  .write(StorageKey.AccountInfo, userModel.toJson());
+              await StorageUtils.saveUser(userModel);
               toast(result.message.toString());
             }
           }
@@ -152,7 +149,6 @@ class LoginController extends GetxController {
   }
 
   void handleAction(LoginAction action) {
-    logE(action.toString());
     switch (action) {
       case LoginAction.REGISTER:
         {

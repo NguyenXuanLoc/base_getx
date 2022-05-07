@@ -29,7 +29,7 @@ class ForgotPassController extends GetxController {
       Dialogs.showLoadingDialog(context);
       errorEmail.value = '';
       var result = await userProvider.forgotPass(email);
-      Dialogs.hideLoadingDialog();
+      await Dialogs.hideLoadingDialog();
       if (result.error != null) {
         toast(result.error);
       } else if (result.message != null) {

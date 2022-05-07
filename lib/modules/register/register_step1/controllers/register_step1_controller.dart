@@ -1,8 +1,10 @@
+import 'package:docsify/app/routes/app_pages.dart';
 import 'package:docsify/components/dialogs.dart';
 import 'package:docsify/data/model/user_model.dart';
 import 'package:docsify/data/provider/user_provider.dart';
 import 'package:docsify/generated/app_translation.dart';
 import 'package:docsify/utils/log_utils.dart';
+import 'package:docsify/utils/storage_utils.dart';
 import 'package:docsify/utils/toast_utils.dart';
 import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
@@ -38,17 +40,18 @@ class RegisterStep1Controller extends GetxController {
 
   Future<void> handleRegister(BuildContext context) async {
     if (validInfo()) {
+      var email = emailController.value.text;
+      var pass = passController.value.text;
       Dialogs.showLoadingDialog(context);
-      var result = await userProvider.registerByEmail(
-          emailController.value.text,
-          emailController.value.text.split('@')[0],
-          passController.value.text);
-      Dialogs.hideLoadingDialog();
+      var result =
+          await userProvider.registerByEmail(email, email.split('@')[0], pass);
+      await Dialogs.hideLoadingDialog();
       if (result.error != null) {
         toast(result.error);
       } else {
         var userModel = UserResponse.fromJson(result.data['data']);
-        logE("LOGIN SUCCESS: ${userModel.toJson()}");
+        await StorageUtils.saveUser(userModel);
+        Get.toNamed(Routes.REGISTER_STEP2, arguments: email);
       }
     }
   }
