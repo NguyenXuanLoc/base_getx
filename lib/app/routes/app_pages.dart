@@ -16,6 +16,8 @@ import '../../modules/register/register_step2/bindings/register_step2_binding.da
 import '../../modules/register/register_step2/views/register_step2_view.dart';
 import '../../modules/splash/bindings/splash_binding.dart';
 import '../../modules/splash/views/splash_view.dart';
+import '../../modules/tab_search/bindings/tab_search_binding.dart';
+import '../../modules/tab_search/views/tab_search_view.dart';
 import '../../modules/test/bindings/test_binding.dart';
 import '../../modules/test/views/test_view.dart';
 
@@ -24,7 +26,7 @@ part 'app_routes.dart';
 class AppPages {
   AppPages._();
 
-  static const INITIAL = Routes.LOGIN;
+  static const INITIAL = Routes.TAB_SEARCH;
 
   static final routes = [
     GetPage(
@@ -74,6 +76,11 @@ class AppPages {
       name: _Paths.ACTIVE_CODE,
       page: () => ActiveCodeView(),
       binding: ActiveCodeBinding(),
+    ),
+    GetPage(
+      name: _Paths.TAB_SEARCH,
+      page: () => TabSearchView(),
+      binding: TabSearchBinding(),
     ),
   ];
 }

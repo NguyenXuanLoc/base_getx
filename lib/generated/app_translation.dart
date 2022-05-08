@@ -68,6 +68,15 @@ class LocaleKeys {
   static const or = 'or';
   static const facebook = 'facebook';
   static const google = 'google';
+  static const user_zone = 'user_zone';
+  static const logout = 'logout';
+  static const offline = 'offline';
+  static const online = 'online';
+  static const category_or_doctor_name = 'category_or_doctor_name';
+  static const fill_doctor = 'fill_doctor';
+  static const doctors = 'doctors';
+  static const lastest_rating = 'lastest_rating';
+  static const search = 'search';
 }
 
 class Locales {
@@ -123,6 +132,15 @@ class Locales {
     'go_to_provider': 'Go to provider',
     'or': '  Or  ',
     'facebook': 'Facebook',
-    'google': 'Google'
+    'google': 'Google',
+    'user_zone': 'User Zone',
+    'logout': 'Logout',
+    'offline': 'Offline',
+    'online': 'Online',
+    'category_or_doctor_name': 'Category or Doctor Name',
+    'fill_doctor': 'Fill a doctor',
+    'doctors': 'Doctor',
+    'lastest_rating': 'Lastest rating',
+    'search': 'Search',
   };
 }

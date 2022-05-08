@@ -14,6 +14,8 @@ class AppButton extends StatelessWidget {
   final BorderSide? side;
   final EdgeInsets? padding;
   final bool disable;
+  final ShapeBorder? shapeBorder;
+  final MaterialTapTargetSize? materialTapTargetSize;
 
   const AppButton({
     Key? key,
@@ -28,6 +30,8 @@ class AppButton extends StatelessWidget {
     this.side,
     this.padding,
     this.disable = true,
+    this.shapeBorder,
+    this.materialTapTargetSize,
   }) : super(key: key);
 
   @override
@@ -49,13 +53,15 @@ class AppButton extends StatelessWidget {
       );
     }
     return MaterialButton(
+      materialTapTargetSize: materialTapTargetSize,
       padding: padding,
       height: height,
       minWidth: width,
       color: backgroundColor,
-      shape: RoundedRectangleBorder(
-          side: side ?? const BorderSide(color: colorWhite),
-          borderRadius: BorderRadius.circular(borderRadius ?? 0)),
+      shape: shapeBorder ??
+          RoundedRectangleBorder(
+              side: side ?? const BorderSide(color: colorWhite),
+              borderRadius: BorderRadius.circular(borderRadius ?? 0)),
       child: Text(
         title,
         textScaleFactor: 1,

@@ -120,6 +120,7 @@ const colorGrey20= Color(0xFFE9EAEC);
 
 const colorBlue100 = Color(0xFF003CA4);
 const colorBlue80 = Color(0xFF044ECC);
+const colorBlue5 = Color(0xFFB1C8F1);
 
 const colorPink100 = Color(0xFFFC2C52);
 const colorPink40 = Color(0xFFFCC0CB);

@@ -32,11 +32,20 @@ class R {
   /// ![preview](file://H:\docsify\docsify\assets\svg\google.svg)
   static const String assetsSvgGoogleSvg = 'assets/svg/google.svg';
 
+  /// ![preview](file://H:\docsify\docsify\assets\svg\ic_drop_down.svg)
+  static const String assetsSvgIcDropDownSvg = 'assets/svg/ic_drop_down.svg';
+
   /// ![preview](file://H:\docsify\docsify\assets\svg\icon_app_bar.svg)
   static const String assetsSvgIconAppBarSvg = 'assets/svg/icon_app_bar.svg';
 
+  /// ![preview](file://H:\docsify\docsify\assets\svg\logout.svg)
+  static const String assetsSvgLogoutSvg = 'assets/svg/logout.svg';
+
   /// ![preview](file://H:\docsify\docsify\assets\svg\or.svg)
   static const String assetsSvgOrSvg = 'assets/svg/or.svg';
+
+  /// ![preview](file://H:\docsify\docsify\assets\svg\search.svg)
+  static const String assetsSvgSearchSvg = 'assets/svg/search.svg';
 
   /// ![preview](file://H:\docsify\docsify\assets\svg\three_dots.svg)
   static const String assetsSvgThreeDotsSvg = 'assets/svg/three_dots.svg';
