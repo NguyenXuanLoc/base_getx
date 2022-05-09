@@ -29,4 +29,8 @@ class ApiKey {
   static const zip_code = 'zip_code';
   static const place = 'place';
   static const code = 'code';
+  static const status = 'status';
+  static const limit = 'limit';
+  static const offset = 'offset';
+  static const vote = 'vote';
 }

@@ -80,6 +80,10 @@ class LocaleKeys {
   static const search = 'search';
   static const how_to_work = 'how_to_work';
   static const step = 'step';
+  static const hello_can_i_help_u = 'hello_can_i_help_u';
+  static const input_specialist_or_doctor_name =
+      'input_specialist_or_doctor_name';
+  static const featured_doctor = 'featured_doctor';
 }
 
 class Locales {
@@ -148,5 +152,8 @@ class Locales {
     'search': 'Search',
     'how_to_work': 'How to work?',
     'step': 'Step',
+    'hello_can_i_help_u': 'Hello\nHow can i help you',
+    'input_specialist_or_doctor_name': 'Input specialist or doctor name',
+    'featured_doctor': 'Feature doctor',
   };
 }

@@ -12,11 +12,11 @@ import 'package:logger/logger.dart';
 class BaseProvider extends GetConnect {
   void initProvider() {
     httpClient.baseUrl = dotenv.env['BASE_API'];
-    httpClient.timeout =  Duration(seconds: globals.timeOut);
+    httpClient.timeout = Duration(seconds: globals.timeOut);
   }
 
   // ignore: non_constant_identifier_names
-  Future<ApiResult> GET(String url) async {
+  Future<ApiResult> GET(String url, {Map<String, dynamic>? queryParam}) async {
     if (await ConnectionUtils.isConnect() == false) {
       return ApiResult(error: LocaleKeys.network_error.tr);
     }
@@ -24,13 +24,12 @@ class BaseProvider extends GetConnect {
     print('[GET] ' + httpClient.baseUrl! + url);
     print("Bearer " + globals.accessToken);
     try {
-      final response = await get(
-        url,
-        headers: {
-          'Authorization': 'Bearer ${globals.accessToken}',
-          'Host': 'auth.com'
-        },
-      );
+      final response = await get(url,
+          headers: {
+            'Authorization': 'Bearer ${globals.accessToken}',
+            'Host': 'auth.com'
+          },
+          query: queryParam);
 
       if (response.isOk && response.body != null) {
         var result = response.body;

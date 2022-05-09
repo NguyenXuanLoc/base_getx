@@ -5,7 +5,6 @@ import 'package:docsify/data/provider/user_provider.dart';
 import 'package:docsify/generated/app_translation.dart';
 import 'package:docsify/modules/login/controllers/login_controller.dart';
 import 'package:docsify/utils/app_utils.dart';
-import 'package:docsify/utils/log_utils.dart';
 import 'package:docsify/utils/storage_utils.dart';
 import 'package:docsify/utils/toast_utils.dart';
 import 'package:email_validator/email_validator.dart';

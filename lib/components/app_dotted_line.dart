@@ -13,11 +13,9 @@ class AppDotsLine extends StatelessWidget {
       lineThickness: 1.0,
       dashLength: 4.0,
       dashColor: colorGrey20,
-      // dashGradient: [Colors.red, Colors.blue],
       dashRadius: 0.0,
       dashGapLength: 4.0,
       dashGapColor: colorGrey20,
-      // dashGapGradient: [Colors.red, Colors.blue],
       dashGapRadius: 0.0,
     );
   }
