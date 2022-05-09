@@ -38,6 +38,9 @@ class R {
   /// ![preview](file://H:\docsify\docsify\assets\svg\icon_app_bar.svg)
   static const String assetsSvgIconAppBarSvg = 'assets/svg/icon_app_bar.svg';
 
+  /// ![preview](file://H:\docsify\docsify\assets\svg\login.svg)
+  static const String assetsSvgLoginSvg = 'assets/svg/login.svg';
+
   /// ![preview](file://H:\docsify\docsify\assets\svg\logout.svg)
   static const String assetsSvgLogoutSvg = 'assets/svg/logout.svg';
 

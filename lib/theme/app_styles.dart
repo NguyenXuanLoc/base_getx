@@ -233,7 +233,7 @@ final typoHeading2 = GoogleFonts.roboto(
 
 final typoHeading4 = GoogleFonts.roboto(
   fontStyle: FontStyle.normal,
-  fontWeight: FontWeight.w700,
+  fontWeight: FontWeight.w500,
   fontSize: 32.sp,
   letterSpacing: 1.02,
   color: colorBlack,
@@ -241,7 +241,7 @@ final typoHeading4 = GoogleFonts.roboto(
 
 final typoHeading5 = GoogleFonts.roboto(
   fontStyle: FontStyle.normal,
-  fontWeight: FontWeight.w700,
+  fontWeight: FontWeight.w500,
   fontSize: 24.sp,
   letterSpacing: 1.02,
   color: colorBlack,
@@ -249,7 +249,7 @@ final typoHeading5 = GoogleFonts.roboto(
 
 final typoHeading6 = GoogleFonts.roboto(
   fontStyle: FontStyle.normal,
-  fontWeight: FontWeight.w700,
+  fontWeight: FontWeight.w500,
   fontSize: 20.sp,
   letterSpacing: 1.02,
   color: colorBlack,
@@ -257,7 +257,7 @@ final typoHeading6 = GoogleFonts.roboto(
 
 final typoSuperLargeTextBold = GoogleFonts.roboto(
   fontStyle: FontStyle.normal,
-  fontWeight: FontWeight.w700,
+  fontWeight: FontWeight.w500,
   fontSize: 24.sp,
   letterSpacing: 1.02,
   color: colorBlack,
@@ -265,7 +265,7 @@ final typoSuperLargeTextBold = GoogleFonts.roboto(
 
 final typoLargeTextBold = GoogleFonts.roboto(
   fontStyle: FontStyle.normal,
-  fontWeight: FontWeight.w700,
+  fontWeight: FontWeight.w500,
   fontSize: 20.sp,
   letterSpacing: 1.02,
   color: colorBlack,
@@ -281,7 +281,7 @@ final typoLargeTextRegular = GoogleFonts.roboto(
 
 final typoMediumTextBold = GoogleFonts.roboto(
   fontStyle: FontStyle.normal,
-  fontWeight: FontWeight.w700,
+  fontWeight: FontWeight.w500,
   fontSize: 18.sp,
   letterSpacing: 1.02,
   color: colorBlack,
@@ -297,7 +297,7 @@ final typoMediumTextRegular = GoogleFonts.roboto(
 
 final typoNormalTextBold = GoogleFonts.roboto(
   fontStyle: FontStyle.normal,
-  fontWeight: FontWeight.w700,
+  fontWeight: FontWeight.w500,
   fontSize: 16.sp,
   letterSpacing: 1.02,
   color: colorBlack,
@@ -305,7 +305,7 @@ final typoNormalTextBold = GoogleFonts.roboto(
 
 final typoNormalTextBEBold = GoogleFonts.roboto(
   fontStyle: FontStyle.normal,
-  fontWeight: FontWeight.w700,
+  fontWeight: FontWeight.w500,
   fontSize: 16.sp,
   letterSpacing: 1.02,
   color: colorBlack,
@@ -342,7 +342,7 @@ final typoNormalTextThinRegular = GoogleFonts.roboto(
 
 final typoSmallTextBold = GoogleFonts.mulish(
   fontStyle: FontStyle.normal,
-  fontWeight: FontWeight.w700,
+  fontWeight: FontWeight.w600,
   fontSize: 14.sp,
   letterSpacing: 1.02,
   color: colorBlack,
@@ -365,7 +365,7 @@ final typoSmallTextRegularNoSpacing = GoogleFonts.mulish(
 
 final typoExtraSmallTextBold = GoogleFonts.mulish(
   fontStyle: FontStyle.normal,
-  fontWeight: FontWeight.w700,
+  fontWeight: FontWeight.w500,
   fontSize: 12.sp,
   letterSpacing: 1.02,
   color: colorBlack,
@@ -381,7 +381,7 @@ final typoExtraSmallTextRegular = GoogleFonts.mulish(
 
 final typoSuperSmallTextBold = GoogleFonts.mulish(
   fontStyle: FontStyle.normal,
-  fontWeight: FontWeight.w700,
+  fontWeight: FontWeight.w500,
   fontSize: 10.sp,
   letterSpacing: 1.02,
   color: colorBlack,

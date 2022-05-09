@@ -2,11 +2,10 @@ import 'dart:async';
 
 import 'package:docsify/app/routes/app_pages.dart';
 import 'package:docsify/components/dialogs.dart';
-import 'package:docsify/config/constant.dart';
 import 'package:docsify/data/model/user_model.dart';
 import 'package:docsify/data/provider/user_provider.dart';
 import 'package:docsify/generated/app_translation.dart';
-import 'package:docsify/services/globals.dart';
+import 'package:docsify/utils/app_utils.dart';
 import 'package:docsify/utils/connection_utils.dart';
 import 'package:docsify/utils/log_utils.dart';
 import 'package:docsify/utils/storage_utils.dart';
@@ -15,7 +14,6 @@ import 'package:email_validator/email_validator.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
 import 'package:get/get.dart';
-import 'package:get_storage/get_storage.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
 enum LoginAction {
@@ -46,6 +44,7 @@ class LoginController extends GetxController {
   }
 
   void handleLoginByAccount(BuildContext context) async {
+    Utils.hideKeyboard(context);
     var email = emailController.value.text;
     var pass = passController.value.text;
     bool isValid = true;
@@ -173,10 +172,11 @@ class LoginController extends GetxController {
           Get.toNamed(Routes.FORGOT_PASS);
           break;
         }
-      case LoginAction.GO_TO_PROVIDER:{
-       logE("GO TO PROVIDER");
-        break;
-      }
+      case LoginAction.GO_TO_PROVIDER:
+        {
+          logE("GO TO PROVIDER");
+          break;
+        }
     }
   }
 }

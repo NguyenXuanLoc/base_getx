@@ -31,15 +31,14 @@ class AppCheckBox extends StatelessWidget {
             Stack(
               children: [
                 Container(
-                  height: 17.h,
-                  width: 17.w,
+                  height: 20.w,
+                  width: 20.w,
                   alignment: Alignment.center,
                   decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(2.h),
+                    borderRadius: BorderRadius.circular(4.h),
                     shape: BoxShape.rectangle,
                     border: Border.all(
-                        color: value ? colorBlackGrey : colorBlackGrey,
-                        width: 1.w),
+                        color: value ? colorGrey30 : colorGrey30, width: 1.w),
                   ),
                 ),
                 Positioned.fill(

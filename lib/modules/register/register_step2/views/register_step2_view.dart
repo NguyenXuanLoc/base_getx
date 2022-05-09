@@ -61,7 +61,7 @@ class RegisterStep2View extends GetView<RegisterStep2Controller> {
                   controller: controller.fullNameController,
                   errorText: controller.errorFullName.value,
                   textInputAction: TextInputAction.next,
-                  hintText: LocaleKeys.full_name.tr,
+                  hintText: LocaleKeys.business_name.tr,
                   textStyle: styleTextFieldBold.copyWith(
                       fontWeight: FontWeight.w500, fontSize: 16.sp),
                   hintStyle: styleTextField.copyWith(

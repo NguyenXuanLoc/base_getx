@@ -115,11 +115,15 @@ const colorBlueBackground = Color(0xffECF5FF);
 const colorBackgroundColor = Color(0xffffffff);
 const colorBackgroundWhite = Color(0xfff6f6f7);
 const colorBackgroundGrey20 = Color(0xF6F7F8F7);
+const colorBackgroundGrey10 = Color(0xFFF7F7F8);
 
 const colorGrey20= Color(0xFFE9EAEC);
+const colorGrey30= Color(0xFFE9EAEC);
+const colorGrey80= Color(0xFF636973);
 
 const colorBlue100 = Color(0xFF003CA4);
 const colorBlue80 = Color(0xFF044ECC);
+const colorBlue40 = Color(0xFF5787DB);
 const colorBlue5 = Color(0xFFB1C8F1);
 
 const colorPink100 = Color(0xFFFC2C52);

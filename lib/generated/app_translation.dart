@@ -25,6 +25,7 @@ class LocaleKeys {
   static const here_for_first_time = 'here_for_first_time';
   static const create_account = 'create_account';
   static const contact = 'contact';
+  static const contact_email = 'contact_email';
   static const regulation = 'regulation';
   static const cookies = 'cookies';
   static const privacy = 'privacy';
@@ -47,7 +48,7 @@ class LocaleKeys {
   static const register_step1 = 'register_step1';
   static const register_step2 = 'register_step2';
   static const enter = 'enter';
-  static const full_name = 'full_name';
+  static const business_name = 'business_name';
   static const phone_number = 'phone_number';
   static const birth_date = 'birth_date';
   static const i_agree_term = 'i_agree_term';
@@ -77,6 +78,8 @@ class LocaleKeys {
   static const doctors = 'doctors';
   static const lastest_rating = 'lastest_rating';
   static const search = 'search';
+  static const how_to_work = 'how_to_work';
+  static const step = 'step';
 }
 
 class Locales {
@@ -90,6 +93,7 @@ class Locales {
     'here_for_first_time': "I'm here for first time",
     'create_account': 'Create account',
     'contact': 'Contact',
+    'contact_email': 'Contact Email',
     'regulation': 'Regulation',
     'cookies': 'Cookies',
     'privacy': 'Privacy policy',
@@ -110,9 +114,9 @@ class Locales {
     'register_step1': 'Register step 1/2',
     'retype_pass': 'Retype Password',
     'enter': 'Enter',
-    'full_name': 'Full Name',
+    'business_name': 'Business name',
     'phone_number': 'Phone Number',
-    'i_agree_term': 'I agree with term and\nconditions',
+    'i_agree_term': 'Accept Terms......',
     'birth_date': 'Birth Date',
     'input_email_to_reset_pass':
         'Please input your email in order to reset your password',
@@ -142,5 +146,7 @@ class Locales {
     'doctors': 'Doctor',
     'lastest_rating': 'Lastest rating',
     'search': 'Search',
+    'how_to_work': 'How to work?',
+    'step': 'Step',
   };
 }

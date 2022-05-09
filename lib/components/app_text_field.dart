@@ -92,7 +92,7 @@ class _AppTextFieldState extends State<AppTextField> {
           hintText: widget.hintText,
           errorText: widget.errorText,
           errorStyle: typoNormalTextRegular.copyWith(
-              color: colorSemanticRed100, fontSize: 13.sp),
+              color: colorSemanticRed100, fontSize: 11.sp),
           prefixIcon: widget.prefixIcon,
           suffixIcon: widget.suffixIcon,
           hintStyle: widget.hintStyle),

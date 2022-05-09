@@ -58,7 +58,8 @@ class LoginView extends GetView<LoginController> {
                     AppText(
                       LocaleKeys.have_account.tr,
                       textAlign: TextAlign.center,
-                      style: typoNormalTextBold,
+                      style: typoNormalTextBold.copyWith(
+                          fontWeight: FontWeight.w600),
                     ),
                     SizedBox(
                       height: 15.h,
@@ -129,7 +130,7 @@ class LoginView extends GetView<LoginController> {
                             .handleAction(LoginAction.FORGOT_PASSWORD),
                         textStyle: typoNormalTextBold.copyWith(
                             fontSize: 14.sp,
-                            fontWeight: FontWeight.w600,
+                            fontWeight: FontWeight.w100,
                             color: colorBlue80,
                             decoration: TextDecoration.underline),
                       ),
@@ -255,7 +256,7 @@ class LoginView extends GetView<LoginController> {
               SizedBox(
                 height: 40.h,
               ),
-              actionWidget()
+              // actionWidget()
             ],
           ),
         ));
