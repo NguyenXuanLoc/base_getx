@@ -20,6 +20,9 @@ class R {
   /// ![preview](file://H:\docsify\docsify\assets\png\avatar_test.png)
   static const String assetsPngAvatarTestPng = 'assets/png/avatar_test.png';
 
+  /// ![preview](file://H:\docsify\docsify\assets\png\doctor.png)
+  static const String assetsPngDoctorPng = 'assets/png/doctor.png';
+
   /// ![preview](file://H:\docsify\docsify\assets\png\facebook.svg)
   static const String assetsPngFacebookSvg = 'assets/png/facebook.svg';
 
@@ -32,8 +35,15 @@ class R {
   /// ![preview](file://H:\docsify\docsify\assets\svg\back_circle.svg)
   static const String assetsSvgBackCircleSvg = 'assets/svg/back_circle.svg';
 
+  /// ![preview](file://H:\docsify\docsify\assets\svg\bag.svg)
+  static const String assetsSvgBagSvg = 'assets/svg/bag.svg';
+
   /// ![preview](file://H:\docsify\docsify\assets\svg\calendar.svg)
   static const String assetsSvgCalendarSvg = 'assets/svg/calendar.svg';
+
+  /// ![preview](file://H:\docsify\docsify\assets\svg\doctor_background.svg)
+  static const String assetsSvgDoctorBackgroundSvg =
+      'assets/svg/doctor_background.svg';
 
   /// ![preview](file://H:\docsify\docsify\assets\svg\facebook.svg)
   static const String assetsSvgFacebookSvg = 'assets/svg/facebook.svg';
@@ -49,6 +59,9 @@ class R {
 
   /// ![preview](file://H:\docsify\docsify\assets\svg\icon_app_bar.svg)
   static const String assetsSvgIconAppBarSvg = 'assets/svg/icon_app_bar.svg';
+
+  /// ![preview](file://H:\docsify\docsify\assets\svg\location.svg)
+  static const String assetsSvgLocationSvg = 'assets/svg/location.svg';
 
   /// ![preview](file://H:\docsify\docsify\assets\svg\login.svg)
   static const String assetsSvgLoginSvg = 'assets/svg/login.svg';

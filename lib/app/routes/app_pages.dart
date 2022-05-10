@@ -1,7 +1,3 @@
-import 'package:docsify/modules/tab_favourite/bindings/favourite_binding.dart';
-import 'package:docsify/modules/tab_favourite/views/favourite_view.dart';
-import 'package:docsify/modules/tab_reservation/bindings/reservation_binding.dart';
-import 'package:docsify/modules/tab_reservation/views/reservation_view.dart';
 import 'package:get/get.dart';
 
 import '../../modules/forgot_pass/bindings/forgot_pass_binding.dart';
@@ -16,8 +12,14 @@ import '../../modules/register/register_step1/bindings/register_step1_binding.da
 import '../../modules/register/register_step1/views/register_step1_view.dart';
 import '../../modules/register/register_step2/bindings/register_step2_binding.dart';
 import '../../modules/register/register_step2/views/register_step2_view.dart';
+import '../../modules/search/bindings/search_binding.dart';
+import '../../modules/search/views/search_view.dart';
 import '../../modules/splash/bindings/splash_binding.dart';
 import '../../modules/splash/views/splash_view.dart';
+import '../../modules/tab_favourite/bindings/favourite_binding.dart';
+import '../../modules/tab_favourite/views/favourite_view.dart';
+import '../../modules/tab_reservation/bindings/reservation_binding.dart';
+import '../../modules/tab_reservation/views/reservation_view.dart';
 import '../../modules/tab_search/bindings/tab_search_binding.dart';
 import '../../modules/tab_search/views/tab_search_view.dart';
 import '../../modules/test/bindings/test_binding.dart';
@@ -85,14 +87,22 @@ class AppPages {
       binding: TabSearchBinding(),
     ),
     GetPage(
+      transition: Transition.rightToLeft,
       name: _Paths.RESERVATION,
       page: () => ReservationView(),
       binding: ReservationBinding(),
     ),
     GetPage(
+      transition: Transition.rightToLeft,
       name: _Paths.FAVOURITE,
       page: () => FavouriteView(),
       binding: FavouriteBinding(),
+    ),
+    GetPage(
+      transition: Transition.rightToLeft,
+      name: _Paths.SEARCH,
+      page: () => const SearchView(),
+      binding: SearchBinding(),
     ),
   ];
 }

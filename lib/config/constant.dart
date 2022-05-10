@@ -33,4 +33,10 @@ class ApiKey {
   static const limit = 'limit';
   static const offset = 'offset';
   static const vote = 'vote';
+
+  static const from = 'from';
+  static const size = 'size';
+  static const city = 'city';
+  static const query = 'query';
+  static const sort = 'sort';
 }

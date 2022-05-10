@@ -3,7 +3,6 @@ import 'package:docsify/components/dialogs.dart';
 import 'package:docsify/data/provider/user_provider.dart';
 import 'package:docsify/generated/app_translation.dart';
 import 'package:docsify/services/globals.dart' as globals;
-import 'package:docsify/utils/log_utils.dart';
 import 'package:docsify/utils/toast_utils.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';

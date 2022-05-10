@@ -86,6 +86,8 @@ class LocaleKeys {
   static const featured_doctor = 'featured_doctor';
   static const reservation = 'reservation';
   static const favourite = 'favourite';
+  static const address = 'address';
+  static const activity_list = 'activity_list';
 }
 
 class Locales {
@@ -159,5 +161,7 @@ class Locales {
     'featured_doctor': 'Feature doctor',
     'reservation': 'Reservation',
     'favourite': 'Favourite',
+    'address': 'Address',
+    'activity_list': 'Activities List',
   };
 }

@@ -1,7 +1,14 @@
+import 'package:event_bus/event_bus.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:intl/intl.dart';
 
 class Utils {
+  static var eventBus = EventBus();
+
+  static void sentEventBus(dynamic event) {
+    eventBus.fire(event);
+  }
+
   static void hideKeyboard(BuildContext context) {
     FocusScope.of(context).requestFocus(FocusNode());
   }

@@ -11,11 +11,25 @@ class SearchProvider extends BaseProvider {
     initProvider();
   }
 
-  Future<ApiResult> getDoctorRatingLatest(
-      {String status = 'approved',
-      int limit = 10,
-      int offset = 0,
-      int vote = 0}) async {
+  Future<ApiResult> searchDoctor({int from = 0,
+    int size = 10,
+    String city = '',
+    String query = '',
+    String sort = 'rate_desc'}) async {
+    var queryParam = {
+      ApiKey.from: from.toString(),
+      ApiKey.size: size.toString(),
+      ApiKey.city: city,
+      ApiKey.query: query,
+      ApiKey.sort: sort
+    };
+    return await GET('search/doctor/search', queryParam: queryParam);
+  }
+
+  Future<ApiResult> getDoctorRatingLatest({String status = 'approved',
+    int limit = 10,
+    int offset = 0,
+    int vote = 0}) async {
     var queryParam = {
       ApiKey.status: status,
       ApiKey.limit: limit.toString(),

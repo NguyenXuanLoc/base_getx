@@ -14,6 +14,7 @@ abstract class Routes {
   static const TAB_SEARCH = _Paths.TAB_SEARCH;
   static const RESERVATION = _Paths.RESERVATION;
   static const FAVOURITE = _Paths.FAVOURITE;
+  static const SEARCH = _Paths.SEARCH;
 }
 
 abstract class _Paths {
@@ -30,4 +31,5 @@ abstract class _Paths {
   static const TAB_SEARCH = '/tab-search';
   static const RESERVATION = '/reservation';
   static const FAVOURITE = '/favourite';
+  static const SEARCH = '/search';
 }

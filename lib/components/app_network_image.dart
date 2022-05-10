@@ -23,7 +23,8 @@ class AppNetworkImage extends StatelessWidget {
   Widget build(BuildContext context) {
     return source == null || source!.isEmpty || !source!.startsWith('http')
         ? CachedNetworkImage(
-            imageUrl: source ?? "",
+            imageUrl:
+                "https://platform-static-files.s3.amazonaws.com/premierleague/photos/players/250x250/Photo-Missing.png",
             placeholder: (context, url) => Center(
               widthFactor: 2,
               heightFactor: 2,

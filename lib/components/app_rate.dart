@@ -16,7 +16,7 @@ class AppRating extends StatelessWidget {
       this.direction = Axis.horizontal,
       this.itemCount = 5,
       this.isRating = false,
-      this.numberRate,
+      this.numberRate = 1,
       this.initialRating = 1,
       this.minRating = 1})
       : super(key: key);
@@ -36,6 +36,7 @@ class AppRating extends StatelessWidget {
       );
     }
     return RatingBar.builder(
+      wrapAlignment: WrapAlignment.start,
       itemSize: 20,
       updateOnDrag: true,
       initialRating: initialRating,

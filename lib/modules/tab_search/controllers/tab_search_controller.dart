@@ -4,23 +4,12 @@ import 'package:docsify/data/provider/search_provider.dart';
 import 'package:docsify/utils/log_utils.dart';
 import 'package:docsify/utils/toast_utils.dart';
 import 'package:get/get.dart';
+import 'package:docsify/services/globals.dart' as globals;
 
 class TabSearchController extends GetxController {
   var searchProvider = SearchProvider();
   final lRating = List<RatingResponse>.empty(growable: true).obs;
-  var listSuggestion = {
-    "AAAAAAA",
-    'AAAAAAAAAAAA',
-    'bbbbbbbbbbbb',
-    'bbbbbbbbbb',
-    'SSSSSSSSS',
-    'wwwwwwwww',
-    'yyyyyyyyy',
-    'llll',
-    'ccccccc',
-    'ddddddd',
-    'eeeeeeeee'
-  };
+  var listSuggestion = globals.listSuggestion;
   final count = 0.obs;
 
   @override
@@ -48,8 +37,8 @@ class TabSearchController extends GetxController {
     }
   }
 
-  void openSearchScreen({String? suggestion}) {
-    Get.toNamed(Routes.FAVOURITE);
+  void openSearchScreen({String? suggestion = ''}) {
+    Get.toNamed(Routes.SEARCH, arguments: suggestion);
     // logE("Open search detai $suggestion");
   }
 
