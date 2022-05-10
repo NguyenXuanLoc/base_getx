@@ -1,5 +1,4 @@
-import 'dart:math';
-
+import 'package:docsify/app/routes/app_pages.dart';
 import 'package:docsify/data/model/rating_response.dart';
 import 'package:docsify/data/provider/search_provider.dart';
 import 'package:docsify/utils/log_utils.dart';
@@ -50,7 +49,8 @@ class TabSearchController extends GetxController {
   }
 
   void openSearchScreen({String? suggestion}) {
-    logE("Open search detai $suggestion");
+    Get.toNamed(Routes.FAVOURITE);
+    // logE("Open search detai $suggestion");
   }
 
   void openDoctorDetail(RatingResponse ratingResponse) {

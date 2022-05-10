@@ -1,21 +1,15 @@
-import 'package:docsify/components/app_button.dart';
-import 'package:docsify/components/app_check_box.dart';
-import 'package:docsify/components/app_rate.dart';
 import 'package:docsify/components/app_scalford.dart';
-import 'package:docsify/components/app_text.dart';
-import 'package:docsify/components/app_text_button.dart';
-import 'package:docsify/components/calendar_timeline/calendar_timeline.dart';
-import 'package:docsify/components/item_loading.dart';
-import 'package:docsify/components/my_listview.dart';
+import 'package:docsify/const/resource.dart';
 import 'package:docsify/generated/app_translation.dart';
+import 'package:docsify/modules/tab_favourite/views/favourite_view.dart';
+import 'package:docsify/modules/tab_reservation/views/reservation_view.dart';
+import 'package:docsify/modules/tab_search/views/tab_search_view.dart';
 import 'package:docsify/theme/app_styles.dart';
 import 'package:docsify/theme/colors.dart';
-import 'package:docsify/utils/log_utils.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
-import 'package:readmore/readmore.dart';
 
 import '../controllers/home_controller.dart';
 
@@ -23,26 +17,63 @@ class HomeView extends GetView<HomeController> {
   @override
   Widget build(BuildContext context) {
     return AppScaffold(
-      backgroundColor: colorBackgroundWhite,
-      body: Align(
-        alignment: Alignment.center,
-        child: Column(
-          children: [
-            AppTextButton(
-              buttonTitle: "Google sign in",
-              onPressed: () {
-                controller.handleGoogleSignIn(context);
-              },
-            ),
-            AppTextButton(
-              buttonTitle: "Google sign out",
-              onPressed: () {
-                controller.handleGoogleSignOut();
-              },
-            )
-          ],
-        ),
+      body: PageView(
+        controller: controller.pageController,
+        physics: const NeverScrollableScrollPhysics(),
+        children: [TabSearchView(), ReservationView(), FavouriteView()],
       ),
+      bottomNavigationBar: bottomNavigationWidget(),
     );
+  }
+
+  Widget _buildIcon(String assetName, String text, int index) => SizedBox(
+        width: double.infinity,
+        height: 55.h,
+        child: Material(
+          color: controller.index.value == index ? colorGrey20 : colorWhite,
+          child: InkWell(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                SvgPicture.asset(
+                  assetName,
+                  color: colorBlack,
+                  width: 18.w,
+                  height: 18.h,
+                ),
+                SizedBox(
+                  height: 7.h,
+                ),
+                Text(text,
+                    style: typoSmallTextRegular.copyWith(fontSize: 12.sp)),
+              ],
+            ),
+            onTap: () => controller.changeTabIndex(index),
+          ),
+        ),
+      );
+
+  Widget bottomNavigationWidget() {
+    return Obx(() => BottomNavigationBar(
+          selectedFontSize: 0,
+          unselectedFontSize: 0,
+          iconSize: 0,
+          items: [
+            BottomNavigationBarItem(
+              backgroundColor: colorBlue80,
+              icon: _buildIcon(R.assetsSvgSearchSvg, LocaleKeys.search.tr, 0),
+              label: '',
+            ),
+            BottomNavigationBarItem(
+                icon: _buildIcon(
+                    R.assetsSvgCalendarSvg, LocaleKeys.reservation.tr, 1),
+                label: ''),
+            BottomNavigationBarItem(
+                icon:
+                    _buildIcon(R.assetsSvgHeartSvg, LocaleKeys.favourite.tr, 2),
+                label: ''),
+          ],
+          currentIndex: controller.index.value,
+        ));
   }
 }

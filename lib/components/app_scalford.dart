@@ -6,13 +6,15 @@ class AppScaffold extends StatelessWidget {
   final PreferredSizeWidget? appbar;
   final Color? backgroundColor;
   final EdgeInsetsGeometry? padding;
+  final Widget? bottomNavigationBar;
 
   const AppScaffold(
       {Key? key,
       required this.body,
       this.appbar,
       this.backgroundColor,
-      this.padding})
+      this.padding,
+      this.bottomNavigationBar})
       : super(key: key);
 
   @override
@@ -27,6 +29,7 @@ class AppScaffold extends StatelessWidget {
           padding: padding,
         ),
       ),
+      bottomNavigationBar: bottomNavigationBar,
     );
   }
 }

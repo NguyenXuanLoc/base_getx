@@ -1,3 +1,7 @@
+import 'package:docsify/modules/tab_favourite/bindings/favourite_binding.dart';
+import 'package:docsify/modules/tab_favourite/views/favourite_view.dart';
+import 'package:docsify/modules/tab_reservation/bindings/reservation_binding.dart';
+import 'package:docsify/modules/tab_reservation/views/reservation_view.dart';
 import 'package:get/get.dart';
 
 import '../../modules/forgot_pass/bindings/forgot_pass_binding.dart';
@@ -9,8 +13,6 @@ import '../../modules/login/views/login_view.dart';
 import '../../modules/register/active_code/bindings/active_code_binding.dart';
 import '../../modules/register/active_code/views/active_code_view.dart';
 import '../../modules/register/register_step1/bindings/register_step1_binding.dart';
-import '../../modules/register/register_step1/bindings/register_step1_binding.dart';
-import '../../modules/register/register_step1/views/register_step1_view.dart';
 import '../../modules/register/register_step1/views/register_step1_view.dart';
 import '../../modules/register/register_step2/bindings/register_step2_binding.dart';
 import '../../modules/register/register_step2/views/register_step2_view.dart';
@@ -26,7 +28,7 @@ part 'app_routes.dart';
 class AppPages {
   AppPages._();
 
-  static const INITIAL = Routes.TAB_SEARCH;
+  static const INITIAL = Routes.HOME;
 
   static final routes = [
     GetPage(
@@ -79,8 +81,18 @@ class AppPages {
     ),
     GetPage(
       name: _Paths.TAB_SEARCH,
-      page: () => TabSearchView(),
+      page: () => const TabSearchView(),
       binding: TabSearchBinding(),
+    ),
+    GetPage(
+      name: _Paths.RESERVATION,
+      page: () => ReservationView(),
+      binding: ReservationBinding(),
+    ),
+    GetPage(
+      name: _Paths.FAVOURITE,
+      page: () => FavouriteView(),
+      binding: FavouriteBinding(),
     ),
   ];
 }

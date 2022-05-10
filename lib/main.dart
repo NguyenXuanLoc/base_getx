@@ -1,11 +1,9 @@
 import 'dart:io';
 
-import 'package:docsify/config/constant.dart';
-import 'package:docsify/data/model/user_model.dart';
+import 'package:docsify/app/routes/root_binding.dart';
 import 'package:docsify/generated/app_translation.dart';
 import 'package:docsify/services/globals.dart' as globals;
 import 'package:docsify/utils/device_utils.dart';
-import 'package:docsify/utils/log_utils.dart';
 import 'package:docsify/utils/storage_utils.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
@@ -31,6 +29,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return ScreenUtilInit(
       builder: (context) => GetMaterialApp(
+        initialBinding: RootBinding(),
         initialRoute: AppPages.INITIAL,
         getPages: AppPages.routes,
         theme: ThemeData(

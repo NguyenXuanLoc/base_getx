@@ -12,6 +12,8 @@ abstract class Routes {
   static const REGISTER_STEP2 = _Paths.REGISTER_STEP2;
   static const ACTIVE_CODE = _Paths.ACTIVE_CODE;
   static const TAB_SEARCH = _Paths.TAB_SEARCH;
+  static const RESERVATION = _Paths.RESERVATION;
+  static const FAVOURITE = _Paths.FAVOURITE;
 }
 
 abstract class _Paths {
@@ -26,4 +28,6 @@ abstract class _Paths {
   static const REGISTER_STEP2 = '/register-step2';
   static const ACTIVE_CODE = '/active-code';
   static const TAB_SEARCH = '/tab-search';
+  static const RESERVATION = '/reservation';
+  static const FAVOURITE = '/favourite';
 }

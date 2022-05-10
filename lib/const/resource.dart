@@ -32,11 +32,17 @@ class R {
   /// ![preview](file://H:\docsify\docsify\assets\svg\back_circle.svg)
   static const String assetsSvgBackCircleSvg = 'assets/svg/back_circle.svg';
 
+  /// ![preview](file://H:\docsify\docsify\assets\svg\calendar.svg)
+  static const String assetsSvgCalendarSvg = 'assets/svg/calendar.svg';
+
   /// ![preview](file://H:\docsify\docsify\assets\svg\facebook.svg)
   static const String assetsSvgFacebookSvg = 'assets/svg/facebook.svg';
 
   /// ![preview](file://H:\docsify\docsify\assets\svg\google.svg)
   static const String assetsSvgGoogleSvg = 'assets/svg/google.svg';
+
+  /// ![preview](file://H:\docsify\docsify\assets\svg\heart.svg)
+  static const String assetsSvgHeartSvg = 'assets/svg/heart.svg';
 
   /// ![preview](file://H:\docsify\docsify\assets\svg\ic_drop_down.svg)
   static const String assetsSvgIcDropDownSvg = 'assets/svg/ic_drop_down.svg';

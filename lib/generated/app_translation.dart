@@ -84,6 +84,8 @@ class LocaleKeys {
   static const input_specialist_or_doctor_name =
       'input_specialist_or_doctor_name';
   static const featured_doctor = 'featured_doctor';
+  static const reservation = 'reservation';
+  static const favourite = 'favourite';
 }
 
 class Locales {
@@ -155,5 +157,7 @@ class Locales {
     'hello_can_i_help_u': 'Hello\nHow can i help you',
     'input_specialist_or_doctor_name': 'Input specialist or doctor name',
     'featured_doctor': 'Feature doctor',
+    'reservation': 'Reservation',
+    'favourite': 'Favourite',
   };
 }

@@ -1,26 +1,24 @@
 import 'package:docsify/components/app_button.dart';
 import 'package:docsify/components/app_dotted_line.dart';
 import 'package:docsify/components/app_network_image.dart';
-import 'package:docsify/components/app_rate.dart';
 import 'package:docsify/components/app_scalford.dart';
 import 'package:docsify/components/app_text.dart';
-import 'package:docsify/components/my_listview.dart';
 import 'package:docsify/const/resource.dart';
 import 'package:docsify/data/model/rating_response.dart';
 import 'package:docsify/generated/app_translation.dart';
 import 'package:docsify/theme/app_styles.dart';
 import 'package:docsify/theme/colors.dart';
-import 'package:docsify/utils/log_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 
 import '../controllers/tab_search_controller.dart';
 
 class TabSearchView extends GetView<TabSearchController> {
+  const TabSearchView({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return AppScaffold(
@@ -76,24 +74,28 @@ class TabSearchView extends GetView<TabSearchController> {
                       ),
                       visible: controller.lRating.isEmpty ? true : false,
                     )),
-                Obx(() => ListView.separated(
-                      scrollDirection: Axis.vertical,
-                      shrinkWrap: true,
-                      primary: false,
-                      itemBuilder: (context, index) =>
-                          itemRating(controller.lRating[index], index),
-                      itemCount: controller.lRating.length,
-                      separatorBuilder: (BuildContext context, int index) {
-                        return Container(
-                          height: 10.h,
-                          alignment: Alignment.center,
-                          child: const AppDotsLine(),
-                        );
-                      },
-                    )),
+                ratingWidget(),
               ],
             ),
           ),
+        ));
+  }
+
+  Widget ratingWidget() {
+    return Obx(() => ListView.separated(
+          scrollDirection: Axis.vertical,
+          shrinkWrap: true,
+          primary: false,
+          itemBuilder: (context, index) =>
+              itemRating(controller.lRating[index], index),
+          itemCount: controller.lRating.length,
+          separatorBuilder: (BuildContext context, int index) {
+            return Container(
+              height: 10.h,
+              alignment: Alignment.center,
+              child: const AppDotsLine(),
+            );
+          },
         ));
   }
 
