@@ -5,6 +5,11 @@ class StorageKey {
   static const String AccountInfo = 'AccountInfo';
 }
 
+class MessageKey {
+  static const String need_active_account =
+      'Aby się zalogować, najpierw aktywuj konto';
+}
+
 class ApiKey {
   static const email = 'email';
   static const token = 'token';

@@ -48,8 +48,14 @@ class R {
   /// ![preview](file://H:\docsify\docsify\assets\svg\facebook.svg)
   static const String assetsSvgFacebookSvg = 'assets/svg/facebook.svg';
 
+  /// ![preview](file://H:\docsify\docsify\assets\svg\facebook_2.svg)
+  static const String assetsSvgFacebook2Svg = 'assets/svg/facebook_2.svg';
+
   /// ![preview](file://H:\docsify\docsify\assets\svg\google.svg)
   static const String assetsSvgGoogleSvg = 'assets/svg/google.svg';
+
+  /// ![preview](file://H:\docsify\docsify\assets\svg\google_2.svg)
+  static const String assetsSvgGoogle2Svg = 'assets/svg/google_2.svg';
 
   /// ![preview](file://H:\docsify\docsify\assets\svg\heart.svg)
   static const String assetsSvgHeartSvg = 'assets/svg/heart.svg';

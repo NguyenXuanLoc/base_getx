@@ -13,6 +13,7 @@ import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
+import 'package:docsify/app/routes/app_pages.dart';
 
 import '../controllers/tab_search_controller.dart';
 
@@ -201,6 +202,7 @@ class TabSearchView extends GetView<TabSearchController> {
         const Spacer(),
         InkWell(
           child: SvgPicture.asset(R.assetsSvgThreeDotsSvg),
+          onTap: () => Get.toNamed(Routes.LOGIN),
         )
       ],
     );

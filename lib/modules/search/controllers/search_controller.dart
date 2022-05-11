@@ -19,18 +19,17 @@ class SearchController extends GetxController {
   final height = 180.h.obs;
   final searchProvider = SearchProvider();
   final itemCount = 0.obs;
+  final isView = false.obs;
 
   @override
   void onInit() {
     query.value = Get.arguments;
-    if (query.value.isNotEmpty) {
-      handleSearch(query.value);
-    }
     super.onInit();
   }
 
   @override
   void onReady() {
+    Timer(const Duration(milliseconds: 500), () => isView.value = true);
     Timer(const Duration(seconds: 2), () => itemCount.value = 5);
     super.onReady();
   }

@@ -32,7 +32,7 @@ class SearchView extends GetView<SearchController> {
           centerTitle: true,
           actions: [
             IconButton(
-                onPressed: () {},
+                onPressed: () => Get.back(),
                 icon: const Icon(
                   Icons.clear,
                   color: colorBlack,
@@ -52,18 +52,12 @@ class SearchView extends GetView<SearchController> {
 
   Widget activityListWidget(BuildContext context) {
     return Container(
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
+      child: Wrap(
+        runSpacing: 10.h,
         children: [
-          SizedBox(
-            height: 10.h,
-          ),
           AppText(
             LocaleKeys.activity_list.tr,
             style: typoMediumTextBold,
-          ),
-          SizedBox(
-            height: 10.h,
           ),
           InkWell(
             child: Container(
@@ -81,9 +75,6 @@ class SearchView extends GetView<SearchController> {
               ),
             ),
             onTap: () {},
-          ),
-          SizedBox(
-            height: 20.h,
           ),
           listSearch()
         ],
@@ -106,121 +97,92 @@ class SearchView extends GetView<SearchController> {
 
   Widget searchGroupWidget(BuildContext context) {
     return Container(
-      width: MediaQuery.of(context).size.width,
-      decoration: const BoxDecoration(
-        color: colorBlue90,
-      ),
-      child: Stack(
+      color: colorBlue90,
+      padding:
+          EdgeInsets.only(top: 10.h, left: 12.w, right: 12.w, bottom: 15.h),
+      child: Column(
         children: [
-          Container(
-            color: colorBlue90,
+          Row(
+            children: [
+              Obx(() => AppButton(
+                    backgroundColor: (controller.isShowAddress.value == true)
+                        ? colorGrey20
+                        : colorWhite,
+                    title: LocaleKeys.offline.tr,
+                    onPress: () => controller.actionSearch(),
+                    textStyle: typoNormalTextBold,
+                    materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                    shapeBorder: RoundedRectangleBorder(
+                        borderRadius:
+                            BorderRadius.only(topLeft: Radius.circular(5.h))),
+                  )),
+              Obx(() => AppButton(
+                    backgroundColor: (controller.isShowAddress.value == true)
+                        ? colorWhite
+                        : colorGrey20,
+                    title: LocaleKeys.online.tr,
+                    onPress: () => controller.actionSearch(),
+                    textStyle: typoNormalTextBold,
+                    shapeBorder: RoundedRectangleBorder(
+                        borderRadius:
+                            BorderRadius.only(topRight: Radius.circular(5.h))),
+                    materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                  )),
+            ],
           ),
           Container(
-            padding: EdgeInsets.only(
-                top: 10.h, left: 12.w, right: 12.w, bottom: 15.h),
-            child: Column(
+            padding: EdgeInsets.all(10.h),
+            child: Wrap(
+              runSpacing: 15.h,
               children: [
-                Row(
-                  children: [
-                    Obx(() => AppButton(
-                          backgroundColor:
-                              (controller.isShowAddress.value == true)
-                                  ? colorGrey20
-                                  : colorWhite,
-                          title: LocaleKeys.offline.tr,
-                          onPress: () => controller.actionSearch(),
-                          textStyle: typoNormalTextBold,
-                          materialTapTargetSize:
-                              MaterialTapTargetSize.shrinkWrap,
-                          shapeBorder: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.only(
-                                  topLeft: Radius.circular(5.h))),
-                        )),
-                    Obx(() => AppButton(
-                          backgroundColor:
-                              (controller.isShowAddress.value == true)
-                                  ? colorWhite
-                                  : colorGrey20,
-                          title: LocaleKeys.online.tr,
-                          onPress: () => controller.actionSearch(),
-                          textStyle: typoNormalTextBold,
-                          shapeBorder: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.only(
-                                  topRight: Radius.circular(5.h))),
-                          materialTapTargetSize:
-                              MaterialTapTargetSize.shrinkWrap,
-                        )),
-                  ],
+                AppText(
+                  LocaleKeys.fill_doctor.tr,
+                  textAlign: TextAlign.start,
+                  style: typoMediumTextBold,
                 ),
-                AnimatedContainer(
-                  padding: EdgeInsets.all(10.h),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      AppText(
-                        LocaleKeys.fill_doctor.tr,
-                        textAlign: TextAlign.start,
-                        style: typoMediumTextBold,
-                      ),
-                      SizedBox(
-                        height: 15.h,
-                      ),
-                      AppTextField(
-                        controller: controller.queryController,
-                        hintText: LocaleKeys.category_or_doctor_name.tr,
+                AppTextField(
+                  controller: controller.queryController,
+                  hintText: LocaleKeys.category_or_doctor_name.tr,
+                  textStyle: typoSmallTextBold.copyWith(
+                      color: colorText80, fontWeight: FontWeight.w400),
+                  hintStyle: styleTextField.copyWith(
+                      fontWeight: FontWeight.w400,
+                      color: colorText80,
+                      fontSize: 14.sp),
+                ),
+                Obx(() => Visibility(
+                      child: AppTextField(
+                        readOnly: true,
+                        hintText: LocaleKeys.address.tr,
                         textStyle: typoSmallTextBold.copyWith(
                             color: colorText80, fontWeight: FontWeight.w400),
                         hintStyle: styleTextField.copyWith(
                             fontWeight: FontWeight.w400,
                             color: colorText80,
                             fontSize: 14.sp),
+                        suffixIcon: IconButton(
+                          onPressed: () {
+                            logE("TAG click");
+                          },
+                          icon: SvgPicture.asset(R.assetsSvgIcDropDownSvg),
+                        ),
                       ),
-                      SizedBox(
-                        height: 15.h,
-                      ),
-                      Obx(() => Visibility(
-                            child: AppTextField(
-                              readOnly: true,
-                              hintText: LocaleKeys.address.tr,
-                              textStyle: typoSmallTextBold.copyWith(
-                                  color: colorText80,
-                                  fontWeight: FontWeight.w400),
-                              hintStyle: styleTextField.copyWith(
-                                  fontWeight: FontWeight.w400,
-                                  color: colorText80,
-                                  fontSize: 14.sp),
-                              suffixIcon: IconButton(
-                                onPressed: () {
-                                  logE("TAG click");
-                                },
-                                icon:
-                                    SvgPicture.asset(R.assetsSvgIcDropDownSvg),
-                              ),
-                            ),
-                            visible: controller.isShowAddress.value,
-                          )),
-                      SizedBox(
-                        height: 20.h,
-                      ),
-                      searchWidget(context)
-                    ],
-                  ),
-                  decoration: BoxDecoration(
-                      color: colorWhite,
-                      borderRadius: BorderRadius.only(
-                          bottomLeft: Radius.circular(10.h),
-                          bottomRight: Radius.circular(10.h),
-                          topRight: Radius.circular(10.h))),
-                  duration: const Duration(seconds: 1),
-                  curve: Curves.fastOutSlowIn,
-                ),
-                SizedBox(
-                  height: 15.h,
-                ),
-                suggestionWidget()
+                      visible: controller.isShowAddress.value,
+                    )),
+                searchWidget(context)
               ],
             ),
-          )
+            decoration: BoxDecoration(
+                color: colorWhite,
+                borderRadius: BorderRadius.only(
+                    bottomLeft: Radius.circular(10.h),
+                    bottomRight: Radius.circular(10.h),
+                    topRight: Radius.circular(10.h))),
+          ),
+          SizedBox(
+            height: 15.h,
+          ),
+          suggestionWidget()
         ],
       ),
     );
@@ -262,20 +224,18 @@ class SearchView extends GetView<SearchController> {
       height: 40.h,
       shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.all(Radius.circular(7.h))),
-      color: colorBlue80,
+      color: colorBlue90,
       minWidth: MediaQuery.of(context).size.width,
       onPressed: () =>
           controller.handleSearch(controller.queryController.value.text),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.center,
+      child: Wrap(
+        runSpacing: 15.w,
+        spacing: 15.w,
         children: [
           SvgPicture.asset(
             R.assetsSvgSearchSvg,
             width: 20.w,
             color: colorWhite,
-          ),
-          SizedBox(
-            width: 15.w,
           ),
           Text(
             LocaleKeys.search.tr,

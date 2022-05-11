@@ -1,12 +1,9 @@
 import 'package:docsify/components/app_button.dart';
-import 'package:docsify/components/app_check_box.dart';
 import 'package:docsify/components/app_scalford.dart';
 import 'package:docsify/components/app_text.dart';
-import 'package:docsify/components/app_text_button.dart';
 import 'package:docsify/components/app_text_field.dart';
 import 'package:docsify/const/resource.dart';
 import 'package:docsify/generated/app_translation.dart';
-import 'package:docsify/modules/login/controllers/login_controller.dart';
 import 'package:docsify/theme/app_styles.dart';
 import 'package:docsify/theme/colors.dart';
 import 'package:flutter/material.dart';
@@ -14,21 +11,17 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 
+import '../../../../components/app_dotted_line.dart';
 import '../controllers/register_step1_controller.dart';
 
 class RegisterStep1View extends GetView<RegisterStep1Controller> {
+  const RegisterStep1View({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return AppScaffold(
       backgroundColor: colorBackgroundGrey10,
-      appbar: AppBar(
-        elevation: 1,
-        backgroundColor: colorWhite,
-        centerTitle: true,
-        title: titleWidget(),
-        titleTextStyle:
-            typoNormalTextBold.copyWith(fontSize: 17.sp, color: colorBlackGrey),
-      ),
+      appbar: appBarWidget(),
       body: SingleChildScrollView(
         child: Column(
           children: [
@@ -140,68 +133,68 @@ class RegisterStep1View extends GetView<RegisterStep1Controller> {
                         ),
                         onPressed: () => controller.changeHideRePass(),
                       ))),
-                  itemTextTitle(LocaleKeys.business_name.tr),
-                  SizedBox(
-                    height: 5.h,
-                  ),
-                  Obx(() => itemTextFiled(
-                        controller.businessNameController,
-                        controller.errorBusinessName.value,
-                      )),
-                  itemTextTitle(LocaleKeys.phone_number.tr),
-                  SizedBox(
-                    height: 5.h,
-                  ),
-                  Obx(() => itemTextFiled(controller.phoneNumberController,
-                      controller.errorPhoneNumber.value,
-                      textInputType: TextInputType.phone)),
-                  itemTextTitle(LocaleKeys.birth_date.tr),
-                  SizedBox(
-                    height: 5.h,
-                  ),
-                  Obx(() => itemTextFiled(controller.birthDateController,
-                      controller.errorBirthDate.value,
-                      readOnly: true,
-                      onTap: () => controller.pickDate(context))),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Obx(() => AppCheckBox(
-                          icon: const Icon(
-                            Icons.check,
-                            size: 15,
-                            color: colorBlue80,
-                          ),
-                          value: controller.isAgreeTerm.value,
-                          onChanged: (value) => controller.checkTerm())),
-                      AppText(
-                        LocaleKeys.i_agree_term.tr,
-                        style: typoSmallTextRegular,
-                      )
-                    ],
-                  ),
                   SizedBox(
                     height: 15.h,
                   ),
-                  Obx(() => AppButton(
-                        disable: controller.isAgreeTerm.value,
-                        borderRadius: 6.h,
-                        textStyle: typoNormalTextBold.copyWith(
-                            color: colorText5, fontWeight: FontWeight.w700),
-                        height: 40.h,
-                        width: MediaQuery.of(context).size.width,
-                        title: LocaleKeys.create_account.tr,
-                        onPress: () => controller.handleRegister(context),
-                        backgroundColor: colorBlue80,
-                      ))
+                  AppButton(
+                    borderRadius: 6.h,
+                    textStyle: typoNormalTextBold.copyWith(
+                        color: colorText5, fontWeight: FontWeight.w700),
+                    height: 40.h,
+                    width: MediaQuery.of(context).size.width,
+                    title: LocaleKeys.ok.tr,
+                    onPress: () => controller.handleRegister(context),
+                    backgroundColor: colorBlue80,
+                  )
                 ],
               ),
             ),
             SizedBox(
               height: 30.h,
             ),
-            actionWidget()
+            Stack(
+              children: [
+                Container(
+                  alignment: Alignment.center,
+                  height: 20.h,
+                  child: const AppDotsLine(),
+                ),
+                Container(
+                  height: 20.h,
+                  alignment: Alignment.center,
+                  child: AppText(
+                    "  ${LocaleKeys.register_with.tr}  ",
+                    style: typoMediumTextBold.copyWith(
+                        backgroundColor: colorBackgroundWhite,
+                        fontWeight: FontWeight.w600),
+                  ),
+                )
+              ],
+            ),
+            SizedBox(
+              height: 20.h,
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              mainAxisSize: MainAxisSize.min,
+              children: [
+              InkWell(child:   SvgPicture.asset(
+                R.assetsSvgFacebook2Svg,
+                height: 35.w,
+                width: 35.w,
+                fit: BoxFit.cover,
+              ),onTap: ()=> controller.handleFacebookSignIn(context),),
+                SizedBox(
+                  width: 20.w,
+                ),
+               InkWell(child:   SvgPicture.asset(
+                 R.assetsSvgGoogleSvg,
+                 height: 40.w,
+                 width: 35.w,
+                 fit: BoxFit.cover,
+               ),onTap: ()=> controller.handleGoogleSignIn(context),)
+              ],
+            ),
           ],
         ),
       ),
@@ -243,70 +236,30 @@ class RegisterStep1View extends GetView<RegisterStep1Controller> {
     );
   }
 
-  Widget actionWidget() {
-    return Container(
-      color: colorWhite,
-      padding: EdgeInsets.all(1.h),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          AppTextButton(
-              textStyle: typoMediumTextBold.copyWith(
-                  fontSize: 12.sp,
-                  color: colorBlue100,
-                  decoration: TextDecoration.underline),
-              buttonTitle: LocaleKeys.contact.tr,
-              onPressed: () => controller.handleAction(LoginAction.CONTACT)),
-          AppTextButton(
-              textStyle: typoMediumTextBold.copyWith(
-                  fontSize: 12.sp,
-                  color: colorBlue100,
-                  decoration: TextDecoration.underline),
-              buttonTitle: LocaleKeys.regulation.tr,
-              onPressed: () => controller.handleAction(LoginAction.REGULATION)),
-          AppTextButton(
-              textStyle: typoMediumTextBold.copyWith(
-                  fontSize: 12.sp,
-                  color: colorBlue100,
-                  decoration: TextDecoration.underline),
-              buttonTitle: LocaleKeys.cookies.tr,
-              onPressed: () => controller.handleAction(LoginAction.COOKIES)),
-          AppTextButton(
-              textStyle: typoMediumTextBold.copyWith(
-                  fontSize: 12.sp,
-                  color: colorBlue100,
-                  decoration: TextDecoration.underline),
-              buttonTitle: LocaleKeys.privacy.tr,
-              onPressed: () => controller.handleAction(LoginAction.POLICY))
-        ],
+  AppBar appBarWidget() {
+    return AppBar(
+      elevation: 1,
+      backgroundColor: colorWhite,
+      title: Text(
+        LocaleKeys.register.tr,
+        style: typoLargeTextBold,
       ),
-    );
-  }
-
-  Widget titleWidget() {
-    return Row(
-      children: [
-        SvgPicture.asset(R.assetsSvgIconAppBarSvg),
-        const Spacer(),
-        AppText(
-          LocaleKeys.how_to_work.tr,
-          style:
-              typoSmallTextBold.copyWith(decoration: TextDecoration.underline),
-        ),
-        SizedBox(
-          width: 25.w,
-        ),
-        InkWell(
-          child: SvgPicture.asset(R.assetsSvgLoginSvg),
-          onTap: () {},
-        ),
-        AppTextButton(
-          onPressed: () {},
-          buttonTitle: LocaleKeys.login.tr,
-          textStyle:
-              typoSmallTextBold.copyWith(decoration: TextDecoration.underline),
-        ),
+      centerTitle: true,
+      leading: IconButton(
+          onPressed: () => Get.back(),
+          icon: const Icon(
+            Icons.arrow_back_ios_outlined,
+            color: colorBlack,
+          )),
+      actions: [
+        IconButton(
+            onPressed: () => Get.back(),
+            icon: const Icon(
+              Icons.clear,
+              color: colorBlack,
+            ))
       ],
+      toolbarHeight: 50.h,
     );
   }
 }

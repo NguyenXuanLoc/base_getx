@@ -1,4 +1,3 @@
-import 'package:docsify/theme/app_styles.dart';
 import 'package:docsify/theme/colors.dart';
 import 'package:flutter/material.dart';
 

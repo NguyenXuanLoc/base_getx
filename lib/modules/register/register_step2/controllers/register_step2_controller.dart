@@ -1,16 +1,12 @@
 import 'package:docsify/app/routes/app_pages.dart';
 import 'package:docsify/components/dialogs.dart';
-import 'package:docsify/config/constant.dart';
-import 'package:docsify/data/model/user_model.dart';
 import 'package:docsify/data/provider/user_provider.dart';
 import 'package:docsify/generated/app_translation.dart';
-import 'package:docsify/utils/log_utils.dart';
 import 'package:docsify/utils/storage_utils.dart';
 import 'package:docsify/utils/toast_utils.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 import 'package:get/get.dart';
-import 'package:get_storage/get_storage.dart';
 
 class RegisterStep2Controller extends GetxController {
   final userProvider = UserProvider();
@@ -57,7 +53,11 @@ class RegisterStep2Controller extends GetxController {
         if (result.error != null) {
           toast(result.error);
         } else {
-          Get.toNamed(Routes.ACTIVE_CODE, arguments: email);
+          if (email == 'true') {
+            Get.toNamed(Routes.LOGIN);
+          } else {
+            Get.toNamed(Routes.ACTIVE_CODE, arguments: email);
+          }
         }
       }
     }

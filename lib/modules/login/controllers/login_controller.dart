@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:docsify/app/routes/app_pages.dart';
 import 'package:docsify/components/dialogs.dart';
+import 'package:docsify/config/constant.dart';
 import 'package:docsify/data/model/user_model.dart';
 import 'package:docsify/data/provider/user_provider.dart';
 import 'package:docsify/generated/app_translation.dart';
@@ -44,7 +45,6 @@ class LoginController extends GetxController {
   }
 
   void handleLoginByAccount(BuildContext context) async {
-    Utils.hideKeyboard(context);
     var email = emailController.value.text;
     var pass = passController.value.text;
     bool isValid = true;
@@ -72,13 +72,19 @@ class LoginController extends GetxController {
       await Dialogs.hideLoadingDialog();
       if (result.error != null) {
         toast(result.error);
+        if(result.error == MessageKey.need_active_account){
+          Get.toNamed(Routes.ACTIVE_CODE,arguments: emailController.value.text);
+        }
       } else if (result.data != null) {
         var userModel = UserResponse.fromJson(result.data['data']);
         await StorageUtils.saveUser(userModel);
         toast(result.message.toString());
+        Get.toNamed(Routes.HOME);
       }
     }
   }
+
+
 
   Future<void> handleLogoutByFacebook() async {
     await FacebookAuth.instance.logOut();
@@ -104,6 +110,7 @@ class LoginController extends GetxController {
         var userModel = UserResponse.fromJson(result.data['data']);
         await StorageUtils.saveUser(userModel);
         toast(result.message.toString());
+        Get.toNamed(Routes.HOME);
       }
     } else {
       toast(LocaleKeys.network_error.tr);
@@ -131,6 +138,7 @@ class LoginController extends GetxController {
               var userModel = UserResponse.fromJson(result.data['data']);
               await StorageUtils.saveUser(userModel);
               toast(result.message.toString());
+              Get.toNamed(Routes.HOME);
             }
           }
         }

@@ -20,12 +20,7 @@ class LoginView extends GetView<LoginController> {
   Widget build(BuildContext context) {
     return AppScaffold(
         backgroundColor: colorBackgroundGrey20,
-        appbar: AppBar(
-          automaticallyImplyLeading: false,
-          toolbarHeight: 50.h,
-          backgroundColor: colorWhite,
-          title: titleWidget(),
-        ),
+        appbar: appBarWidget(),
         body: SingleChildScrollView(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
@@ -78,7 +73,6 @@ class LoginView extends GetView<LoginController> {
                       height: 5.h,
                     ),
                     Obx(() => AppTextField(
-                          // autofocus: true,
                           textInputAction: TextInputAction.next,
                           controller: controller.emailController,
                           errorText: controller.errorEmail.value,
@@ -312,6 +306,33 @@ class LoginView extends GetView<LoginController> {
           ),
         )
       ],
+    );
+  }
+
+  AppBar appBarWidget() {
+    return AppBar(
+      elevation: 1,
+      backgroundColor: colorWhite,
+      title: Text(
+        LocaleKeys.login.tr,
+        style: typoLargeTextBold,
+      ),
+      centerTitle: true,
+      leading: IconButton(
+          onPressed: () => Get.back(),
+          icon: const Icon(
+            Icons.arrow_back_ios_outlined,
+            color: colorBlack,
+          )),
+      actions: [
+        IconButton(
+            onPressed: () => Get.back(),
+            icon: const Icon(
+              Icons.clear,
+              color: colorBlack,
+            ))
+      ],
+      toolbarHeight: 50.h,
     );
   }
 

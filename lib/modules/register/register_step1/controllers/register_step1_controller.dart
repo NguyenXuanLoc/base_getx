@@ -5,12 +5,14 @@ import 'package:docsify/data/provider/user_provider.dart';
 import 'package:docsify/generated/app_translation.dart';
 import 'package:docsify/modules/login/controllers/login_controller.dart';
 import 'package:docsify/utils/app_utils.dart';
+import 'package:docsify/utils/connection_utils.dart';
 import 'package:docsify/utils/storage_utils.dart';
 import 'package:docsify/utils/toast_utils.dart';
 import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
+import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
 import 'package:get/get.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 
 class RegisterStep1Controller extends GetxController {
   final userProvider = UserProvider();
@@ -22,69 +24,42 @@ class RegisterStep1Controller extends GetxController {
   final errorPass = ''.obs;
   final errorRePass = ''.obs;
 
-  final errorBusinessName = ''.obs;
-  final errorBirthDate = ''.obs;
-  final errorPhoneNumber = ''.obs;
-
   final isHidePass = true.obs;
   final isHideRsPass = true.obs;
   final emailController = TextEditingController();
   final passController = TextEditingController();
   final rePassController = TextEditingController();
-
-  final birthDateController = TextEditingController();
-  final businessNameController = TextEditingController();
-  final phoneNumberController = TextEditingController();
-  final count = 0.obs;
   final isAgreeTerm = false.obs;
+  final _googleSignIn = GoogleSignIn(scopes: ['email']);
 
   @override
   void onClose() {}
-
-  void increment() => count.value++;
 
   void checkTerm() {
     isAgreeTerm.value = !isAgreeTerm.value;
   }
 
   Future<void> handleRegister(BuildContext context) async {
-    if (isvalidInfo()) {
+    if (isValidInfo()) {
       Utils.hideKeyboard(context);
       var email = emailController.value.text;
       var pass = passController.value.text;
       Dialogs.showLoadingDialog(context);
       var result =
           await userProvider.registerByEmail(email, email.split('@')[0], pass);
-      if (result.error != null) {
-        toast(result.error);
-        await Dialogs.hideLoadingDialog();
-      } else {
-        var userModel = UserResponse.fromJson(result.data['data']);
-        await StorageUtils.saveUser(userModel);
-        updateProfile(context);
-      }
-    }
-  }
-
-  void updateProfile(BuildContext context) async {
-    var userModel = await StorageUtils.getUser();
-    var userId = userModel?.userId;
-    if (userId != null) {
-      var result = await userProvider.createUserProfile(
-          userId,
-          businessNameController.text,
-          birthDateController.text,
-          phoneNumberController.text);
       await Dialogs.hideLoadingDialog();
       if (result.error != null) {
         toast(result.error);
       } else {
-        Get.toNamed(Routes.ACTIVE_CODE, arguments: emailController.text);
+        var userModel = UserResponse.fromJson(result.data['data']);
+        await StorageUtils.saveUser(userModel);
+        Get.toNamed(Routes.REGISTER_STEP2,
+            arguments: emailController.value.text);
       }
     }
   }
 
-  bool isvalidInfo() {
+  bool isValidInfo() {
     var email = emailController.value.text;
     var pass = passController.value.text;
     var rePass = rePassController.value.text;
@@ -116,33 +91,6 @@ class RegisterStep1Controller extends GetxController {
     } else {
       errorRePass.value = '';
     }
-
-    var fullName = businessNameController.value.text;
-    var phoneNumber = phoneNumberController.value.text;
-    var birthDate = birthDateController.value.text;
-
-    if (fullName.isEmpty) {
-      isValid = false;
-      errorBusinessName.value = LocaleKeys.please_input_your_name.tr;
-    } else {
-      errorBusinessName.value = '';
-    }
-    if (phoneNumber.isEmpty) {
-      isValid = false;
-      errorPhoneNumber.value = LocaleKeys.please_input_phone_number.tr;
-    } else if (!Utils.validateMobile(phoneNumber)) {
-      isValid = false;
-      errorPhoneNumber.value = LocaleKeys.please_input_valid_phone_number.tr;
-    } else {
-      errorPhoneNumber.value = '';
-    }
-    if (birthDate.isEmpty) {
-      isValid = false;
-      errorBirthDate.value = LocaleKeys.please_input_phone_number.tr;
-    } else {
-      errorBirthDate.value = '';
-    }
-
     if (isValid && pass != rePass) {
       errorPass.value = LocaleKeys.pass_and_confirm_pass_not_match.tr;
       errorRePass.value = LocaleKeys.pass_and_confirm_pass_not_match.tr;
@@ -159,17 +107,68 @@ class RegisterStep1Controller extends GetxController {
     isHideRsPass.value = !isHideRsPass.value;
   }
 
-  void pickDate(BuildContext context) {
-    var time = DateTime.now();
-    DatePicker.showDatePicker(context,
-        showTitleActions: true,
-        minTime: DateTime(1900, 3, 5),
-        maxTime: DateTime(time.year + 10, 12),
-        onChanged: (date) {}, onConfirm: (date) {
-      birthDateController.obs.value.text =
-          "${date.year}-${date.month}-${date.day}";
-    }, currentTime: DateTime.now(), locale: LocaleType.en);
+  Future<void> handleFacebookSignIn(BuildContext context) async {
+    if (await ConnectionUtils.isConnect() == false) {
+      toast(LocaleKeys.network_error.tr);
+      return;
+    }
+
+    final LoginResult loginResponse =
+        await FacebookAuth.instance.login(permissions: ['email']);
+    if (loginResponse.status == LoginStatus.success &&
+        loginResponse.accessToken?.token != null) {
+      Dialogs.showLoadingDialog(context);
+      var result =
+          await userProvider.facebookSignIn(loginResponse.accessToken!.token);
+      await Dialogs.hideLoadingDialog();
+      if (result.error != null) {
+        toast(result.error);
+      } else if (result.data != null) {
+        var userModel = UserResponse.fromJson(result.data['data']);
+        await StorageUtils.saveUser(userModel);
+        if (userModel.profile == null) {
+          Get.toNamed(Routes.REGISTER_STEP2, arguments: 'true');
+        } else {
+          toast(result.message.toString());
+          Get.toNamed(Routes.HOME);
+        }
+      }
+    } else {
+      toast(LocaleKeys.network_error.tr);
+    }
   }
 
-  void handleAction(LoginAction action) {}
+  Future<void> handleGoogleSignIn(BuildContext context) async {
+    try {
+      if (await ConnectionUtils.isConnect() == false) {
+        toast(LocaleKeys.network_error.tr);
+        return;
+      }
+      _googleSignIn.signIn().then((ob) async {
+        var account = await ob?.authentication;
+        if (account != null) {
+          var token = account.accessToken;
+          if (token != null) {
+            Dialogs.showLoadingDialog(context);
+            var result = await userProvider.googleSignIn(token);
+            await Dialogs.hideLoadingDialog();
+            if (result.error != null) {
+              toast(result.error);
+            } else if (result.data != null) {
+              var userModel = UserResponse.fromJson(result.data['data']);
+              await StorageUtils.saveUser(userModel);
+              if (userModel.profile == null) {
+                Get.toNamed(Routes.REGISTER_STEP2, arguments: 'true');
+              } else {
+                toast(result.message.toString());
+                Get.toNamed(Routes.HOME);
+              }
+            }
+          }
+        }
+      });
+    } catch (ex) {
+      toast(LocaleKeys.network_error.tr);
+    }
+  }
 }

@@ -1,5 +1,6 @@
 import 'package:docsify/theme/app_styles.dart';
 import 'package:docsify/theme/colors.dart';
+import 'package:docsify/utils/app_utils.dart';
 import 'package:flutter/material.dart';
 
 class AppButton extends StatelessWidget {
@@ -67,7 +68,10 @@ class AppButton extends StatelessWidget {
         textScaleFactor: 1,
         style: textStyle ?? typoNormalTextRegular,
       ),
-      onPressed: () => onPress.call(),
+      onPressed: () {
+        Utils.hideKeyboard(context);
+        onPress.call();
+      },
     );
   }
 }

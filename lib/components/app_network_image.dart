@@ -49,7 +49,7 @@ class AppNetworkImage extends StatelessWidget {
             placeholder: (context, url) => Center(
               widthFactor: 2,
               heightFactor: 2,
-              child: Container(
+              child: SizedBox(
                 width: 24.w,
                 height: 24.h,
                 child: const CircularProgressIndicator(

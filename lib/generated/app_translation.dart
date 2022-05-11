@@ -88,6 +88,8 @@ class LocaleKeys {
   static const favourite = 'favourite';
   static const address = 'address';
   static const activity_list = 'activity_list';
+  static const full_name = 'full_name';
+  static const ok = 'ok';
 }
 
 class Locales {
@@ -163,5 +165,7 @@ class Locales {
     'favourite': 'Favourite',
     'address': 'Address',
     'activity_list': 'Activities List',
+    'full_name': 'Full Name',
+    'ok': 'OK',
   };
 }
