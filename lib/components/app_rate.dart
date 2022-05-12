@@ -16,7 +16,7 @@ class AppRating extends StatelessWidget {
       this.direction = Axis.horizontal,
       this.itemCount = 5,
       this.isRating = false,
-      this.numberRate = 1,
+      this.numberRate = 0,
       this.initialRating = 1,
       this.minRating = 1})
       : super(key: key);

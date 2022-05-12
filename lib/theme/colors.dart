@@ -85,7 +85,9 @@ const colorWarning100 = Color(0xffE6A23C);
 
 const colorText100 = Color(0xff303133);
 const colorText80 = Color(0xff060e1e);
+const colorText50 = Color(0xff060e1e);
 const colorText60 = Color(0xff909399);
+const colorText45 = Color(0xff909399);
 const colorText40 = Color(0xffC0C4CC);
 const colorText20 = Color(0xffDCDFE6);
 const colorText5 = Color(0xffEBEEF5);
@@ -114,6 +116,7 @@ const colorGreyBorder = Color(0xff909399);
 const colorBlueBackground = Color(0xffECF5FF);
 const colorBackgroundColor = Color(0xffffffff);
 const colorBackgroundWhite = Color(0xfff6f6f7);
+const colorBackgroundGrey80 = Color(0xF65D605D);
 const colorBackgroundGrey20 = Color(0xF6F7F8F7);
 const colorBackgroundGrey10 = Color(0xFFF7F7F8);
 

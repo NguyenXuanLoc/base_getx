@@ -30,7 +30,7 @@ class BaseProvider extends GetConnect {
             'Host': 'auth.com'
           },
           query: queryParam);
-
+      logE("REQUEST: ${response.request?.url.toString()}");
       if (response.isOk && response.body != null) {
         var result = response.body;
         Logger().d(result);

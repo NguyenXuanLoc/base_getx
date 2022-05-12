@@ -90,6 +90,8 @@ class LocaleKeys {
   static const activity_list = 'activity_list';
   static const full_name = 'full_name';
   static const ok = 'ok';
+  static const not_result = 'not_result';
+  static const please_input_keyword = 'please_input_keyword';
 }
 
 class Locales {
@@ -167,5 +169,7 @@ class Locales {
     'activity_list': 'Activities List',
     'full_name': 'Full Name',
     'ok': 'OK',
+    'not_result': 'Not result',
+    'please_input_keyword': 'Please input Keyword.',
   };
 }

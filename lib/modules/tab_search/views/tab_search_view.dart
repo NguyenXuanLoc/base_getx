@@ -200,9 +200,9 @@ class TabSearchView extends GetView<TabSearchController> {
           style: typoLargeTextBold,
         ),
         const Spacer(),
-        InkWell(
-          child: SvgPicture.asset(R.assetsSvgThreeDotsSvg),
-          onTap: () => Get.toNamed(Routes.LOGIN),
+        IconButton(
+          icon: SvgPicture.asset(R.assetsSvgThreeDotsSvg),
+          onPressed: () => Get.toNamed(Routes.LOGIN),
         )
       ],
     );

@@ -2,19 +2,23 @@ import 'package:docsify/components/app_network_image.dart';
 import 'package:docsify/components/app_rate.dart';
 import 'package:docsify/components/app_text.dart';
 import 'package:docsify/const/resource.dart';
+import 'package:docsify/data/model/search_response.dart';
+import 'package:docsify/generated/app_translation.dart';
 import 'package:docsify/theme/app_styles.dart';
 import 'package:docsify/theme/colors.dart';
-import 'package:docsify/utils/app_utils.dart';
-import 'package:flutter/cupertino.dart';
+import 'package:docsify/utils/log_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:get/get_utils/get_utils.dart';
 import 'package:readmore/readmore.dart';
 
 import 'expanded_pageview.dart';
 
 class ItemSearchWidget extends StatefulWidget {
-  const ItemSearchWidget({Key? key}) : super(key: key);
+  final SearchResponse ob;
+
+  const ItemSearchWidget({Key? key, required this.ob}) : super(key: key);
 
   @override
   _ItemSearchWidgetState createState() => _ItemSearchWidgetState();
@@ -28,14 +32,14 @@ class _ItemSearchWidgetState extends State<ItemSearchWidget>
 
   @override
   void initState() {
-    tabController = TabController(length: 3, vsync: this);
+    tabController = TabController(
+        length: widget.ob.source!.after!.addresses!.length, vsync: this);
     tabController.addListener(() {
       if (currentIndex != tabController.index) {
         currentIndex = tabController.index;
         pageController.jumpToPage(currentIndex);
         setState(() {});
       }
-      Utils.sentEventBus(tabController.index);
     });
     super.initState();
   }
@@ -57,6 +61,7 @@ class _ItemSearchWidgetState extends State<ItemSearchWidget>
           EdgeInsets.only(top: 10.h, bottom: 10.h, left: 10.w, right: 10.w),
       color: colorWhite,
       child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Row(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -79,17 +84,27 @@ class _ItemSearchWidgetState extends State<ItemSearchWidget>
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   AppText(
-                    'Denisa Green',
+                    widget.ob.source!.after!.doctorName!,
                     style: typoMediumTextBold,
                   ),
                   AppText(
-                    'Dentis,Psychologis,Surgeon',
-                    style: typoSmallTextRegular.copyWith(fontSize: 12.sp),
+                    widget.ob.source!.after!.doctorProfile!.specialization
+                        .toString(),
+                    style: typoSmallTextRegular.copyWith(
+                        fontSize: 13.sp, color: colorText45),
                   ),
-                  const AppRating(
-                    itemCount: 5,
-                    isRating: false,
-                    numberRate: 4,
+                  Row(
+                    children: [
+                      AppRating(
+                        itemCount: 5,
+                        isRating: false,
+                        numberRate: widget.ob.source!.after!.doctorRateAvg,
+                      ),
+                      AppText(
+                        " (${widget.ob.source!.after!.doctorRateCount.toString()}) ",
+                        style: typoSmallTextRegular.copyWith(fontSize: 12.sp),
+                      )
+                    ],
                   ),
                 ],
               ),
@@ -107,7 +122,7 @@ class _ItemSearchWidgetState extends State<ItemSearchWidget>
             height: 10.h,
           ),
           ReadMoreText(
-            'She graduated in nursing at the University of Health, then in addictology at the 1st    Faculty of Medicine, Charles University. She graduat...',
+            widget.ob.source!.after!.doctorProfile!.about!,
             trimLines: 3,
             style: typoSmallTextRegular.copyWith(fontSize: 14.3.sp),
             colorClickableText: colorBlue80,
@@ -137,23 +152,15 @@ class _ItemSearchWidgetState extends State<ItemSearchWidget>
             ),
           ),
           TabBar(
+            isScrollable: true,
+            indicatorSize: TabBarIndicatorSize.label,
             controller: tabController,
             labelStyle: typoSmallTextBold.copyWith(fontWeight: FontWeight.w800),
             indicator: const UnderlineTabIndicator(
               borderSide: BorderSide(color: colorPink100, width: 2.0),
             ),
             unselectedLabelColor: colorText100,
-            tabs: const [
-              Tab(
-                text: 'Online',
-              ),
-              Tab(
-                text: 'Address 1',
-              ),
-              Tab(
-                text: 'Address 2',
-              ),
-            ],
+            tabs: allTitleServiceWidget(widget.ob.source!.after!.addresses!),
           ),
           ExpandablePageView(
             currentIndex: currentIndex,
@@ -161,18 +168,45 @@ class _ItemSearchWidgetState extends State<ItemSearchWidget>
               pageController = controller;
               switchPage();
             },
-            children: [
-              statusWidget(),
-              addressWidget(),
-              addressWidget(),
-            ],
+            children: allServiceWidget(widget.ob.source!.after!.addresses!),
           )
         ],
       ),
     );
   }
 
-  Widget addressWidget() {
+  List<Tab> allTitleServiceWidget(List<Address> listService) {
+    var list = <Tab>[];
+    for (int i = 0; i < listService.length; i++) {
+      list.add(Tab(text: LocaleKeys.address.tr + " ${i + 1}"));
+    }
+    return list;
+  }
+
+  List<Widget> allServiceWidget(List<Address> listService) {
+    var list = <Widget>[];
+    for (var element in listService) {
+      list.add(addressWidget(element));
+    }
+    /*  for (var element in listService) {
+      list.add(addressWidget(Address(
+          city: "CITY",
+          street: "TRESS",
+          district: "district",
+          apartmentNumber: "apartmentNumber",
+          locationId: 1,
+          services: [
+            Service(
+                serviceName: "ServiceNAME",
+                price: 11,
+                providerServiceDescription: "providerServiceDescription",
+                currencyUnit: "currencyUnit")
+          ])));
+    }*/
+    return list;
+  }
+
+  Widget addressWidget(Address address) {
     return Container(
       padding:
           EdgeInsets.only(left: 10.w, right: 10.w, top: 15.h, bottom: 20.h),
@@ -187,7 +221,7 @@ class _ItemSearchWidgetState extends State<ItemSearchWidget>
               ),
               Expanded(
                   child: AppText(
-                '88 Nguyen Xien, Thanh Xuan, Ha Noi Medlatech',
+                "${address.street}, ${address.district}, ${address.city}",
                 style: typoSmallTextRegular,
                 maxLine: 3,
               ))
@@ -205,7 +239,7 @@ class _ItemSearchWidgetState extends State<ItemSearchWidget>
               ),
               Expanded(
                   child: ReadMoreText(
-                'Dental examination - 300.000 VND Couple psychotherapy - 400.000 VND Psychological counseling - 200.000 VND',
+                getAllService(address.services!),
                 trimLines: 3,
                 style: typoSmallTextRegular.copyWith(fontSize: 14.3.sp),
                 colorClickableText: colorBlue80,
@@ -218,6 +252,15 @@ class _ItemSearchWidgetState extends State<ItemSearchWidget>
         ],
       ),
     );
+  }
+
+  String getAllService(List<Service> services) {
+    var result = '';
+    for (var element in services) {
+      result +=
+          "${element.serviceName} - ${element.price} ${element.currencyUnit!}";
+    }
+    return result;
   }
 
   Widget statusWidget() {

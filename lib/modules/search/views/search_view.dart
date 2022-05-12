@@ -2,6 +2,7 @@ import 'package:docsify/components/app_button.dart';
 import 'package:docsify/components/app_scalford.dart';
 import 'package:docsify/components/app_text.dart';
 import 'package:docsify/components/app_text_field.dart';
+import 'package:docsify/components/item_loading.dart';
 import 'package:docsify/components/item_search.dart';
 import 'package:docsify/const/resource.dart';
 import 'package:docsify/generated/app_translation.dart';
@@ -41,57 +42,104 @@ class SearchView extends GetView<SearchController> {
           toolbarHeight: 50.h,
         ),
         body: SingleChildScrollView(
+          controller: controller.scrollController,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisAlignment: MainAxisAlignment.start,
             mainAxisSize: MainAxisSize.min,
-            children: [searchGroupWidget(context), activityListWidget(context)],
+            children: [
+              searchGroupWidget(context),
+          /*    Obx(() => Visibility(
+                  visible: controller.isLoading.value,
+                  child: Center(
+                    child: Container(
+                      margin: EdgeInsets.only(top: 20.h),
+                      alignment: Alignment.center,
+                      height: 30.h,
+                      width: 30.w,
+                      child: const CircularProgressIndicator(
+                        strokeWidth: 2,
+                      ),
+                    ),
+                  ))),*/
+              SizedBox(
+                height: 10.h,
+              ),
+              Obx(() => controller.listSearch.isNotEmpty
+                  ? sortWidget(context)
+                  : Container(
+                      alignment: Alignment.center,
+                      margin: EdgeInsets.only(top: 70.h),
+                      child: AppText(
+                        LocaleKeys.not_result.tr,
+                        style: typoLargeTextBold.copyWith(color: colorText60),
+                      ),
+                    )),
+              SizedBox(
+                height: 15.h,
+              ),
+              listSearch()
+            ],
           ),
         ));
   }
 
-  Widget activityListWidget(BuildContext context) {
-    return Container(
-      child: Wrap(
-        runSpacing: 10.h,
-        children: [
-          AppText(
-            LocaleKeys.activity_list.tr,
-            style: typoMediumTextBold,
-          ),
-          InkWell(
-            child: Container(
-              padding: EdgeInsets.only(left: 10.w, right: 10.w),
-              height: 33.h,
-              decoration: BoxDecoration(
-                  color: colorWhite,
-                  borderRadius: BorderRadius.all(Radius.circular(8.h))),
-              child: Row(
-                children: [
-                  AppText("Price: lowest list", style: typoSmallTextRegular),
-                  const Spacer(),
-                  const Icon(Icons.arrow_drop_down)
-                ],
-              ),
+  Widget sortWidget(BuildContext context) {
+    return Obx(() => Visibility(
+        visible: controller.listSearch.isNotEmpty ? true : false,
+        child: Wrap(
+          runSpacing: 10.h,
+          children: [
+            SizedBox(
+              width: 10.h,
             ),
-            onTap: () {},
-          ),
-          listSearch()
-        ],
-      ),
-      padding: EdgeInsets.only(left: 10.w, right: 10.h),
-    );
+            AppText(
+              LocaleKeys.activity_list.tr,
+              style: typoMediumTextBold,
+            ),
+            InkWell(
+              child: Container(
+                margin: EdgeInsets.only(left: 10.w, right: 10.w),
+                padding: EdgeInsets.only(left: 10.w, right: 10.w),
+                height: 33.h,
+                decoration: BoxDecoration(
+                    color: colorWhite,
+                    borderRadius: BorderRadius.all(Radius.circular(8.h))),
+                child: Row(
+                  children: [
+                    AppText("Price: lowest list", style: typoSmallTextRegular),
+                    const Spacer(),
+                    const Icon(Icons.arrow_drop_down)
+                  ],
+                ),
+              ),
+              onTap: () {},
+            ),
+            SizedBox(
+              height: 10.h,
+            ),
+          ],
+        )));
   }
 
   Widget listSearch() {
     return Obx(() => ListView.separated(
           shrinkWrap: true,
           primary: false,
-          itemBuilder: (context, index) => const ItemSearchWidget(),
+          itemBuilder: (context, index) {
+            if (index == controller.listSearch.length) {
+              return const ItemLoading();
+            }
+            return ItemSearchWidget(
+              ob: controller.listSearch[index],
+            );
+          },
           separatorBuilder: (context, index) => Container(
             height: 20.h,
           ),
-          itemCount: controller.itemCount.value,
+          itemCount: controller.isReadEnd.value
+              ? controller.listSearch.length
+              : controller.listSearch.length + 1,
         ));
   }
 
@@ -226,8 +274,9 @@ class SearchView extends GetView<SearchController> {
           borderRadius: BorderRadius.all(Radius.circular(7.h))),
       color: colorBlue90,
       minWidth: MediaQuery.of(context).size.width,
-      onPressed: () =>
-          controller.handleSearch(controller.queryController.value.text),
+      onPressed: () => controller.handleSearch(
+          controller.queryController.value.text,
+          context: context),
       child: Wrap(
         runSpacing: 15.w,
         spacing: 15.w,

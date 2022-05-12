@@ -1,9 +1,8 @@
-import 'package:docsify/const/resource.dart';
-import 'package:flutter/material.dart';
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:docsify/const/resource.dart';
 import 'package:docsify/theme/colors.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 
 class AppNetworkImage extends StatelessWidget {
   const AppNetworkImage({
@@ -12,8 +11,10 @@ class AppNetworkImage extends StatelessWidget {
     this.style = "none",
     this.fit = BoxFit.contain,
     this.decoration,
+    this.errorSource =
+        'https://platform-static-files.s3.amazonaws.com/premierleague/photos/players/250x250/Photo-Missing.png',
   }) : super(key: key);
-
+  final String errorSource;
   final String? source;
   final String? style;
   final BoxFit fit;
@@ -32,16 +33,14 @@ class AppNetworkImage extends StatelessWidget {
                 width: 24.w,
                 height: 24.h,
                 child: const CircularProgressIndicator(
-                  color: colorBlue80,
+                  color: colorPrimaryCTV24h,
                   strokeWidth: 2.0,
-                  backgroundColor: colorWhite,
                 ),
               ),
             ),
             fit: BoxFit.fill,
             errorWidget: (context, url, error) => CachedNetworkImage(
-              imageUrl:
-                  "https://platform-static-files.s3.amazonaws.com/premierleague/photos/players/250x250/Photo-Missing.png",
+              imageUrl: errorSource,
             ),
           )
         : CachedNetworkImage(
@@ -60,8 +59,7 @@ class AppNetworkImage extends StatelessWidget {
             ),
             fit: BoxFit.fill,
             errorWidget: (context, url, error) => CachedNetworkImage(
-              imageUrl:
-                  "https://platform-static-files.s3.amazonaws.com/premierleague/photos/players/250x250/Photo-Missing.png",
+              imageUrl: errorSource,
             ),
           );
   }
