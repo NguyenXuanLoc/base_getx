@@ -5,7 +5,7 @@ class AppScaffold extends StatelessWidget {
   final Widget body;
   final PreferredSizeWidget? appbar;
   final Color? backgroundColor;
-  final EdgeInsetsGeometry? padding;
+  final EdgeInsets padding;
   final Widget? bottomNavigationBar;
 
   const AppScaffold(
@@ -13,7 +13,7 @@ class AppScaffold extends StatelessWidget {
       required this.body,
       this.appbar,
       this.backgroundColor,
-      this.padding,
+      this.padding = const EdgeInsets.only(left: 0, right: 0),
       this.bottomNavigationBar})
       : super(key: key);
 
@@ -24,10 +24,8 @@ class AppScaffold extends StatelessWidget {
       resizeToAvoidBottomInset: false,
       appBar: appbar,
       body: SafeArea(
-        child: Container(
-          child: body,
-          padding: padding,
-        ),
+        minimum: padding,
+        child: body,
       ),
       bottomNavigationBar: bottomNavigationBar,
     );

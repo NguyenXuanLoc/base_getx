@@ -21,7 +21,7 @@ class RegisterStep1View extends GetView<RegisterStep1Controller> {
   Widget build(BuildContext context) {
     return AppScaffold(
       backgroundColor: colorBackgroundGrey10,
-      appbar: appBarWidget(),
+      appbar: appBarWidget(context),
       body: SingleChildScrollView(
         child: Column(
           children: [
@@ -178,21 +178,27 @@ class RegisterStep1View extends GetView<RegisterStep1Controller> {
               mainAxisAlignment: MainAxisAlignment.center,
               mainAxisSize: MainAxisSize.min,
               children: [
-              InkWell(child:   SvgPicture.asset(
-                R.assetsSvgFacebook2Svg,
-                height: 35.w,
-                width: 35.w,
-                fit: BoxFit.cover,
-              ),onTap: ()=> controller.handleFacebookSignIn(context),),
+                InkWell(
+                  child: SvgPicture.asset(
+                    R.assetsSvgFacebook2Svg,
+                    height: 35.w,
+                    width: 35.w,
+                    fit: BoxFit.cover,
+                  ),
+                  onTap: () => controller.handleFacebookSignIn(context),
+                ),
                 SizedBox(
                   width: 20.w,
                 ),
-               InkWell(child:   SvgPicture.asset(
-                 R.assetsSvgGoogleSvg,
-                 height: 40.w,
-                 width: 35.w,
-                 fit: BoxFit.cover,
-               ),onTap: ()=> controller.handleGoogleSignIn(context),)
+                InkWell(
+                  child: SvgPicture.asset(
+                    R.assetsSvgGoogleSvg,
+                    height: 40.w,
+                    width: 35.w,
+                    fit: BoxFit.cover,
+                  ),
+                  onTap: () => controller.handleGoogleSignIn(context),
+                )
               ],
             ),
           ],
@@ -236,7 +242,7 @@ class RegisterStep1View extends GetView<RegisterStep1Controller> {
     );
   }
 
-  AppBar appBarWidget() {
+  AppBar appBarWidget(BuildContext context) {
     return AppBar(
       elevation: 1,
       backgroundColor: colorWhite,
@@ -253,7 +259,7 @@ class RegisterStep1View extends GetView<RegisterStep1Controller> {
           )),
       actions: [
         IconButton(
-            onPressed: () => Get.back(),
+            onPressed: () => controller.showQuitDialog(context),
             icon: const Icon(
               Icons.clear,
               color: colorBlack,

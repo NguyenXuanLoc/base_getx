@@ -1,19 +1,17 @@
-import 'package:docsify/components/app_network_image.dart';
-import 'package:docsify/components/app_rate.dart';
 import 'package:docsify/components/app_text.dart';
+import 'package:docsify/components/rate_bar_indicator.dart';
 import 'package:docsify/const/resource.dart';
 import 'package:docsify/data/model/search_response.dart';
 import 'package:docsify/generated/app_translation.dart';
 import 'package:docsify/theme/app_styles.dart';
 import 'package:docsify/theme/colors.dart';
-import 'package:docsify/utils/log_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get_utils/get_utils.dart';
 import 'package:readmore/readmore.dart';
 
-import 'expanded_pageview.dart';
+import 'app_network_image.dart';
 
 class ItemSearchWidget extends StatefulWidget {
   final SearchResponse ob;
@@ -33,11 +31,10 @@ class _ItemSearchWidgetState extends State<ItemSearchWidget>
   @override
   void initState() {
     tabController = TabController(
-        length: widget.ob.source!.after!.addresses!.length, vsync: this);
+        length: widget.ob.source!.after!.addresses!.length + 1, vsync: this);
     tabController.addListener(() {
       if (currentIndex != tabController.index) {
         currentIndex = tabController.index;
-        pageController.jumpToPage(currentIndex);
         setState(() {});
       }
     });
@@ -95,11 +92,16 @@ class _ItemSearchWidgetState extends State<ItemSearchWidget>
                   ),
                   Row(
                     children: [
-                      AppRating(
+                      SvgPicture.asset(R.assetsSvgRateSvg)
+                      /*         RatingBarIndicator(
+                        unratedWidget: SvgPicture.asset(R.assetsSvgUnRateSvg),
+                        rating: 1.5 */ /*widget.ob.source!.after!.doctorRateAvg!*/ /*,
+                        itemBuilder: (context, _) =>
+                            SvgPicture.asset(R.assetsSvgRateSvg),
                         itemCount: 5,
-                        isRating: false,
-                        numberRate: widget.ob.source!.after!.doctorRateAvg,
-                      ),
+                        itemSize: 20.0,
+                      ),*/
+                      ,
                       AppText(
                         " (${widget.ob.source!.after!.doctorRateCount.toString()}) ",
                         style: typoSmallTextRegular.copyWith(fontSize: 12.sp),
@@ -152,6 +154,7 @@ class _ItemSearchWidgetState extends State<ItemSearchWidget>
             ),
           ),
           TabBar(
+            physics: const NeverScrollableScrollPhysics(),
             isScrollable: true,
             indicatorSize: TabBarIndicatorSize.label,
             controller: tabController,
@@ -162,14 +165,8 @@ class _ItemSearchWidgetState extends State<ItemSearchWidget>
             unselectedLabelColor: colorText100,
             tabs: allTitleServiceWidget(widget.ob.source!.after!.addresses!),
           ),
-          ExpandablePageView(
-            currentIndex: currentIndex,
-            pageController: (controller) {
-              pageController = controller;
-              switchPage();
-            },
-            children: allServiceWidget(widget.ob.source!.after!.addresses!),
-          )
+          addressWidget(
+              widget.ob.source!.after!.addresses![tabController.index])
         ],
       ),
     );
@@ -180,6 +177,7 @@ class _ItemSearchWidgetState extends State<ItemSearchWidget>
     for (int i = 0; i < listService.length; i++) {
       list.add(Tab(text: LocaleKeys.address.tr + " ${i + 1}"));
     }
+    list.add(Tab(text: LocaleKeys.address.tr + " 2"));
     return list;
   }
 
@@ -188,21 +186,6 @@ class _ItemSearchWidgetState extends State<ItemSearchWidget>
     for (var element in listService) {
       list.add(addressWidget(element));
     }
-    /*  for (var element in listService) {
-      list.add(addressWidget(Address(
-          city: "CITY",
-          street: "TRESS",
-          district: "district",
-          apartmentNumber: "apartmentNumber",
-          locationId: 1,
-          services: [
-            Service(
-                serviceName: "ServiceNAME",
-                price: 11,
-                providerServiceDescription: "providerServiceDescription",
-                currencyUnit: "currencyUnit")
-          ])));
-    }*/
     return list;
   }
 
@@ -244,8 +227,8 @@ class _ItemSearchWidgetState extends State<ItemSearchWidget>
                 style: typoSmallTextRegular.copyWith(fontSize: 14.3.sp),
                 colorClickableText: colorBlue80,
                 trimMode: TrimMode.Line,
-                trimCollapsedText: '\nMore',
-                trimExpandedText: '\nLess',
+                trimCollapsedText: '\n${LocaleKeys.more.tr}',
+                trimExpandedText: '\n${LocaleKeys.less.tr}',
               )),
             ],
           ),

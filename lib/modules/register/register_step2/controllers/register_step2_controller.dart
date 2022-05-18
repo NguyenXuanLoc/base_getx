@@ -2,6 +2,7 @@ import 'package:docsify/app/routes/app_pages.dart';
 import 'package:docsify/components/dialogs.dart';
 import 'package:docsify/data/provider/user_provider.dart';
 import 'package:docsify/generated/app_translation.dart';
+import 'package:docsify/utils/app_utils.dart';
 import 'package:docsify/utils/storage_utils.dart';
 import 'package:docsify/utils/toast_utils.dart';
 import 'package:flutter/cupertino.dart';
@@ -85,11 +86,17 @@ class RegisterStep2Controller extends GetxController {
     }
     if (birthDate.isEmpty) {
       isValid = false;
-      errorBirthDate.value = LocaleKeys.please_input_phone_number.tr;
+      errorBirthDate.value = LocaleKeys.please_input_date_of_birth.tr;
     } else {
       errorBirthDate.value = '';
     }
     return isValid;
+  }
+
+  void showQuitDialog(BuildContext context) {
+    Utils.hideKeyboard(context);
+    Dialogs.showQuitForgotPassDialog(
+        context, () => Get.offAllNamed(Routes.HOME));
   }
 
   void pickDate(BuildContext context) {

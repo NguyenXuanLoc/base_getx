@@ -14,7 +14,7 @@ class SplashController extends GetxController {
   }
 
   void routerHome() {
-    Timer(const Duration(milliseconds: 500), () => Get.offNamed(Routes.HOME));
+    Timer(const Duration(milliseconds: 1500), () => Get.offNamed(Routes.HOME));
   }
 
   @override

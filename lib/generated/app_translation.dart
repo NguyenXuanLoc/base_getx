@@ -92,6 +92,13 @@ class LocaleKeys {
   static const ok = 'ok';
   static const not_result = 'not_result';
   static const please_input_keyword = 'please_input_keyword';
+  static const more = 'more';
+  static const less = 'less';
+  static const are_you_sure_want_to_quit = 'are_you_sure_want_to_quit';
+  static const your_information_will_not_be_saved =
+      'your_information_will_not_be_saved';
+  static const cancel = 'cancel';
+  static const quit = 'quit';
 }
 
 class Locales {
@@ -103,7 +110,7 @@ class Locales {
     'forgot_pass': 'Forgot Password',
     'login': 'Login',
     'here_for_first_time': "I'm here for first time",
-    'create_account': 'Create account',
+    'create_account': 'Create an account',
     'contact': 'Contact',
     'contact_email': 'Contact Email',
     'regulation': 'Regulation',
@@ -119,7 +126,7 @@ class Locales {
     'network_error': 'Network error, please try again.',
     'login_success': 'Successfully logged in.',
     'app_name': 'Docsify',
-    'sent': 'Sent',
+    'sent': 'Send',
     'register': 'Register',
     'register_with': 'Register with',
     'register_step2': 'Register step 2/2',
@@ -171,5 +178,11 @@ class Locales {
     'ok': 'OK',
     'not_result': 'Not result',
     'please_input_keyword': 'Please input Keyword.',
+    'more': 'More',
+    'less': 'Less',
+    'are_you_sure_want_to_quit': 'Are you sure want to quit ?',
+    'your_information_will_not_be_saved': 'Your information will not be saved',
+    'cancel': 'Cancel',
+    'quit': 'Quit',
   };
 }

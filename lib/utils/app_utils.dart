@@ -1,15 +1,36 @@
-import 'package:event_bus/event_bus.dart';
+import 'package:docsify/const/resource.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:intl/intl.dart';
 
 class Utils {
-  static var eventBus = EventBus();
+ static String getNumberRating(double rate) {
+    if (rate == 0) return R.assetsPngRate0Png;
+    if (rate >= 0 && rate <= 0.5) {
+      return R.assetsPngRate05Png;
+    } else if (rate > 0.5 && rate <= 1) {
+      return R.assetsPngRate1Png;
+    } else if (rate > 1 && rate <= 1.5) {
+      return R.assetsPngRate15Png;
+    } else if (rate > 1.5 && rate <= 2) {
+      return R.assetsPngRate2Png;
+    } else if (rate > 2 && rate <= 2.5) {
+      return R.assetsPngRate25Png;
+    } else if (rate > 2.5 && rate <= 3) {
+      return R.assetsPngRate3Png;
+    } else if (rate > 3 && rate <= 3.5) {
+      return R.assetsPngRate35Png;
+    } else if (rate > 3.5 && rate <= 4) {
+      return R.assetsPngRate4Png;
+    } else if (rate > 4.5 && rate <= 5) {
+      return R.assetsPngRate45Png;
+    } else if (rate >= 5) {
+      return R.assetsPngRate5Png;
+    }
 
-  static void sentEventBus(dynamic event) {
-    eventBus.fire(event);
+    return R.assetsPngRate5Png;
   }
 
- static String getQueryString(Map params,
+  static String getQueryString(Map params,
       {String prefix: '&', bool inRecursion: false}) {
     String query = '';
 

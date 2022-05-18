@@ -2,6 +2,7 @@ import 'package:docsify/theme/app_styles.dart';
 import 'package:docsify/theme/colors.dart';
 import 'package:docsify/utils/app_utils.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class AppButton extends StatelessWidget {
   final double? height;
@@ -37,23 +38,11 @@ class AppButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    if (!disable) {
-      return Container(
-        alignment: Alignment.center,
-        padding: padding,
-        height: height,
-        width: width,
-        decoration: BoxDecoration(
-            color: backgroundColor,
-            borderRadius: BorderRadius.circular(borderRadius ?? 0)),
-        child: Text(
-          title,
-          textScaleFactor: 1,
-          style: textStyle ?? typoNormalTextRegular,
-        ),
-      );
-    }
     return MaterialButton(
+      animationDuration: Duration(seconds: 0),
+      splashColor: disable ? Colors.transparent : null,
+      highlightColor: disable ? Colors.transparent : null,
+      enableFeedback: false,
       materialTapTargetSize: materialTapTargetSize,
       padding: padding,
       height: height,

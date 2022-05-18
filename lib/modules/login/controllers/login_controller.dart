@@ -72,8 +72,9 @@ class LoginController extends GetxController {
       await Dialogs.hideLoadingDialog();
       if (result.error != null) {
         toast(result.error);
-        if(result.error == MessageKey.need_active_account){
-          Get.toNamed(Routes.ACTIVE_CODE,arguments: emailController.value.text);
+        if (result.error == MessageKey.need_active_account) {
+          Get.toNamed(Routes.ACTIVE_CODE,
+              arguments: emailController.value.text);
         }
       } else if (result.data != null) {
         var userModel = UserResponse.fromJson(result.data['data']);
@@ -84,7 +85,11 @@ class LoginController extends GetxController {
     }
   }
 
-
+  void showQuitDialog(BuildContext context) {
+    Utils.hideKeyboard(context);
+    Dialogs.showQuitForgotPassDialog(
+        context, () => Get.offAllNamed(Routes.HOME));
+  }
 
   Future<void> handleLogoutByFacebook() async {
     await FacebookAuth.instance.logOut();

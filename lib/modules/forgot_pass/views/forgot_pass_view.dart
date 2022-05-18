@@ -14,19 +14,24 @@ import 'package:get/get.dart';
 import '../controllers/forgot_pass_controller.dart';
 
 class ForgotPassView extends GetView<ForgotPassController> {
+  const ForgotPassView({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return AppScaffold(
         appbar: AppBar(
           elevation: 1,
-          title: Text(LocaleKeys.forgot_pass.tr),
+          title: AppText(
+            LocaleKeys.forgot_pass.tr,
+            style: typoMediumTextBold,
+          ),
           centerTitle: true,
           titleTextStyle: typoNormalTextBold.copyWith(
               fontSize: 17.sp, color: colorBlackGrey),
           backgroundColor: colorBackgroundColor,
           actions: [
             IconButton(
-                onPressed: () => Get.back(),
+                onPressed: () => controller.showQuitDialog(context),
                 icon: const Icon(
                   Icons.clear,
                   color: colorBlackGrey,
@@ -46,23 +51,13 @@ class ForgotPassView extends GetView<ForgotPassController> {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               SizedBox(
-                height: 30.h,
-              ),
-              AppText(
-                LocaleKeys.app_name.tr.toUpperCase(),
-                textAlign: TextAlign.center,
-                style: typoLargeTextBold.copyWith(fontSize: 30.sp),
-              ),
-              SizedBox(
-                height: 30.h,
+                height: 60.h,
               ),
               AppText(
                 LocaleKeys.input_email_to_reset_pass.tr,
                 textAlign: TextAlign.center,
                 style: typoNormalTextRegular.copyWith(
-                    fontSize: 17.sp,
-                    fontWeight: FontWeight.w600,
-                    color: colorBlackGrey),
+                    fontSize: 17.sp, color: colorText100),
               ),
               SizedBox(
                 height: 70.h,
@@ -71,12 +66,9 @@ class ForgotPassView extends GetView<ForgotPassController> {
                     controller: controller.emailController,
                     hintText: LocaleKeys.email_address.tr,
                     errorText: controller.errorEmail.value,
-                    textStyle: styleTextFieldBold.copyWith(
+                    textStyle: typoMediumTextRegular.copyWith(
                         fontWeight: FontWeight.w500, fontSize: 16.sp),
-                    hintStyle: styleTextField.copyWith(
-                        fontWeight: FontWeight.w700,
-                        color: colorText80,
-                        fontSize: 16.sp),
+                    hintStyle: typoSmallTextRegular,
                   )),
               SizedBox(
                 height: 30.h,

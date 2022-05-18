@@ -16,33 +16,26 @@ import 'package:get/get.dart';
 import '../controllers/login_controller.dart';
 
 class LoginView extends GetView<LoginController> {
+  const LoginView({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return AppScaffold(
         backgroundColor: colorBackgroundGrey20,
-        appbar: appBarWidget(),
+        appbar: appBarWidget(context),
         body: SingleChildScrollView(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Container(
-                  padding: EdgeInsets.only(left: 20.h, right: 20.h, top: 20.h),
-                  child: AppText(
-                    LocaleKeys.login.tr,
-                    style: typoMediumTextBold.copyWith(
-                        fontSize: 24.sp,
-                        fontWeight: FontWeight.w900,
-                        color: colorText80),
-                    textAlign: TextAlign.start,
-                  )),
-              Container(
                 decoration: BoxDecoration(
                     color: colorBackgroundColor,
                     borderRadius: BorderRadius.all(Radius.circular(10.h))),
                 padding: EdgeInsets.only(
                     left: 20.h, right: 20.h, top: 5.h, bottom: 5.h),
-                margin: EdgeInsets.all(12.h),
+                margin: EdgeInsets.only(
+                    left: 12.h, right: 12.h, bottom: 12.h, top: 40.h),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   mainAxisAlignment: MainAxisAlignment.center,
@@ -309,7 +302,7 @@ class LoginView extends GetView<LoginController> {
     );
   }
 
-  AppBar appBarWidget() {
+  AppBar appBarWidget(BuildContext context) {
     return AppBar(
       elevation: 1,
       backgroundColor: colorWhite,
@@ -326,7 +319,7 @@ class LoginView extends GetView<LoginController> {
           )),
       actions: [
         IconButton(
-            onPressed: () => Get.back(),
+            onPressed: () => controller.showQuitDialog(context),
             icon: const Icon(
               Icons.clear,
               color: colorBlack,

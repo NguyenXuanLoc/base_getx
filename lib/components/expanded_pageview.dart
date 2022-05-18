@@ -53,6 +53,7 @@ class _ExpandablePageViewState extends State<ExpandablePageView>
       tween: Tween<double>(begin: _heights[0], end: _currentHeight),
       builder: (context, value, child) => SizedBox(height: value, child: child),
       child: PageView(
+        physics: const NeverScrollableScrollPhysics(),
         controller: _pageController,
         children: _sizeReportingChildren
             .asMap() //
@@ -103,7 +104,7 @@ class _SizeReportingWidgetState extends State<SizeReportingWidget> {
 
   @override
   Widget build(BuildContext context) {
-    WidgetsBinding.instance!.addPostFrameCallback((_) => _notifySize());
+    WidgetsBinding.instance?.addPostFrameCallback((_) => _notifySize());
     return widget.child;
   }
 

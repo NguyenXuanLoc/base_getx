@@ -22,7 +22,7 @@ class RegisterStep2View extends GetView<RegisterStep2Controller> {
   Widget build(BuildContext context) {
     return AppScaffold(
       backgroundColor: colorBackgroundGrey10,
-      appbar: appBarWidget(),
+      appbar: appBarWidget(context),
       body: SingleChildScrollView(
         child: Column(
           children: [
@@ -52,7 +52,11 @@ class RegisterStep2View extends GetView<RegisterStep2Controller> {
                   width: 20.w,
                   height: 20.w,
                   alignment: Alignment.center,
-                  child: const Icon(Icons.check,size: 13,color: colorWhite,),
+                  child: const Icon(
+                    Icons.check,
+                    size: 13,
+                    color: colorWhite,
+                  ),
                   decoration: BoxDecoration(
                       color: colorBlue40,
                       borderRadius: BorderRadius.all(
@@ -141,7 +145,7 @@ class RegisterStep2View extends GetView<RegisterStep2Controller> {
                     height: 15.h,
                   ),
                   Obx(() => AppButton(
-                        disable: controller.isAgree.value,
+                        disable: !controller.isAgree.value,
                         borderRadius: 6.h,
                         textStyle: typoNormalTextBold.copyWith(
                             color: colorText5, fontWeight: FontWeight.w700),
@@ -198,7 +202,7 @@ class RegisterStep2View extends GetView<RegisterStep2Controller> {
     );
   }
 
-  AppBar appBarWidget() {
+  AppBar appBarWidget(BuildContext context) {
     return AppBar(
       elevation: 1,
       backgroundColor: colorWhite,
@@ -215,7 +219,7 @@ class RegisterStep2View extends GetView<RegisterStep2Controller> {
           )),
       actions: [
         IconButton(
-            onPressed: () => Get.back(),
+            onPressed: () => controller.showQuitDialog(context),
             icon: const Icon(
               Icons.clear,
               color: colorBlack,

@@ -1,8 +1,5 @@
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:docsify/const/resource.dart';
-import 'package:docsify/theme/colors.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class AppNetworkImage extends StatelessWidget {
   const AppNetworkImage({
@@ -26,7 +23,7 @@ class AppNetworkImage extends StatelessWidget {
         ? CachedNetworkImage(
             imageUrl:
                 "https://platform-static-files.s3.amazonaws.com/premierleague/photos/players/250x250/Photo-Missing.png",
-            placeholder: (context, url) => Center(
+      /*      placeholder: (context, url) => Center(
               widthFactor: 2,
               heightFactor: 2,
               child: SizedBox(
@@ -37,7 +34,7 @@ class AppNetworkImage extends StatelessWidget {
                   strokeWidth: 2.0,
                 ),
               ),
-            ),
+            ),*/
             fit: BoxFit.fill,
             errorWidget: (context, url, error) => CachedNetworkImage(
               imageUrl: errorSource,
@@ -45,7 +42,7 @@ class AppNetworkImage extends StatelessWidget {
           )
         : CachedNetworkImage(
             imageUrl: source ?? "",
-            placeholder: (context, url) => Center(
+     /*       placeholder: (context, url) => Center(
               widthFactor: 2,
               heightFactor: 2,
               child: SizedBox(
@@ -56,7 +53,7 @@ class AppNetworkImage extends StatelessWidget {
                   strokeWidth: 2.0,
                 ),
               ),
-            ),
+            ),*/
             fit: BoxFit.fill,
             errorWidget: (context, url, error) => CachedNetworkImage(
               imageUrl: errorSource,

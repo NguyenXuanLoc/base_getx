@@ -86,6 +86,7 @@ const colorWarning100 = Color(0xffE6A23C);
 const colorText100 = Color(0xff303133);
 const colorText80 = Color(0xff060e1e);
 const colorText50 = Color(0xff060e1e);
+const colorText70 = Color(0xff636973);
 const colorText60 = Color(0xff909399);
 const colorText45 = Color(0xff909399);
 const colorText40 = Color(0xffC0C4CC);
@@ -109,7 +110,10 @@ const colorBackgrDiamon = Color(0xffDBC1DD);
 const colorRoyal = Color(0xff5365F3);
 const colorBackgrRoyal = Color(0xffC1C7DD);
 const colorBrownBorder = Color(0xffE4B07C);
+
 const colorYellow = Color(0xffF2E0B4);
+const colorYellow100 = Color(0xffffcf5c);
+
 const colorBlueLinkBorder = Color(0xffB3D8FF);
 const colorGreyBorder = Color(0xff909399);
 
@@ -120,15 +124,16 @@ const colorBackgroundGrey80 = Color(0xF65D605D);
 const colorBackgroundGrey20 = Color(0xF6F7F8F7);
 const colorBackgroundGrey10 = Color(0xFFF7F7F8);
 
-const colorGrey20= Color(0xFFE9EAEC);
-const colorGrey30= Color(0xFFE9EAEC);
-const colorGrey80= Color(0xFF636973);
+const colorGrey20 = Color(0xFFE9EAEC);
+const colorGrey30 = Color(0xFFE9EAEC);
+const colorGrey80 = Color(0xFF636973);
 
 const colorBlue100 = Color(0xFF003CA4);
 const colorBlue90 = Color(0xFF012B73);
 const colorBlue80 = Color(0xFF044ECC);
 const colorBlue40 = Color(0xFF5787DB);
 const colorBlue5 = Color(0xFFB1C8F1);
+const colorBlue85 = Color(0xFF003186);
 
 const colorPink100 = Color(0xFFFC2C52);
 const colorPink40 = Color(0xFFFCC0CB);

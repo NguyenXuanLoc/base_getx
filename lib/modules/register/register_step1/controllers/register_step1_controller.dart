@@ -58,6 +58,11 @@ class RegisterStep1Controller extends GetxController {
       }
     }
   }
+  void showQuitDialog(BuildContext context) {
+    Utils.hideKeyboard(context);
+    Dialogs.showQuitForgotPassDialog(
+        context, () => Get.offAllNamed(Routes.HOME));
+  }
 
   bool isValidInfo() {
     var email = emailController.value.text;

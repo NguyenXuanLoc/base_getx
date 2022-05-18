@@ -1,6 +1,8 @@
+import 'package:docsify/app/routes/app_pages.dart';
 import 'package:docsify/components/dialogs.dart';
 import 'package:docsify/data/provider/user_provider.dart';
 import 'package:docsify/generated/app_translation.dart';
+import 'package:docsify/utils/app_utils.dart';
 import 'package:docsify/utils/toast_utils.dart';
 import 'package:email_validator/email_validator.dart';
 import 'package:flutter/cupertino.dart';
@@ -14,6 +16,12 @@ class ForgotPassController extends GetxController {
 
   @override
   void onClose() {}
+
+  void showQuitDialog(BuildContext context) {
+    Utils.hideKeyboard(context);
+    Dialogs.showQuitForgotPassDialog(
+        context, () => Get.offAllNamed(Routes.HOME));
+  }
 
   void handleForgotPass(BuildContext context) async {
     var email = emailController.value.text;

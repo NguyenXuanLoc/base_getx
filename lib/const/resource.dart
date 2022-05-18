@@ -26,8 +26,53 @@ class R {
   /// ![preview](file://H:\docsify\docsify\assets\png\facebook.svg)
   static const String assetsPngFacebookSvg = 'assets/png/facebook.svg';
 
+  /// ![preview](file://H:\docsify\docsify\assets\png\rate_0.png)
+  static const String assetsPngRate0Png = 'assets/png/rate_0.png';
+
+  /// ![preview](file://H:\docsify\docsify\assets\png\rate_0_5.png)
+  static const String assetsPngRate05Png = 'assets/png/rate_0_5.png';
+
+  /// ![preview](file://H:\docsify\docsify\assets\png\rate_1.png)
+  static const String assetsPngRate1Png = 'assets/png/rate_1.png';
+
+  /// ![preview](file://H:\docsify\docsify\assets\png\rate_1_5.png)
+  static const String assetsPngRate15Png = 'assets/png/rate_1_5.png';
+
+  /// ![preview](file://H:\docsify\docsify\assets\png\rate_2.png)
+  static const String assetsPngRate2Png = 'assets/png/rate_2.png';
+
+  /// ![preview](file://H:\docsify\docsify\assets\png\rate_2.svg)
+  static const String assetsPngRate2Svg = 'assets/png/rate_2.svg';
+
+  /// ![preview](file://H:\docsify\docsify\assets\png\rate_2_5.png)
+  static const String assetsPngRate25Png = 'assets/png/rate_2_5.png';
+
+  /// ![preview](file://H:\docsify\docsify\assets\png\rate_3.png)
+  static const String assetsPngRate3Png = 'assets/png/rate_3.png';
+
+  /// ![preview](file://H:\docsify\docsify\assets\png\rate_3.svg)
+  static const String assetsPngRate3Svg = 'assets/png/rate_3.svg';
+
+  /// ![preview](file://H:\docsify\docsify\assets\png\rate_3_5.png)
+  static const String assetsPngRate35Png = 'assets/png/rate_3_5.png';
+
+  /// ![preview](file://H:\docsify\docsify\assets\png\rate_4.png)
+  static const String assetsPngRate4Png = 'assets/png/rate_4.png';
+
+  /// ![preview](file://H:\docsify\docsify\assets\png\rate_4_5.png)
+  static const String assetsPngRate45Png = 'assets/png/rate_4_5.png';
+
+  /// ![preview](file://H:\docsify\docsify\assets\png\rate_5.png)
+  static const String assetsPngRate5Png = 'assets/png/rate_5.png';
+
   /// ![preview](file://H:\docsify\docsify\assets\svg\Crown.png)
   static const String assetsSvgCrownPng = 'assets/svg/Crown.png';
+
+  /// ![preview](file://H:\docsify\docsify\assets\svg\app_name.svg)
+  static const String assetsSvgAppNameSvg = 'assets/svg/app_name.svg';
+
+  /// ![preview](file://H:\docsify\docsify\assets\svg\avatar.svg)
+  static const String assetsSvgAvatarSvg = 'assets/svg/avatar.svg';
 
   /// ![preview](file://H:\docsify\docsify\assets\svg\avatar_test.svg)
   static const String assetsSvgAvatarTestSvg = 'assets/svg/avatar_test.svg';
@@ -40,6 +85,9 @@ class R {
 
   /// ![preview](file://H:\docsify\docsify\assets\svg\calendar.svg)
   static const String assetsSvgCalendarSvg = 'assets/svg/calendar.svg';
+
+  /// ![preview](file://H:\docsify\docsify\assets\svg\clear_circle.svg)
+  static const String assetsSvgClearCircleSvg = 'assets/svg/clear_circle.svg';
 
   /// ![preview](file://H:\docsify\docsify\assets\svg\doctor_background.svg)
   static const String assetsSvgDoctorBackgroundSvg =
@@ -78,9 +126,21 @@ class R {
   /// ![preview](file://H:\docsify\docsify\assets\svg\or.svg)
   static const String assetsSvgOrSvg = 'assets/svg/or.svg';
 
+  /// ![preview](file://H:\docsify\docsify\assets\svg\rate.svg)
+  static const String assetsSvgRateSvg = 'assets/svg/rate.svg';
+
+  /// ![preview](file://H:\docsify\docsify\assets\svg\rate_2.svg)
+  static const String assetsSvgRate2Svg = 'assets/svg/rate_2.svg';
+
   /// ![preview](file://H:\docsify\docsify\assets\svg\search.svg)
   static const String assetsSvgSearchSvg = 'assets/svg/search.svg';
 
+  /// ![preview](file://H:\docsify\docsify\assets\svg\search2.svg)
+  static const String assetsSvgSearch2Svg = 'assets/svg/search2.svg';
+
   /// ![preview](file://H:\docsify\docsify\assets\svg\three_dots.svg)
   static const String assetsSvgThreeDotsSvg = 'assets/svg/three_dots.svg';
+
+  /// ![preview](file://H:\docsify\docsify\assets\svg\un_rate.svg)
+  static const String assetsSvgUnRateSvg = 'assets/svg/un_rate.svg';
 }
