@@ -103,7 +103,7 @@ class _CalendarTimelineState extends State<CalendarTimeline> {
     _moveToMonthIndex(_monthSelectedIndex ?? 0);
     _moveToDayIndex(_daySelectedIndex ?? 0);
     _scrollAlignment = widget.leftMargin / 440;
-    SchedulerBinding.instance!.addPostFrameCallback((_) {
+    SchedulerBinding.instance.addPostFrameCallback((_) {
       initializeDateFormatting(_locale);
     });
   }

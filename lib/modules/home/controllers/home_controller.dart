@@ -17,7 +17,7 @@ class HomeController extends GetxController {
   }
 
   void showDialog(BuildContext context) {
-    WidgetsBinding.instance?.addPostFrameCallback((_) {
+    WidgetsBinding.instance.addPostFrameCallback((_) {
       Dialogs.showLoadingDialog(context);
       Timer(Duration(seconds: 1), () => Dialogs.hideLoadingDialog());
     });

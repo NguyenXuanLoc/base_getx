@@ -21,11 +21,11 @@ class TabSearchController extends GetxController {
   final currentIndex = 0.obs;
   final scrollController = ScrollController();
 
-  bool isLoadRating = false;
+  bool isLoadRating = true;
   int pagingLatestRating = 0;
   final isReadEndLatestRating = false.obs;
 
-  bool isLoadDoctor = false;
+  bool isLoadDoctor = true;
   int pagingDoctor = 0;
   final isReadEndDoctor = false.obs;
 

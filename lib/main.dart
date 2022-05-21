@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:docsify/app/routes/root_binding.dart';
 import 'package:docsify/generated/app_translation.dart';
+import 'package:docsify/modules/splash/views/splash_view.dart';
 import 'package:docsify/services/globals.dart' as globals;
 import 'package:docsify/utils/device_utils.dart';
 import 'package:docsify/utils/storage_utils.dart';
@@ -28,7 +29,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ScreenUtilInit(
-      builder: (context) => GetMaterialApp(
+      builder: (w,c) => GetMaterialApp(
         initialBinding: RootBinding(),
         initialRoute: AppPages.INITIAL,
         getPages: AppPages.routes,
@@ -50,7 +51,7 @@ class MyApp extends StatelessWidget {
           GlobalWidgetsLocalizations.delegate,
           GlobalCupertinoLocalizations.delegate,
         ],
-        debugShowCheckedModeBanner: false,
+        debugShowCheckedModeBanner: true,
       ),
     );
   }

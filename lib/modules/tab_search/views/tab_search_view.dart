@@ -1,6 +1,7 @@
 import 'package:docsify/app/routes/app_pages.dart';
 import 'package:docsify/components/app_button.dart';
 import 'package:docsify/components/app_network_image.dart';
+import 'package:docsify/components/app_read_more_widget.dart';
 import 'package:docsify/components/app_scalford.dart';
 import 'package:docsify/components/app_text.dart';
 import 'package:docsify/components/app_text_field.dart';
@@ -334,15 +335,7 @@ class TabSearchView extends GetView<TabSearchController> {
                         borderRadius: BorderRadius.all(Radius.circular(7.w))),
                     padding: EdgeInsets.all(10.h),
                     width: MediaQuery.of(context).size.width,
-                    child: ReadMoreText(
-                      ob.rComment.toString(),
-                      trimLines: 3,
-                      style: typoSmallTextRegular.copyWith(fontSize: 14.3.sp),
-                      colorClickableText: colorBlue80,
-                      trimMode: TrimMode.Line,
-                      trimCollapsedText: '\nMore',
-                      trimExpandedText: '\nLess',
-                    ))
+                    child: AppReadMoreWidget(message:  ob.rComment.toString(),))
               ],
             ))
           ],
