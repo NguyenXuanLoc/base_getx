@@ -217,7 +217,7 @@ class LoginView extends GetView<LoginController> {
                     SizedBox(
                       height: 15.h,
                     ),
-                    AppButton(
+                    AppButton(disable: false,
                         padding: EdgeInsets.only(
                             left: 20.w, right: 20.r, top: 12.h, bottom: 12.h),
                         borderRadius: 6.h,

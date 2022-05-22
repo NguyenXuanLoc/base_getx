@@ -10,6 +10,7 @@ List<SearchResponse> searchResponseFromJson(List<dynamic> list) =>
 String searchResponseToJson(List<SearchResponse> data) =>
     json.encode(List<dynamic>.from(data.map((x) => x.toJson())));
 
+
 class SearchResponse {
   SearchResponse({
     this.providerIds,

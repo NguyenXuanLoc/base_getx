@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:hexcolor/hexcolor.dart';
 
 const colorTransparent = Color(0x00000000);
 const colorWhite = Color(0xffffffff);

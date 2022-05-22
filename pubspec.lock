@@ -330,13 +330,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "3.1.0"
-  dropdown_formfield:
-    dependency: "direct main"
-    description:
-      name: dropdown_formfield
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "0.1.4"
   email_validator:
     dependency: "direct main"
     description:
@@ -557,13 +550,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.0.6"
-  flutter_rating_bar:
-    dependency: "direct main"
-    description:
-      name: flutter_rating_bar
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "4.0.1"
   flutter_screenutil:
     dependency: "direct main"
     description:
@@ -700,13 +686,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.1.0"
-  hexcolor:
-    dependency: "direct main"
-    description:
-      name: hexcolor
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "2.0.7"
   html:
     dependency: transitive
     description:
@@ -854,13 +833,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.0.2"
-  modal_bottom_sheet:
-    dependency: "direct main"
-    description:
-      name: modal_bottom_sheet
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "2.0.1"
   nested:
     dependency: transitive
     description:
@@ -904,7 +876,7 @@ packages:
     source: hosted
     version: "2.0.2"
   path:
-    dependency: transitive
+    dependency: "direct main"
     description:
       name: path
       url: "https://pub.dartlang.org"
@@ -1147,7 +1119,7 @@ packages:
     source: hosted
     version: "1.8.2"
   sqflite:
-    dependency: transitive
+    dependency: "direct main"
     description:
       name: sqflite
       url: "https://pub.dartlang.org"
@@ -1167,13 +1139,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.10.0"
-  steps:
-    dependency: "direct main"
-    description:
-      name: steps
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "1.0.1"
   stream_channel:
     dependency: transitive
     description:
@@ -1237,13 +1202,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.0.0"
-  top_modal_sheet:
-    dependency: "direct main"
-    description:
-      name: top_modal_sheet
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "1.0.0+1"
   tuple:
     dependency: transitive
     description:

@@ -47,21 +47,15 @@ dependencies:
   permission_handler: ^8.1.4+2
   package_info: ^2.0.2
   flutter_asset_generator: ^1.0.0 #auto generate all file resource
-  modal_bottom_sheet: ^2.0.0
   dotted_line: ^3.1.0
   syncfusion_flutter_datepicker: ^19.4.55
-  top_modal_sheet: ^1.0.0+1
-  steps: ^1.0.1
   flutter_inappwebview: ^5.3.2
-  dropdown_formfield: ^0.1.4
   google_sign_in: ^5.0.4
   getwidget: ^2.0.5
   cupertino_icons: ^1.0.2
   flutter_screenutil: ^5.5.0
   readmore: ^2.1.0
   scrollable_positioned_list: ^0.2.3 #custom calendar time line.
-  flutter_rating_bar: ^4.0.0 #convert ob to json
-  hexcolor: ^2.0.7
   email_validator: ^2.0.1
   fluttertoast: ^8.0.9
   device_info_plus: ^2.0.1
@@ -75,6 +69,8 @@ dependencies:
   connectivity_plus: ^2.3.0 #internet connection
   flutter_facebook_auth: ^4.3.0
   flutter_datetime_picker: ^1.5.1
+  sqflite: ^2.0.2+1
+  path: ^1.8.0
 dev_dependencies:
   flutter_test:
     sdk: flutter

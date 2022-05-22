@@ -31,7 +31,7 @@ class TestView extends GetView<TestController> {
         controller: controller.testController,
         child: Column(
           children: [
-            AppRating(
+          /*  AppRating(
               onRateUpdate: (rating) {
                 logD("TAG rating");
               },
@@ -41,7 +41,7 @@ class TestView extends GetView<TestController> {
             const AppRating(
               numberRate: 3,
               itemCount: 5,
-            ),
+            ),*/
             AppTextButton(
               buttonTitle: "Textbutton",
               onPressed: () => logD("Bam cc"),

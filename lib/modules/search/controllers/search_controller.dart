@@ -2,11 +2,14 @@ import 'dart:async';
 
 import 'package:docsify/components/dialogs.dart';
 import 'package:docsify/config/constant.dart';
+import 'package:docsify/data/app_database.dart';
+import 'package:docsify/data/model/doctor_model.dart';
 import 'package:docsify/data/model/search_response.dart';
 import 'package:docsify/data/provider/search_provider.dart';
 import 'package:docsify/generated/app_translation.dart';
 import 'package:docsify/services/globals.dart' as globals;
 import 'package:docsify/utils/app_utils.dart';
+import 'package:docsify/utils/log_utils.dart';
 import 'package:docsify/utils/snack_bar_utils.dart';
 import 'package:docsify/utils/toast_utils.dart';
 import 'package:flutter/cupertino.dart';
@@ -26,8 +29,10 @@ class SearchController extends GetxController {
   final isShowAddress = false.obs;
   final searchProvider = SearchProvider();
   final listSearch = List<SearchResponse>.empty(growable: true).obs;
+  final listFamousDoctor = List<SearchResponse>.empty(growable: true).obs;
+  final listLastSearch = List<DoctorModel>.empty(growable: true).obs;
   final isLoading = true.obs;
-
+  final isLoadingFamous = true.obs;
   final isDefaultView = false.obs;
   final isReadEnd = false.obs;
   var paging = 0;
@@ -56,12 +61,22 @@ class SearchController extends GetxController {
 
   @override
   void onReady() {
+    if (isDefaultView.value) {
+      getLastSearch();
+      getFamousDoctor();
+    }
     if (query.isNotEmpty) {
       queryController.obs.value.text = query;
       handleSearch(query);
     }
     handlePaging();
     super.onReady();
+  }
+
+  void getLastSearch() async {
+    var listResult = await AppDatabase.instance.readAllDoctors();
+    listLastSearch.value = listResult;
+    update();
   }
 
   void setContext(BuildContext context) {
@@ -87,7 +102,6 @@ class SearchController extends GetxController {
     return ApiKey.rate_asc;
   }
 
-
   void handlePaging() {
     scrollController.addListener(() {
       var maxScroll = scrollController.position.maxScrollExtent;
@@ -108,9 +122,23 @@ class SearchController extends GetxController {
     handleSearch(suggest);
   }
 
+  void getFamousDoctor() async {
+    isLoadingFamous.value = true;
+    var result = await searchProvider.getFamousDoctor();
+    if (result.error != null) {
+      toast(result.error.toString());
+    } else {
+      var listResult = searchResponseFromJson(result.data['data']);
+      listFamousDoctor.addAll(listResult);
+    }
+    isLoadingFamous.value = false;
+    update();
+  }
+
   void handleSearch(String query,
       {String city = '', bool isPaging = false}) async {
     if (query.isNotEmpty) {
+      isDefaultView.value = false;
       if (!isPaging) paging = 0;
       var sort = getSortKey(sortValue.value);
       if (context != null) Utils.hideKeyboard(context!);
@@ -146,7 +174,22 @@ class SearchController extends GetxController {
     isShowAddress.value = !isShowAddress.value;
   }
 
-  void showAddress() {}
+  void openDoctorDetail(SearchResponse ob) {
+    saveDoctor(
+        name: ob.doctorName!,
+        avatar: ob.doctorProfile!.avatar![0],
+        id: ob.id!,
+        specialization: ob.doctorProfile!.specialization!);
+  }
+
+  void saveDoctor(
+      {String name = '',
+      String avatar = '',
+      String specialization = '',
+      int id = 0}) async {
+    AppDatabase.instance.create(DoctorModel(
+        id: id, name: name, avatar: avatar, specialization: specialization));
+  }
 
   @override
   void onClose() {}

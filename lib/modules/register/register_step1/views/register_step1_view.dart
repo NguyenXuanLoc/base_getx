@@ -136,7 +136,7 @@ class RegisterStep1View extends GetView<RegisterStep1Controller> {
                   SizedBox(
                     height: 15.h,
                   ),
-                  AppButton(
+                  AppButton(disable: false,
                     borderRadius: 6.h,
                     textStyle: typoNormalTextBold.copyWith(
                         color: colorText5, fontWeight: FontWeight.w700),

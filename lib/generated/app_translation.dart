@@ -100,6 +100,9 @@ class LocaleKeys {
   static const cancel = 'cancel';
   static const quit = 'quit';
   static const notify = 'notify';
+  static const last_search = 'last_search';
+  static const suggestion = 'suggestion';
+  static const famous_doctor = 'famous_doctor';
 }
 
 class Locales {
@@ -186,5 +189,8 @@ class Locales {
     'cancel': 'Cancel',
     'quit': 'Quit',
     'notify': 'Notify',
+    'last_search': 'LAST SEARCH',
+    'suggestion': 'Suggestions',
+    'famous_doctor': 'Famous Doctor',
   };
 }

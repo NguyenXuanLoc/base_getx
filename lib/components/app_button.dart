@@ -31,7 +31,7 @@ class AppButton extends StatelessWidget {
     this.borderRadius,
     this.side,
     this.padding,
-    this.disable = true,
+    this.disable = false,
     this.shapeBorder,
     this.materialTapTargetSize,
   }) : super(key: key);
@@ -39,7 +39,7 @@ class AppButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialButton(
-      animationDuration: Duration(seconds: 0),
+      animationDuration: const Duration(seconds: 0),
       splashColor: disable ? Colors.transparent : null,
       highlightColor: disable ? Colors.transparent : null,
       enableFeedback: false,

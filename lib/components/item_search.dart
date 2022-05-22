@@ -6,7 +6,6 @@ import 'package:docsify/generated/app_translation.dart';
 import 'package:docsify/services/globals.dart';
 import 'package:docsify/theme/app_styles.dart';
 import 'package:docsify/theme/colors.dart';
-import 'package:docsify/utils/log_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -18,8 +17,15 @@ import 'app_network_image.dart';
 
 class ItemSearchWidget extends StatefulWidget {
   final SearchResponse ob;
+  final Function(int) callBackFavourite;
+  final Function(SearchResponse) callBackOpenDetail;
 
-  const ItemSearchWidget({Key? key, required this.ob}) : super(key: key);
+  const ItemSearchWidget(
+      {Key? key,
+      required this.ob,
+      required this.callBackFavourite,
+      required this.callBackOpenDetail})
+      : super(key: key);
 
   @override
   _ItemSearchWidgetState createState() => _ItemSearchWidgetState();
@@ -36,103 +42,107 @@ class _ItemSearchWidgetState extends State<ItemSearchWidget>
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding:
-          EdgeInsets.only(top: 10.h, bottom: 10.h, left: 10.w, right: 10.w),
-      color: colorWhite,
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Row(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              ClipOval(
-                child: SizedBox(
-                  width: 46.w,
-                  height: 46.w,
-                  child: AppNetworkImage(
-                      source: widget.ob.doctorProfile!.avatar,
-                      errorSource: urlAvatarError),
-                ),
-              ),
-              SizedBox(
-                width: 10.w,
-              ),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  AppText(
-                    widget.ob.doctorName!,
-                    style: typoMediumTextBold,
-                  ),
-                  AppText(
-                    widget.ob.doctorProfile!.specialization.toString(),
-                    style: typoSmallTextRegular.copyWith(
-                        fontSize: 13.sp, color: colorText45),
-                  ),
-                  Row(
-                    children: [
-                      SizedBox(
-                        width: 100.w,
-                        child: Image.asset(Utils.getNumberRating(
-                            double.parse(widget.ob.doctorRateAvg!.toString()))),
-                      ),
-                      AppText(
-                        " (${widget.ob.doctorRateCount.toString()}) ",
-                        style: typoSmallTextRegular.copyWith(fontSize: 12.sp),
-                      )
-                    ],
-                  ),
-                ],
-              ),
-              const Spacer(),
-              InkWell(
-                onTap: () {},
-                child: SvgPicture.asset(
-                  R.assetsSvgHeartSvg,
-                  width: 21.w,
-                ),
-              )
-            ],
-          ),
-          SizedBox(
-            height: 10.h,
-          ),
-          AppReadMoreWidget(message: widget.ob.doctorProfile!.about!),
-          SizedBox(
-            height: 20.h,
-          ),
-          Container(
-            alignment: Alignment.center,
-            width: MediaQuery.of(context).size.width,
-            decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(5.h),
-                color: colorBackgroundGrey10),
-            padding: EdgeInsets.only(top: 7.h, bottom: 7.h),
-            child: Row(
+    return InkWell(
+      onTap: () => widget.callBackOpenDetail(widget.ob),
+      child: Container(
+        padding:
+            EdgeInsets.only(top: 10.h, bottom: 10.h, left: 10.w, right: 10.w),
+        color: colorWhite,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                SvgPicture.asset(R.assetsSvgCalendarSvg),
-                AppText(
-                  '  Available Calendar: Today ',
-                  style: typoSmallTextBold.copyWith(fontSize: 13.sp),
+                ClipOval(
+                  child: SizedBox(
+                    width: 46.w,
+                    height: 46.w,
+                    child: AppNetworkImage(
+                        source: widget.ob.doctorProfile!.avatar,
+                        errorSource: urlAvatarError),
+                  ),
+                ),
+                SizedBox(
+                  width: 10.w,
+                ),
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    AppText(
+                      widget.ob.doctorName!,
+                      style: typoMediumTextBold,
+                    ),
+                    AppText(
+                      widget.ob.doctorProfile!.specialization.toString(),
+                      style: typoSmallTextRegular.copyWith(
+                          fontSize: 13.sp, color: colorText45),
+                    ),
+                    Row(
+                      children: [
+                        SizedBox(
+                          width: 100.w,
+                          child: Image.asset(Utils.getNumberRating(double.parse(
+                              widget.ob.doctorRateAvg!.toString()))),
+                        ),
+                        AppText(
+                          " (${widget.ob.doctorRateCount.toString()}) ",
+                          style: typoSmallTextRegular.copyWith(fontSize: 12.sp),
+                        )
+                      ],
+                    ),
+                  ],
+                ),
+                const Spacer(),
+                InkWell(
+                  onTap: () =>
+                      widget.callBackFavourite(widget.ob.doctorProfile!.id!),
+                  child: SvgPicture.asset(
+                    R.assetsSvgHeartSvg,
+                    width: 21.w,
+                  ),
                 )
               ],
-              mainAxisSize: MainAxisSize.min,
             ),
-          ),
-          SizedBox(
-            height: 10.h,
-          ),
-          SizedBox(
-            width: MediaQuery.of(context).size.width,
-            height: 40.h,
-            child: ListView(
-              scrollDirection: Axis.horizontal,
-              children: titleAddressWidget(),
+            SizedBox(
+              height: 10.h,
             ),
-          ),
-          addressWidget(widget.ob.addresses![currentIndex])
-        ],
+            AppReadMoreWidget(message: widget.ob.doctorProfile!.about ?? ''),
+            SizedBox(
+              height: 20.h,
+            ),
+            Container(
+              alignment: Alignment.center,
+              width: MediaQuery.of(context).size.width,
+              decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(5.h),
+                  color: colorBackgroundGrey10),
+              padding: EdgeInsets.only(top: 7.h, bottom: 7.h),
+              child: Row(
+                children: [
+                  SvgPicture.asset(R.assetsSvgCalendarSvg),
+                  AppText(
+                    '  Available Calendar: Today ',
+                    style: typoSmallTextBold.copyWith(fontSize: 13.sp),
+                  )
+                ],
+                mainAxisSize: MainAxisSize.min,
+              ),
+            ),
+            SizedBox(
+              height: 10.h,
+            ),
+            SizedBox(
+              width: MediaQuery.of(context).size.width,
+              height: 40.h,
+              child: ListView(
+                scrollDirection: Axis.horizontal,
+                children: titleAddressWidget(),
+              ),
+            ),
+            addressWidget(widget.ob.addresses![currentIndex])
+          ],
+        ),
       ),
     );
   }
@@ -145,7 +155,7 @@ class _ItemSearchWidgetState extends State<ItemSearchWidget>
             setState(() => currentIndex = i);
           },
           child: Container(
-            child: Text(LocaleKeys.address.tr + " ${i + 1}",
+            child: AppText(LocaleKeys.address.tr + " ${i + 1}",
                 style: typoMediumTextBold.copyWith(
                   fontSize: 15.sp,
                   shadows: [
