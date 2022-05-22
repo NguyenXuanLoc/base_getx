@@ -22,7 +22,7 @@ class SearchProvider extends BaseProvider {
     var body = {
       ApiKey.from: from.toString(),
       ApiKey.size: size.toString(),
-      ApiKey.city: city.toString(),
+      ApiKey.city: city.toString().replaceAll(" ", "_"),
       ApiKey.query: query.toString(),
       ApiKey.sort: sort,
     };

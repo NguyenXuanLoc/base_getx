@@ -143,4 +143,6 @@ class R {
 
   /// ![preview](file://H:\docsify\docsify\assets\svg\un_rate.svg)
   static const String assetsSvgUnRateSvg = 'assets/svg/un_rate.svg';
+
+  static const String assetsJsonCity = 'assets/json/city.json';
 }

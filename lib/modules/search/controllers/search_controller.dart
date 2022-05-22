@@ -1,4 +1,4 @@
-import 'dart:async';
+import 'dart:convert';
 
 import 'package:docsify/components/dialogs.dart';
 import 'package:docsify/config/constant.dart';
@@ -9,12 +9,14 @@ import 'package:docsify/data/provider/search_provider.dart';
 import 'package:docsify/generated/app_translation.dart';
 import 'package:docsify/services/globals.dart' as globals;
 import 'package:docsify/utils/app_utils.dart';
-import 'package:docsify/utils/log_utils.dart';
 import 'package:docsify/utils/snack_bar_utils.dart';
 import 'package:docsify/utils/toast_utils.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
+
+import '../../../data/model/city_response.dart';
 
 enum ACTION_SEARCH { ONLINE, OFFLINE }
 
@@ -23,14 +25,18 @@ class SearchController extends GetxController {
   BuildContext? context;
   final scrollController = ScrollController();
   final queryController = TextEditingController();
+  final cityController = TextEditingController();
   final errorQuery = ''.obs;
 
   final listSuggestion = globals.listSuggestion.obs;
-  final isShowAddress = false.obs;
   final searchProvider = SearchProvider();
   final listSearch = List<SearchResponse>.empty(growable: true).obs;
   final listFamousDoctor = List<SearchResponse>.empty(growable: true).obs;
-  final listLastSearch = List<DoctorModel>.empty(growable: true).obs;
+  final listLastSearch = List<InfoDoctorModel>.empty(growable: true).obs;
+  final listSuggestDoctor = List<InfoDoctorModel>.empty(growable: true).obs;
+  final listCity = List<CityResponse>.empty(growable: true).obs;
+  final isCity = false.obs;
+
   final isLoading = true.obs;
   final isLoadingFamous = true.obs;
   final isDefaultView = false.obs;
@@ -61,9 +67,11 @@ class SearchController extends GetxController {
 
   @override
   void onReady() {
+    getCity();
     if (isDefaultView.value) {
       getLastSearch();
       getFamousDoctor();
+      listSuggestDoctor.value = globals.listDoctorSuggest;
     }
     if (query.isNotEmpty) {
       queryController.obs.value.text = query;
@@ -71,6 +79,31 @@ class SearchController extends GetxController {
     }
     handlePaging();
     super.onReady();
+  }
+
+  void getCity() async {
+    String response = await rootBundle.loadString('assets/json/city.json');
+    var result = json.decode(response);
+    listCity.value = cityResponseFromJson(result);
+  }
+
+  void setCity(CityResponse cityResponse) {
+    cityController.text = cityResponse.city!;
+  }
+
+  void setCategory(String category) {
+    queryController.text = category;
+    handleSearch(category);
+  }
+
+  List<CityResponse> filterCity(String text) {
+    var result = <CityResponse>[];
+    for (var e in listCity) {
+      if (e.city!.toLowerCase().contains(text.toLowerCase())) {
+        result.add(e);
+      }
+    }
+    return result;
   }
 
   void getLastSearch() async {
@@ -138,6 +171,10 @@ class SearchController extends GetxController {
   void handleSearch(String query,
       {String city = '', bool isPaging = false}) async {
     if (query.isNotEmpty) {
+      if (isCity.value == true && cityController.text.isNotEmpty) {
+        city = cityController.text;
+        print("TAG city: $city");
+      }
       isDefaultView.value = false;
       if (!isPaging) paging = 0;
       var sort = getSortKey(sortValue.value);
@@ -170,8 +207,12 @@ class SearchController extends GetxController {
     }
   }
 
-  void actionSearch() {
-    isShowAddress.value = !isShowAddress.value;
+  void actionSearch(bool isShowCity) {
+    if (isShowCity) {
+      isCity.value = true;
+    } else {
+      isCity.value = false;
+    }
   }
 
   void openDoctorDetail(SearchResponse ob) {
@@ -187,7 +228,7 @@ class SearchController extends GetxController {
       String avatar = '',
       String specialization = '',
       int id = 0}) async {
-    AppDatabase.instance.create(DoctorModel(
+    AppDatabase.instance.create(InfoDoctorModel(
         id: id, name: name, avatar: avatar, specialization: specialization));
   }
 

@@ -40,13 +40,13 @@ CREATE TABLE $tableDoctor (
 ''');
   }
 
-  Future<DoctorModel> create(DoctorModel doctor) async {
+  Future<InfoDoctorModel> create(InfoDoctorModel doctor) async {
     final db = await instance.database;
     final id = await db.insert(tableDoctor, doctor.toJson());
     return doctor.copy(id: id);
   }
 
-  Future<DoctorModel> readDoctor(int id) async {
+  Future<InfoDoctorModel> readDoctor(int id) async {
     final db = await instance.database;
 
     final maps = await db.query(
@@ -57,21 +57,21 @@ CREATE TABLE $tableDoctor (
     );
 
     if (maps.isNotEmpty) {
-      return DoctorModel.fromJson(maps.first);
+      return InfoDoctorModel.fromJson(maps.first);
     } else {
       throw Exception('ID $id not found');
     }
   }
 
-  Future<List<DoctorModel>> readAllDoctors() async {
+  Future<List<InfoDoctorModel>> readAllDoctors() async {
     final db = await instance.database;
 
-    final result = await db.query(tableDoctor);
+    final result = await db.query(tableDoctor,limit: 5);
 
-    return result.map((json) => DoctorModel.fromJson(json)).toList();
+    return result.map((json) => InfoDoctorModel.fromJson(json)).toList();
   }
 
-  Future<int> update(DoctorModel Doctor) async {
+  Future<int> update(InfoDoctorModel Doctor) async {
     final db = await instance.database;
 
     return db.update(

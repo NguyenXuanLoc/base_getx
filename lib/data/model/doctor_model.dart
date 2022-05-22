@@ -9,32 +9,32 @@ class DoctorField {
   static final String specialization = 'specialization';
 }
 
-class DoctorModel {
+class InfoDoctorModel {
   final int? id;
   final String? name;
   final String? avatar;
   final String? specialization;
 
-  const DoctorModel({
+  const InfoDoctorModel({
     required this.id,
     required this.name,
     required this.avatar,
     required this.specialization,
   });
 
-  DoctorModel copy({
+  InfoDoctorModel copy({
     int? id,
     String? name,
     String? avatar,
   }) =>
-      DoctorModel(
+      InfoDoctorModel(
         id: id ?? this.id,
         name: name ?? this.name,
         avatar: avatar ?? this.avatar,
         specialization: specialization ?? this.specialization,
       );
 
-  static DoctorModel fromJson(Map<String, Object?> json) => DoctorModel(
+  static InfoDoctorModel fromJson(Map<String, Object?> json) => InfoDoctorModel(
         id: json[DoctorField.id] as int?,
         name: json[DoctorField.name] as String?,
         avatar: json[DoctorField.avatar] as String?,

@@ -7,6 +7,7 @@ import 'package:docsify/components/item_loading.dart';
 import 'package:docsify/components/item_search.dart';
 import 'package:docsify/components/suggest_wiget.dart';
 import 'package:docsify/const/resource.dart';
+import 'package:docsify/data/model/city_response.dart';
 import 'package:docsify/generated/app_translation.dart';
 import 'package:docsify/services/globals.dart';
 import 'package:docsify/theme/app_styles.dart';
@@ -16,6 +17,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
+import 'package:dropdown_button2/dropdown_button2.dart';
+import 'package:flutter_typeahead/flutter_typeahead.dart';
 
 import '../controllers/search_controller.dart';
 
@@ -65,9 +68,10 @@ class SearchView extends GetView<SearchController> {
                   child: suggestionWidget()),
             ),
             Obx(() => Visibility(
-                  child: sortWidget(),
+                  child: sortWidget(context),
                   visible: !controller.isDefaultView.value,
                 )),
+            // test(context),
             Obx(() => Visibility(
                 child: listSearch(), visible: !controller.isDefaultView.value))
           ],
@@ -82,66 +86,19 @@ class SearchView extends GetView<SearchController> {
           padding: EdgeInsets.only(left: 15.w, top: 15.h, bottom: 25.h),
           child: AppText(
             LocaleKeys.famous_doctor.tr.toUpperCase(),
-            style: typoMediumTextBold.copyWith(fontWeight: FontWeight.w700),
+            style: typoNormalTextBold.copyWith(fontWeight: FontWeight.w700),
           ),
         ),
         Obx(() => Visibility(
-          visible: controller.isLoadingFamous.value,
-          child: const Align(
-            alignment: Alignment.center,
-            child: CircularProgressIndicator(
-              strokeWidth: 2,
-              color: colorBlue80,
-            ),
-          ),
-        )),
-        Obx(() => ListView.builder(
-          shrinkWrap: true,
-          physics: const NeverScrollableScrollPhysics(),
-          primary: false,
-          itemBuilder: (context, index) => Container(
-            color: colorWhite,
-            padding: EdgeInsets.only(
-                left: 20.w, right: 20.w, top: 10.h, bottom: 10.h),
-            child:InkWell(child:  Row(
-              children: [
-                SizedBox(
-                  child: ClipOval(
-                    child: AppNetworkImage(
-                      source: controller.listFamousDoctor[index]
-                          .doctorProfile!.avatar![0],
-                      errorSource: urlAvatarError,
-                    ),
-                  ),
-                  height: 40.h,
-                  width: 40.h,
+              visible: controller.isLoadingFamous.value,
+              child: const Align(
+                alignment: Alignment.center,
+                child: CircularProgressIndicator(
+                  strokeWidth: 2,
+                  color: colorBlue80,
                 ),
-                SizedBox(
-                  width: 50.w,
-                ),
-                AppText(
-                  controller.listFamousDoctor[index].doctorName!,
-                  style: typoSmallTextRegular.copyWith(fontSize: 15.sp),
-                )
-              ],
-            ),onTap: (){print("TAG sfsdf");},),
-          ),
-          itemCount: controller.listFamousDoctor.length,
-        ))
-      ],
-    );
-  }
-  Widget lastSearchWidget() {
-    return Wrap(
-      spacing: 15.w,
-      children: [
-        Padding(
-          padding: EdgeInsets.only(left: 15.w, top: 25.h, bottom: 25.h),
-          child: AppText(
-            LocaleKeys.last_search.tr.toUpperCase(),
-            style: typoMediumTextBold.copyWith(fontWeight: FontWeight.w700),
-          ),
-        ),
+              ),
+            )),
         Obx(() => ListView.builder(
               shrinkWrap: true,
               physics: const NeverScrollableScrollPhysics(),
@@ -150,33 +107,92 @@ class SearchView extends GetView<SearchController> {
                 color: colorWhite,
                 padding: EdgeInsets.only(
                     left: 20.w, right: 20.w, top: 10.h, bottom: 10.h),
-                child: Row(
-                  children: [
-                    SizedBox(
-                      child: ClipOval(
-                        child: AppNetworkImage(
-                          source: controller.listLastSearch[index].avatar,
-                          errorSource: urlAvatarError,
+                child: InkWell(
+                  child: Row(
+                    children: [
+                      SizedBox(
+                        child: ClipOval(
+                          child: AppNetworkImage(
+                            source: controller.listFamousDoctor[index]
+                                .doctorProfile!.avatar![0],
+                            errorSource: urlAvatarError,
+                          ),
                         ),
+                        height: 40.h,
+                        width: 40.h,
                       ),
-                      height: 40.h,
-                      width: 40.h,
-                    ),
-                    SizedBox(
-                      width: 50.w,
-                    ),
-                    AppText(
-                      controller.listLastSearch[index].name!,
-                      style: typoSmallTextRegular.copyWith(fontSize: 15.sp),
-                    )
-                  ],
+                      SizedBox(
+                        width: 50.w,
+                      ),
+                      AppText(
+                        controller.listFamousDoctor[index].doctorName!,
+                        style: typoSmallTextRegular.copyWith(fontSize: 15.sp),
+                      )
+                    ],
+                  ),
+                  onTap: () => controller.openDoctorDetail(controller.listFamousDoctor[index]),
                 ),
               ),
-              itemCount: controller.listLastSearch.length,
+              itemCount: controller.listFamousDoctor.length,
             ))
       ],
     );
   }
+
+  Widget lastSearchWidget() {
+    return Visibility(
+      child: Wrap(
+        spacing: 15.w,
+        children: [
+          Padding(
+            padding: EdgeInsets.only(left: 15.w, top: 25.h, bottom: 25.h),
+            child: AppText(
+              LocaleKeys.last_search.tr.toUpperCase(),
+              style: typoNormalTextBold.copyWith(fontWeight: FontWeight.w700),
+            ),
+          ),
+          Obx(() => ListView.builder(
+                shrinkWrap: true,
+                physics: const NeverScrollableScrollPhysics(),
+                primary: false,
+                itemBuilder: (context, index) => InkWell(
+                  child: Container(
+                    color: colorWhite,
+                    padding: EdgeInsets.only(
+                        left: 20.w, right: 20.w, top: 10.h, bottom: 10.h),
+                    child: Row(
+                      children: [
+                        SizedBox(
+                          child: ClipOval(
+                            child: AppNetworkImage(
+                              source: controller.listLastSearch[index].avatar,
+                              errorSource: urlAvatarError,
+                            ),
+                          ),
+                          height: 40.h,
+                          width: 40.h,
+                        ),
+                        SizedBox(
+                          width: 50.w,
+                        ),
+                        AppText(
+                          controller.listLastSearch[index].name!,
+                          style: typoSmallTextRegular.copyWith(fontSize: 15.sp),
+                        )
+                      ],
+                    ),
+                  ),
+                  onTap: () => controller
+                      .setCategory(controller.listLastSearch[index].name!),
+                ),
+                itemCount: controller.listLastSearch.length,
+              ))
+        ],
+      ),
+      visible: controller.listLastSearch.isNotEmpty ? true : false,
+    );
+  }
+
   Widget suggestionWidget() {
     return Wrap(
       runSpacing: 10.w,
@@ -185,63 +201,67 @@ class SearchView extends GetView<SearchController> {
           padding: EdgeInsets.only(left: 15.w, top: 25.h, bottom: 15.h),
           child: AppText(
             LocaleKeys.suggestion.tr.toUpperCase(),
-            style: typoMediumTextBold.copyWith(fontWeight: FontWeight.w700),
+            style: typoNormalTextBold.copyWith(fontWeight: FontWeight.w700),
           ),
         ),
         ListView.builder(
           shrinkWrap: true,
           physics: const NeverScrollableScrollPhysics(),
           primary: false,
-          itemBuilder: (context, index) => Container(
-            color: colorWhite,
-            padding: EdgeInsets.only(
-                left: 20.w, right: 20.w, top: 10.h, bottom: 10.h),
-            child: Row(
-              children: [
-                SizedBox(
-                  child: ClipOval(
-                    child: AppNetworkImage(
-                      source: controller.listLastSearch[index].avatar,
-                      errorSource: urlAvatarError,
+          itemBuilder: (context, index) => InkWell(
+            child: Container(
+              color: colorWhite,
+              padding: EdgeInsets.only(
+                  left: 20.w, right: 20.w, top: 10.h, bottom: 10.h),
+              child: Row(
+                children: [
+                  SizedBox(
+                    child: ClipOval(
+                      child: AppNetworkImage(
+                        source: controller.listSuggestDoctor[index].avatar,
+                        errorSource: urlAvatarError,
+                      ),
                     ),
+                    height: 40.h,
+                    width: 40.h,
                   ),
-                  height: 40.h,
-                  width: 40.h,
-                ),
-                SizedBox(
-                  width: 50.w,
-                ),
-                Column(
-                  children: [
-                    AppText(
-                      controller.listLastSearch[index].name!,
-                      style: typoSmallTextRegular.copyWith(fontSize: 15.sp),
-                    ),
-                    AppText(
-                      controller.listLastSearch[index].specialization ?? '',
-                      style: typoSmallTextRegular.copyWith(fontSize: 15.sp),
-                    )
-                  ],
-                )
-              ],
+                  SizedBox(
+                    width: 50.w,
+                  ),
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      AppText(
+                        controller.listSuggestDoctor[index].name!,
+                        style: typoSmallTextRegular.copyWith(fontSize: 15.sp),
+                      ),
+                      AppText(
+                        controller.listSuggestDoctor[index].specialization ??
+                            '',
+                        style: typoSmallTextRegular.copyWith(
+                            fontSize: 13.sp, color: colorText60),
+                      )
+                    ],
+                  )
+                ],
+              ),
             ),
+            onTap: () => controller
+                .setCategory(controller.listSuggestDoctor[index].name!),
           ),
-          itemCount: controller.listLastSearch.length,
+          itemCount: controller.listSuggestDoctor.length,
         )
       ],
     );
   }
 
-
-
-
-  Widget sortWidget() {
+  Widget sortWidget(BuildContext context) {
     return Wrap(
       runSpacing: 10.h,
       spacing: 10.w,
       children: [
         SizedBox(
-          width: 10.h,
+          width: 5.h,
         ),
         AppText(
           LocaleKeys.activity_list.tr,
@@ -249,54 +269,81 @@ class SearchView extends GetView<SearchController> {
         ),
         Obx(() => Container(
             margin: EdgeInsets.only(left: 10.w, right: 10.w, bottom: 15.h),
-            padding: EdgeInsets.only(left: 10.w, right: 10.w),
             height: 33.h,
-            decoration: BoxDecoration(
-                border: Border.all(color: colorGrey20, width: 1.h),
-                color: colorWhite,
-                borderRadius: BorderRadius.all(Radius.circular(8.h))),
             child: DropdownButtonHideUnderline(
-              child: DropdownButton<String>(
-                  isDense: true,
-                  value: controller.sortValue.value,
-                  isExpanded: true,
-                  icon: const Icon(Icons.keyboard_arrow_down),
-                  items: controller.listSort
-                      .map((e) => DropdownMenuItem(
-                            child: AppText(e),
-                            value: e,
-                          ))
-                      .toList(),
-                  onChanged: (value) {
-                    controller.handleSort(value!);
-                  }),
+              child: DropdownButton2(
+                isExpanded: true,
+                items: controller.listSort
+                    .map((item) => DropdownMenuItem<String>(
+                          value: item,
+                          child: AppText(
+                            item,
+                            style: typoSmallTextRegular,
+                          ),
+                        ))
+                    .toList(),
+                value: controller.sortValue.value,
+                onChanged: (value) {
+                  controller.handleSort(value.toString());
+                },
+                icon: const Icon(Icons.keyboard_arrow_down),
+                buttonPadding: EdgeInsets.only(left: 10.w, right: 10.w),
+                buttonDecoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(10.w),
+                  border: Border.all(
+                    color: colorGrey20,
+                  ),
+                  color: colorWhite,
+                ),
+                itemPadding: EdgeInsets.only(left: 14.w, right: 14.w),
+                dropdownWidth: MediaQuery.of(context).size.width,
+                dropdownDecoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(14),
+                  color: colorWhite,
+                ),
+                scrollbarRadius: Radius.circular(10.w),
+                scrollbarThickness: 1,
+                scrollbarAlwaysShow: true,
+                offset: const Offset(-20, 0),
+              ),
             ))),
       ],
     );
   }
+
   Widget listSearch() {
-    return ListView.separated(
-      physics: const NeverScrollableScrollPhysics(),
-      shrinkWrap: true,
-      primary: false,
-      itemBuilder: (context, index) {
-        if (index == controller.listSearch.length) {
-          return const ItemLoading();
-        }
-        return ItemSearchWidget(
-          ob: controller.listSearch[index],
-          callBackOpenDetail: (ob) => controller.openDoctorDetail(ob),
-          callBackFavourite: (id) {},
-        );
-      },
-      separatorBuilder: (context, index) => Container(
-        height: 20.h,
-      ),
-      itemCount: controller.isReadEnd.value
-          ? controller.listSearch.length
-          : controller.listSearch.length + 1,
-    );
+    return ((controller.listSearch.isEmpty && !controller.isLoading.value)
+        ? Container(
+            alignment: Alignment.center,
+            padding: EdgeInsets.only(top: 20.h),
+            child: AppText(
+              LocaleKeys.not_result.tr,
+              style: typoMediumTextRegular,
+            ),
+          )
+        : Obx(() => ListView.separated(
+              physics: const NeverScrollableScrollPhysics(),
+              shrinkWrap: true,
+              primary: false,
+              itemBuilder: (context, index) {
+                if (index == controller.listSearch.length) {
+                  return const ItemLoading();
+                }
+                return ItemSearchWidget(
+                  ob: controller.listSearch[index],
+                  callBackOpenDetail: (ob) => controller.openDoctorDetail(ob),
+                  callBackFavourite: (id) {},
+                );
+              },
+              separatorBuilder: (context, index) => Container(
+                height: 20.h,
+              ),
+              itemCount: controller.isReadEnd.value
+                  ? controller.listSearch.length
+                  : controller.listSearch.length + 1,
+            )));
   }
+
   Widget searchGroupWidget(BuildContext context) {
     return Container(
       color: colorBlue90,
@@ -310,11 +357,11 @@ class SearchView extends GetView<SearchController> {
           Row(
             children: [
               Obx(() => AppButton(
-                    backgroundColor: (controller.isShowAddress.value == true)
+                    backgroundColor: (controller.isCity.value == true)
                         ? colorGrey20
                         : colorWhite,
                     title: LocaleKeys.offline.tr,
-                    onPress: () => controller.actionSearch(),
+                    onPress: () => controller.actionSearch(true),
                     textStyle: typoNormalTextBold,
                     materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
                     shapeBorder: RoundedRectangleBorder(
@@ -322,11 +369,11 @@ class SearchView extends GetView<SearchController> {
                             BorderRadius.only(topLeft: Radius.circular(5.h))),
                   )),
               Obx(() => AppButton(
-                    backgroundColor: (controller.isShowAddress.value == true)
+                    backgroundColor: (controller.isCity.value == true)
                         ? colorWhite
                         : colorGrey20,
                     title: LocaleKeys.online.tr,
-                    onPress: () => controller.actionSearch(),
+                    onPress: () => controller.actionSearch(false),
                     textStyle: typoNormalTextBold,
                     shapeBorder: RoundedRectangleBorder(
                         borderRadius:
@@ -356,23 +403,61 @@ class SearchView extends GetView<SearchController> {
                       fontSize: 14.sp),
                 ),
                 Obx(() => Visibility(
-                      child: AppTextField(
-                        readOnly: true,
-                        hintText: LocaleKeys.address.tr,
-                        textStyle: typoSmallTextBold.copyWith(
-                            color: colorText80, fontWeight: FontWeight.w400),
-                        hintStyle: styleTextField.copyWith(
-                            fontWeight: FontWeight.w400,
-                            color: colorText80,
-                            fontSize: 14.sp),
-                        suffixIcon: IconButton(
-                          onPressed: () {
-                            logE("TAG click");
+                      child: SizedBox(
+                        height: 37.h,
+                        child: TypeAheadField(
+                          hideSuggestionsOnKeyboardHide: false,
+                          textFieldConfiguration: TextFieldConfiguration(
+                              controller: controller.cityController,
+                              autofocus: false,
+                              style: typoSmallTextBold.copyWith(
+                                  color: colorText80,
+                                  fontWeight: FontWeight.w400),
+                              decoration: InputDecoration(
+                                  focusColor: colorGrey20,
+                                  hintText: LocaleKeys.address.tr,
+                                  labelStyle: styleTextField.copyWith(
+                                      fontWeight: FontWeight.w400,
+                                      color: colorText80,
+                                      fontSize: 10.sp),
+                                  hintStyle: styleTextField.copyWith(
+                                      fontWeight: FontWeight.w400,
+                                      color: colorText80,
+                                      fontSize: 14.sp),
+                                  suffixIcon: const Icon(
+                                    Icons.keyboard_arrow_down,
+                                    color: colorBlack,
+                                    size: 20,
+                                  ),
+                                  focusedBorder: OutlineInputBorder(
+                                      borderSide: const BorderSide(
+                                          color: colorBlack, width: 0.7),
+                                      borderRadius: BorderRadius.all(
+                                          Radius.circular(7.h))),
+                                  border: OutlineInputBorder(
+                                      borderRadius: BorderRadius.all(
+                                          Radius.circular(7.h))))),
+                          itemBuilder: (context, CityResponse suggestion) {
+                            return ListTile(
+                              leading: const Icon(Icons.pin_drop_outlined),
+                              title: Text(
+                                suggestion.city!,
+                                style: typoSmallTextRegular,
+                              ),
+                            );
                           },
-                          icon: SvgPicture.asset(R.assetsSvgIcDropDownSvg),
+                          noItemsFoundBuilder: (c) => AppText(
+                            LocaleKeys.not_result.tr,
+                            style: typoSmallTextRegular,
+                          ),
+                          onSuggestionSelected: (CityResponse city) =>
+                              controller.setCity(city),
+                          suggestionsCallback: (pattern) {
+                            return controller.filterCity(pattern);
+                          },
                         ),
                       ),
-                      visible: controller.isShowAddress.value,
+                      visible: controller.isCity.value,
                     )),
                 searchWidget(context)
               ],
@@ -394,6 +479,7 @@ class SearchView extends GetView<SearchController> {
       ),
     );
   }
+
   Widget searchWidget(BuildContext context) {
     return MaterialButton(
       height: 40.h,
