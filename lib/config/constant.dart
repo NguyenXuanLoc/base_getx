@@ -43,5 +43,12 @@ class ApiKey {
   static const size = 'size';
   static const city = 'city';
   static const query = 'query';
+
   static const sort = 'sort';
+  static const rate_desc = 'rate_desc';
+  static const rate_asc = 'rate_asc';
+  static const price_desc = 'rate_desc';
+  static const price_asc = 'rate_asc';
+
+
 }

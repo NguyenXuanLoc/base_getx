@@ -99,6 +99,7 @@ class LocaleKeys {
       'your_information_will_not_be_saved';
   static const cancel = 'cancel';
   static const quit = 'quit';
+  static const notify = 'notify';
 }
 
 class Locales {
@@ -184,5 +185,6 @@ class Locales {
     'your_information_will_not_be_saved': 'Your information will not be saved',
     'cancel': 'Cancel',
     'quit': 'Quit',
+    'notify': 'Notify',
   };
 }

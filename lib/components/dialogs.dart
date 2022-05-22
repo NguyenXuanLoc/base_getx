@@ -13,7 +13,10 @@ import 'package:get/get.dart';
 class Dialogs {
   static final GlobalKey<State> _keyLoader = GlobalKey<State>();
 
-  static Future<void> showLoadingDialog(BuildContext context) {
+  static Future<void>? showLoadingDialog(BuildContext? context) {
+    if (context == null) {
+      return null;
+    }
     return showDialog<void>(
         context: context,
         barrierDismissible: false,

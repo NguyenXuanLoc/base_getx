@@ -26,6 +26,7 @@ class AppTextField extends StatefulWidget {
   final Function(String)? onSubmitted;
   final MaxLengthEnforcement? maxLengthEnforcement;
   final bool? enable;
+  final double? height;
 
   const AppTextField(
       {this.controller,
@@ -49,7 +50,8 @@ class AppTextField extends StatefulWidget {
       this.focusNode,
       this.onSubmitted,
       this.maxLengthEnforcement,
-      this.enable})
+      this.enable,
+      this.height})
       : super(key: key);
 
   @override
@@ -74,7 +76,8 @@ class _AppTextFieldState extends State<AppTextField> {
       maxLengthEnforcement: widget.maxLengthEnforcement,
       focusNode: widget.focusNode,
       controller: widget.controller,
-      style: widget.textStyle ?? styleTextField,
+      style: widget.textStyle?.copyWith(height: widget.height) ??
+          styleTextField.copyWith(height: widget.height),
       obscureText: widget.obscureText ?? false,
       keyboardType: widget.keyboardType,
       textInputAction: widget.textInputAction,
@@ -97,35 +100,5 @@ class _AppTextFieldState extends State<AppTextField> {
           suffixIcon: widget.suffixIcon,
           hintStyle: widget.hintStyle),
     );
-    /* return AnimatedContainer(
-      duration: const Duration(milliseconds: 100),
-      decoration: BoxDecoration(
-          boxShadow: _focusNode.hasFocus ? boxShadowFocus : boxShadow),
-      child: TextField(
-        readOnly: widget.readOnly ?? false,
-        focusNode: _focusNode,
-        controller: widget.controller,
-        style: widget.textStyle ?? styleTextField,
-        obscureText: widget.obscureText ?? false,
-        keyboardType: widget.keyboardType,
-        textInputAction: widget.textInputAction,
-        maxLength: widget.maxLength,
-        autofocus: widget.autofocus ?? false,
-        autocorrect: false,
-        maxLines: widget.keyboardType == TextInputType.multiline ? 4 : 1,
-        onEditingComplete: widget.onEditingComplete,
-        onChanged: widget.onChanged,
-        onSubmitted: (text) {
-          _focusNode.unfocus();
-        },
-        onTap: widget.onTap,
-        decoration: decorTextField.copyWith(
-            hintText: widget.hintText,
-            errorText: widget.errorText,
-            prefixIcon: widget.prefixIcon,
-            suffixIcon: widget.suffixIcon,
-            hintStyle: widget.hintStyle),
-      ),
-    );*/
   }
 }

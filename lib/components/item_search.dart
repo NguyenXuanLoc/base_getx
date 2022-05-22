@@ -1,16 +1,19 @@
+import 'package:docsify/components/app_read_more_widget.dart';
 import 'package:docsify/components/app_text.dart';
-import 'package:docsify/components/rate_bar_indicator.dart';
 import 'package:docsify/const/resource.dart';
 import 'package:docsify/data/model/search_response.dart';
 import 'package:docsify/generated/app_translation.dart';
+import 'package:docsify/services/globals.dart';
 import 'package:docsify/theme/app_styles.dart';
 import 'package:docsify/theme/colors.dart';
+import 'package:docsify/utils/log_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get_utils/get_utils.dart';
 import 'package:readmore/readmore.dart';
 
+import '../utils/app_utils.dart';
 import 'app_network_image.dart';
 
 class ItemSearchWidget extends StatefulWidget {
@@ -24,31 +27,11 @@ class ItemSearchWidget extends StatefulWidget {
 
 class _ItemSearchWidgetState extends State<ItemSearchWidget>
     with SingleTickerProviderStateMixin {
-  late TabController tabController;
-  late PageController pageController;
   var currentIndex = 0;
 
   @override
   void initState() {
-    tabController = TabController(
-        length: widget.ob.source!.after!.addresses!.length + 1, vsync: this);
-    tabController.addListener(() {
-      if (currentIndex != tabController.index) {
-        currentIndex = tabController.index;
-        setState(() {});
-      }
-    });
     super.initState();
-  }
-
-  void switchPage() {
-    pageController.addListener(() {
-      var _newPage = pageController.page!.round();
-      if (currentIndex != _newPage) {
-        currentIndex = _newPage;
-        tabController.index = currentIndex;
-      }
-    });
   }
 
   @override
@@ -64,14 +47,12 @@ class _ItemSearchWidgetState extends State<ItemSearchWidget>
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               ClipOval(
-                child: Container(
-                  color: colorBlack,
+                child: SizedBox(
                   width: 46.w,
                   height: 46.w,
-                  child: const AppNetworkImage(
-                    source:
-                        'https://platform-static-files.s3.amazonaws.com/premierleague/photos/players/250x250/Photo-Missing.png',
-                  ),
+                  child: AppNetworkImage(
+                      source: widget.ob.doctorProfile!.avatar,
+                      errorSource: urlAvatarError),
                 ),
               ),
               SizedBox(
@@ -81,29 +62,23 @@ class _ItemSearchWidgetState extends State<ItemSearchWidget>
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   AppText(
-                    widget.ob.source!.after!.doctorName!,
+                    widget.ob.doctorName!,
                     style: typoMediumTextBold,
                   ),
                   AppText(
-                    widget.ob.source!.after!.doctorProfile!.specialization
-                        .toString(),
+                    widget.ob.doctorProfile!.specialization.toString(),
                     style: typoSmallTextRegular.copyWith(
                         fontSize: 13.sp, color: colorText45),
                   ),
                   Row(
                     children: [
-                      SvgPicture.asset(R.assetsSvgRateSvg)
-                      /*         RatingBarIndicator(
-                        unratedWidget: SvgPicture.asset(R.assetsSvgUnRateSvg),
-                        rating: 1.5 */ /*widget.ob.source!.after!.doctorRateAvg!*/ /*,
-                        itemBuilder: (context, _) =>
-                            SvgPicture.asset(R.assetsSvgRateSvg),
-                        itemCount: 5,
-                        itemSize: 20.0,
-                      ),*/
-                      ,
+                      SizedBox(
+                        width: 100.w,
+                        child: Image.asset(Utils.getNumberRating(
+                            double.parse(widget.ob.doctorRateAvg!.toString()))),
+                      ),
                       AppText(
-                        " (${widget.ob.source!.after!.doctorRateCount.toString()}) ",
+                        " (${widget.ob.doctorRateCount.toString()}) ",
                         style: typoSmallTextRegular.copyWith(fontSize: 12.sp),
                       )
                     ],
@@ -123,15 +98,7 @@ class _ItemSearchWidgetState extends State<ItemSearchWidget>
           SizedBox(
             height: 10.h,
           ),
-          ReadMoreText(
-            widget.ob.source!.after!.doctorProfile!.about!,
-            trimLines: 3,
-            style: typoSmallTextRegular.copyWith(fontSize: 14.3.sp),
-            colorClickableText: colorBlue80,
-            trimMode: TrimMode.Line,
-            trimCollapsedText: '\nMore',
-            trimExpandedText: '\nLess',
-          ),
+          AppReadMoreWidget(message: widget.ob.doctorProfile!.about!),
           SizedBox(
             height: 20.h,
           ),
@@ -153,40 +120,47 @@ class _ItemSearchWidgetState extends State<ItemSearchWidget>
               mainAxisSize: MainAxisSize.min,
             ),
           ),
-          TabBar(
-            physics: const NeverScrollableScrollPhysics(),
-            isScrollable: true,
-            indicatorSize: TabBarIndicatorSize.label,
-            controller: tabController,
-            labelStyle: typoSmallTextBold.copyWith(fontWeight: FontWeight.w800),
-            indicator: const UnderlineTabIndicator(
-              borderSide: BorderSide(color: colorPink100, width: 2.0),
-            ),
-            unselectedLabelColor: colorText100,
-            tabs: allTitleServiceWidget(widget.ob.source!.after!.addresses!),
+          SizedBox(
+            height: 10.h,
           ),
-          addressWidget(
-              widget.ob.source!.after!.addresses![tabController.index])
+          SizedBox(
+            width: MediaQuery.of(context).size.width,
+            height: 40.h,
+            child: ListView(
+              scrollDirection: Axis.horizontal,
+              children: titleAddressWidget(),
+            ),
+          ),
+          addressWidget(widget.ob.addresses![currentIndex])
         ],
       ),
     );
   }
 
-  List<Tab> allTitleServiceWidget(List<Address> listService) {
-    var list = <Tab>[];
-    for (int i = 0; i < listService.length; i++) {
-      list.add(Tab(text: LocaleKeys.address.tr + " ${i + 1}"));
+  List<Widget> titleAddressWidget() {
+    var result = <Widget>[];
+    for (int i = 0; i < widget.ob.addresses!.length; i++) {
+      result.add(InkWell(
+          onTap: () {
+            setState(() => currentIndex = i);
+          },
+          child: Container(
+            child: Text(LocaleKeys.address.tr + " ${i + 1}",
+                style: typoMediumTextBold.copyWith(
+                  fontSize: 15.sp,
+                  shadows: [
+                    const Shadow(color: colorText100, offset: Offset(0, -8))
+                  ],
+                  color: Colors.transparent,
+                  decoration: TextDecoration.underline,
+                  decorationColor:
+                      (currentIndex == i) ? colorSemanticRed100 : colorWhite,
+                  decorationThickness: 2,
+                )),
+            margin: EdgeInsets.all(10.w),
+          )));
     }
-    list.add(Tab(text: LocaleKeys.address.tr + " 2"));
-    return list;
-  }
-
-  List<Widget> allServiceWidget(List<Address> listService) {
-    var list = <Widget>[];
-    for (var element in listService) {
-      list.add(addressWidget(element));
-    }
-    return list;
+    return result;
   }
 
   Widget addressWidget(Address address) {
@@ -244,26 +218,5 @@ class _ItemSearchWidgetState extends State<ItemSearchWidget>
           "${element.serviceName} - ${element.price} ${element.currencyUnit!}";
     }
     return result;
-  }
-
-  Widget statusWidget() {
-    return Container(
-        padding:
-            EdgeInsets.only(left: 10.w, right: 10.w, top: 15.h, bottom: 20.h),
-        child: Row(
-          children: [
-            SvgPicture.asset(
-              R.assetsSvgBagSvg,
-              width: 20.w,
-            ),
-            SizedBox(
-              width: 15.w,
-            ),
-            AppText(
-              'Online consultation - 300.000 VND',
-              style: typoSmallTextRegular,
-            )
-          ],
-        ));
   }
 }

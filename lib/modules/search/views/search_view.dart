@@ -4,6 +4,7 @@ import 'package:docsify/components/app_text.dart';
 import 'package:docsify/components/app_text_field.dart';
 import 'package:docsify/components/item_loading.dart';
 import 'package:docsify/components/item_search.dart';
+import 'package:docsify/components/suggest_wiget.dart';
 import 'package:docsify/const/resource.dart';
 import 'package:docsify/generated/app_translation.dart';
 import 'package:docsify/theme/app_styles.dart';
@@ -21,6 +22,7 @@ class SearchView extends GetView<SearchController> {
 
   @override
   Widget build(BuildContext context) {
+    controller.setContext(context);
     return AppScaffold(
         backgroundColor: colorBackgroundGrey10,
         appbar: AppBar(
@@ -41,89 +43,84 @@ class SearchView extends GetView<SearchController> {
           ],
           toolbarHeight: 50.h,
         ),
-        body: SingleChildScrollView(
+        body: ListView(
           controller: controller.scrollController,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            mainAxisAlignment: MainAxisAlignment.start,
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              searchGroupWidget(context),
-          /*    Obx(() => Visibility(
-                  visible: controller.isLoading.value,
-                  child: Center(
-                    child: Container(
-                      margin: EdgeInsets.only(top: 20.h),
-                      alignment: Alignment.center,
-                      height: 30.h,
-                      width: 30.w,
-                      child: const CircularProgressIndicator(
-                        strokeWidth: 2,
-                      ),
-                    ),
-                  ))),*/
-              SizedBox(
-                height: 10.h,
-              ),
-              Obx(() => controller.listSearch.isNotEmpty
-                  ? sortWidget(context)
-                  : Container(
-                      alignment: Alignment.center,
-                      margin: EdgeInsets.only(top: 70.h),
-                      child: AppText(
-                        LocaleKeys.not_result.tr,
-                        style: typoLargeTextBold.copyWith(color: colorText60),
-                      ),
-                    )),
-              SizedBox(
-                height: 15.h,
-              ),
-              listSearch()
-            ],
-          ),
+          children: [
+            searchGroupWidget(context),
+            // for (int i = 0; i < defaultView().length; i++) defaultView()[i],
+            Obx(() =>
+                Visibility(
+                  child: sortWidget(),
+                  visible: !controller.isDefaultView.value,
+                )),
+            Obx(() =>
+                Visibility(
+                    child: listSearch(),
+                    visible: !controller.isDefaultView.value))
+          ],
         ));
   }
 
-  Widget sortWidget(BuildContext context) {
-    return Obx(() => Visibility(
-        visible: controller.listSearch.isNotEmpty ? true : false,
-        child: Wrap(
-          runSpacing: 10.h,
-          children: [
-            SizedBox(
-              width: 10.h,
-            ),
-            AppText(
-              LocaleKeys.activity_list.tr,
-              style: typoMediumTextBold,
-            ),
-            InkWell(
-              child: Container(
-                margin: EdgeInsets.only(left: 10.w, right: 10.w),
+  List<Widget> defaultView() {
+    return <Widget>[];
+    logE("TAG default view: ${controller.isDefaultView.value}");
+  }
+
+  Widget sortWidget() {
+    return Wrap(
+      runSpacing: 10.h,
+      spacing: 10.w,
+      children: [
+        SizedBox(
+          width: 10.h,
+        ),
+        AppText(
+          LocaleKeys.activity_list.tr,
+          style: typoMediumTextBold,
+        ),
+        Obx(() =>
+            Container(
+                margin: EdgeInsets.only(left: 10.w, right: 10.w, bottom: 15.h),
                 padding: EdgeInsets.only(left: 10.w, right: 10.w),
                 height: 33.h,
                 decoration: BoxDecoration(
+                    border: Border.all(color: colorGrey20, width: 1.h),
                     color: colorWhite,
                     borderRadius: BorderRadius.all(Radius.circular(8.h))),
-                child: Row(
-                  children: [
-                    AppText("Price: lowest list", style: typoSmallTextRegular),
-                    const Spacer(),
-                    const Icon(Icons.arrow_drop_down)
-                  ],
-                ),
-              ),
-              onTap: () {},
-            ),
-            SizedBox(
-              height: 10.h,
-            ),
-          ],
-        )));
+                child: DropdownButtonHideUnderline(
+                  child: DropdownButton<String>(
+                      isDense: true,
+                      value: controller.sortValue.value,
+                      isExpanded: true,
+                      icon: const Icon(Icons.keyboard_arrow_down),
+                      items: controller.listSort.map(buildSortItem).toList(),
+                      onChanged: (value) {
+                        controller.handleSort(value!);
+                      }),
+                ))),
+      ],
+    );
   }
 
+  DropdownMenuItem<String> buildSortItem(String item) =>
+      DropdownMenuItem(
+        child: AppText(item),
+        value: item,
+      );
+
   Widget listSearch() {
-    return Obx(() => ListView.separated(
+    return ((controller.listSearch.isEmpty && !controller.isLoading.value)
+        ? Container(
+      alignment: Alignment.center,
+      padding: EdgeInsets.only(top: 20.h),
+      child: AppText(
+        LocaleKeys.not_result.tr,
+        style: typoMediumTextRegular,
+      ),
+    )
+        : Obx(() =>
+        ListView.separated(
+          physics: NeverScrollableScrollPhysics(),
           shrinkWrap: true,
           primary: false,
           itemBuilder: (context, index) {
@@ -134,25 +131,30 @@ class SearchView extends GetView<SearchController> {
               ob: controller.listSearch[index],
             );
           },
-          separatorBuilder: (context, index) => Container(
-            height: 20.h,
-          ),
+          separatorBuilder: (context, index) =>
+              Container(
+                height: 20.h,
+              ),
           itemCount: controller.isReadEnd.value
               ? controller.listSearch.length
               : controller.listSearch.length + 1,
-        ));
+        )));
   }
 
   Widget searchGroupWidget(BuildContext context) {
     return Container(
       color: colorBlue90,
+      margin: EdgeInsets.only(
+        bottom: 10.h,
+      ),
       padding:
-          EdgeInsets.only(top: 10.h, left: 12.w, right: 12.w, bottom: 15.h),
+      EdgeInsets.only(top: 10.h, left: 12.w, right: 12.w, bottom: 15.h),
       child: Column(
         children: [
           Row(
             children: [
-              Obx(() => AppButton(
+              Obx(() =>
+                  AppButton(
                     backgroundColor: (controller.isShowAddress.value == true)
                         ? colorGrey20
                         : colorWhite,
@@ -162,9 +164,10 @@ class SearchView extends GetView<SearchController> {
                     materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
                     shapeBorder: RoundedRectangleBorder(
                         borderRadius:
-                            BorderRadius.only(topLeft: Radius.circular(5.h))),
+                        BorderRadius.only(topLeft: Radius.circular(5.h))),
                   )),
-              Obx(() => AppButton(
+              Obx(() =>
+                  AppButton(
                     backgroundColor: (controller.isShowAddress.value == true)
                         ? colorWhite
                         : colorGrey20,
@@ -173,7 +176,7 @@ class SearchView extends GetView<SearchController> {
                     textStyle: typoNormalTextBold,
                     shapeBorder: RoundedRectangleBorder(
                         borderRadius:
-                            BorderRadius.only(topRight: Radius.circular(5.h))),
+                        BorderRadius.only(topRight: Radius.circular(5.h))),
                     materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
                   )),
             ],
@@ -198,7 +201,8 @@ class SearchView extends GetView<SearchController> {
                       color: colorText80,
                       fontSize: 14.sp),
                 ),
-                Obx(() => Visibility(
+                Obx(() =>
+                    Visibility(
                       child: AppTextField(
                         readOnly: true,
                         hintText: LocaleKeys.address.tr,
@@ -230,40 +234,11 @@ class SearchView extends GetView<SearchController> {
           SizedBox(
             height: 15.h,
           ),
-          suggestionWidget()
+          SuggestWidget(
+              listSuggestion: controller.listSuggestion,
+              callBack: (text) => controller.handleSuggest(text))
         ],
       ),
-    );
-  }
-
-  Widget suggestionWidget() {
-    return Wrap(
-      children: controller.listSuggestion
-          .map((e) => Container(
-                child: InkWell(
-                  child: RichText(
-                    text: TextSpan(children: [
-                      TextSpan(
-                        text: e.toString(),
-                        style: typoSmallTextRegular.copyWith(
-                            color: colorWhite,
-                            fontSize: 10.sp,
-                            decoration: TextDecoration.underline),
-                      ),
-                      (e ==
-                              controller.listSuggestion.elementAt(
-                                  controller.listSuggestion.length - 1))
-                          ? const TextSpan()
-                          : TextSpan(
-                              text: "   |",
-                              style: typoSmallTextRegular.copyWith(
-                                  color: colorGrey80, fontSize: 8.sp))
-                    ]),
-                  ),
-                ),
-                margin: EdgeInsets.only(left: 2.w, right: 10.w, top: 5.h),
-              ))
-          .toList(),
     );
   }
 
@@ -273,10 +248,14 @@ class SearchView extends GetView<SearchController> {
       shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.all(Radius.circular(7.h))),
       color: colorBlue90,
-      minWidth: MediaQuery.of(context).size.width,
-      onPressed: () => controller.handleSearch(
-          controller.queryController.value.text,
-          context: context),
+      minWidth: MediaQuery
+          .of(context)
+          .size
+          .width,
+      onPressed: () =>
+          controller.handleSearch(
+            controller.queryController.value.text,
+          ),
       child: Wrap(
         runSpacing: 15.w,
         spacing: 15.w,
