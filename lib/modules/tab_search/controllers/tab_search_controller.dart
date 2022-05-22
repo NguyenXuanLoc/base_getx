@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:docsify/app/routes/app_pages.dart';
 import 'package:docsify/data/model/rating_response.dart';
+import 'package:docsify/data/model/search_response.dart';
 import 'package:docsify/data/provider/search_provider.dart';
 import 'package:docsify/utils/log_utils.dart';
 import 'package:docsify/utils/toast_utils.dart';
@@ -10,22 +11,19 @@ import 'package:get/get.dart';
 import 'package:docsify/services/globals.dart' as globals;
 
 class TabSearchController extends GetxController {
-  final tabRating = 1;
-  final tabDoctor = 0;
-
   var searchProvider = SearchProvider();
   final lRating = List<RatingResponse>.empty(growable: true).obs;
-  final lDoctor = List<RatingResponse>.empty(growable: true).obs;
+  final lDoctor = List<DoctorResponse>.empty(growable: true).obs;
 
   var listSuggestion = globals.listSuggestion;
   final currentIndex = 0.obs;
   final scrollController = ScrollController();
 
-  bool isLoadRating = true;
+  final isLoadRating = true.obs;
   int pagingLatestRating = 0;
   final isReadEndLatestRating = false.obs;
 
-  bool isLoadDoctor = true;
+  final isLoadDoctor = true.obs;
   int pagingDoctor = 0;
   final isReadEndDoctor = false.obs;
 
@@ -42,27 +40,29 @@ class TabSearchController extends GetxController {
       var maxScroll = scrollController.position.maxScrollExtent;
       var currentScroll = scrollController.position.pixels;
       if (maxScroll - currentScroll <= 200) {
-        if (currentIndex.value == 0 && !isLoadDoctor) {
-          if (isReadEndDoctor.value) {
-            getDoctor();
-          }
-        } else {
-          if (isReadEndLatestRating.value && !isLoadRating) {
-            getRatingLatest();
-          }
+        if (currentIndex.value == 0 &&
+            !isLoadDoctor.value &&
+            !isReadEndDoctor.value) {
+          getDoctor();
+        } else if (currentIndex.value == 1 &&
+            !isReadEndLatestRating.value &&
+            !isLoadRating.value) {
+          getRatingLatest();
         }
       }
     });
   }
 
-  void switchTab() {
-    currentIndex.value =
-        currentIndex.value == tabDoctor ? tabRating : tabDoctor;
+  void switchTab(bool isDoctor) {
+    if (isDoctor) {
+      currentIndex.value = 0;
+    } else {
+      currentIndex.value = 1;
+    }
   }
 
   void handleRefresh() async {
-
-    if (currentIndex.value == tabDoctor) {
+    if (currentIndex.value == 0) {
       pagingDoctor = 0;
       getDoctor(isRefresh: true);
     } else {
@@ -75,47 +75,60 @@ class TabSearchController extends GetxController {
     Get.toNamed(Routes.SEARCH, arguments: suggestion);
   }
 
-  void openDoctorDetail(RatingResponse ratingResponse) {
+  void openDoctorDetail(
+      {DoctorResponse? doctorResponse, RatingResponse? ratingResponse}) {
     logE("open rating detail");
   }
 
   void getDoctor({bool isRefresh = false}) async {
-    isLoadDoctor = true;
+    isLoadDoctor.value = true;
     var result =
-        await searchProvider.getDoctorRatingLatest(offset: pagingDoctor);
-    isLoadDoctor = false;
+        await searchProvider.getFamousDoctor(from: pagingDoctor, size: 10);
+    isLoadDoctor.value = false;
     if (isRefresh) lDoctor.clear();
     if (result.error != null) {
       toast(result.error.toString());
     } else {
-      var listResponse = ratingResponseFromJson(result.data['data']);
+      List<DoctorResponse>? listResponse;
+      try {
+        listResponse = DoctorResponseFromJson(result.data['data']);
+      } catch (ex) {
+        listResponse = [];
+        isReadEndDoctor.value = true;
+      }
       if (listResponse.isNotEmpty) {
         lDoctor.addAll(listResponse);
-        isReadEndDoctor.value = true;
+        isReadEndDoctor.value = false;
         pagingDoctor++;
       } else {
-        isReadEndDoctor.value = false;
+        isReadEndDoctor.value = true;
       }
       update();
     }
   }
 
   void getRatingLatest({bool isRefresh = false}) async {
-    isLoadRating = true;
+    isLoadRating.value = true;
     if (isRefresh) lRating.clear();
     var result =
         await searchProvider.getDoctorRatingLatest(offset: pagingLatestRating);
-    isLoadRating = false;
+    isLoadRating.value = false;
     if (result.error != null) {
       toast(result.error.toString());
     } else {
-      var listResponse = ratingResponseFromJson(result.data['data']);
+      List<RatingResponse>? listResponse;
+      try {
+        listResponse = ratingResponseFromJson(result.data['data']);
+      } catch (ex) {
+        listResponse = [];
+        isReadEndLatestRating.value = true;
+      }
       if (listResponse.isNotEmpty) {
         lRating.addAll(listResponse);
-        isReadEndLatestRating.value = true;
+        isReadEndLatestRating.value = false;
         pagingLatestRating++;
       } else {
-        isReadEndLatestRating.value = false;
+        isReadEndLatestRating.value = true;
       }
     }
     update();

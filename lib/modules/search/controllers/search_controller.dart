@@ -30,8 +30,8 @@ class SearchController extends GetxController {
 
   final listSuggestion = globals.listSuggestion.obs;
   final searchProvider = SearchProvider();
-  final listSearch = List<SearchResponse>.empty(growable: true).obs;
-  final listFamousDoctor = List<SearchResponse>.empty(growable: true).obs;
+  final listSearch = List<DoctorResponse>.empty(growable: true).obs;
+  final listFamousDoctor = List<DoctorResponse>.empty(growable: true).obs;
   final listLastSearch = List<InfoDoctorModel>.empty(growable: true).obs;
   final listSuggestDoctor = List<InfoDoctorModel>.empty(growable: true).obs;
   final listCity = List<CityResponse>.empty(growable: true).obs;
@@ -161,7 +161,7 @@ class SearchController extends GetxController {
     if (result.error != null) {
       toast(result.error.toString());
     } else {
-      var listResult = searchResponseFromJson(result.data['data']);
+      var listResult = DoctorResponseFromJson(result.data['data']);
       listFamousDoctor.addAll(listResult);
     }
     isLoadingFamous.value = false;
@@ -189,7 +189,7 @@ class SearchController extends GetxController {
         toast(result.error.toString());
       } else {
         var listResult =
-            searchResponseFromJson(result.data['data']['search_result']);
+            DoctorResponseFromJson(result.data['data']['search_result']);
         if (listResult.isEmpty) {
           isReadEnd.value = true;
         } else {
@@ -215,7 +215,7 @@ class SearchController extends GetxController {
     }
   }
 
-  void openDoctorDetail(SearchResponse ob) {
+  void openDoctorDetail(DoctorResponse ob) {
     saveDoctor(
         name: ob.doctorName!,
         avatar: ob.doctorProfile!.avatar![0],

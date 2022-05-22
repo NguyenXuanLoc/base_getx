@@ -1,18 +1,18 @@
 // To parse this JSON data, do
 //
-//     final searchResponse = searchResponseFromJson(jsonString);
+//     final DoctorResponse = DoctorResponseFromJson(jsonString);
 
 import 'dart:convert';
 
-List<SearchResponse> searchResponseFromJson(List<dynamic> list) =>
-    List<SearchResponse>.from(list.map((x) => SearchResponse.fromJson(x)));
+List<DoctorResponse> DoctorResponseFromJson(List<dynamic> list) =>
+    List<DoctorResponse>.from(list.map((x) => DoctorResponse.fromJson(x)));
 
-String searchResponseToJson(List<SearchResponse> data) =>
+String DoctorResponseToJson(List<DoctorResponse> data) =>
     json.encode(List<dynamic>.from(data.map((x) => x.toJson())));
 
 
-class SearchResponse {
-  SearchResponse({
+class DoctorResponse {
+  DoctorResponse({
     this.providerIds,
     this.addresses,
     this.cities,
@@ -52,7 +52,7 @@ class SearchResponse {
   String? doctorName;
   DoctorProfile? doctorProfile;
 
-  factory SearchResponse.fromJson(Map<String, dynamic> json) => SearchResponse(
+  factory DoctorResponse.fromJson(Map<String, dynamic> json) => DoctorResponse(
     providerIds: List<dynamic>.from(json["provider_ids"].map((x) => x)),
     addresses: List<Address>.from(json["addresses"].map((x) => Address.fromJson(x))),
     cities: List<String>.from(json["cities"].map((x) => x)),

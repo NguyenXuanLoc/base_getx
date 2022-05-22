@@ -29,7 +29,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ScreenUtilInit(
-      builder: (w,c) => GetMaterialApp(
+      builder: (w, c) => GetMaterialApp(
         initialBinding: RootBinding(),
         initialRoute: AppPages.INITIAL,
         getPages: AppPages.routes,
@@ -83,6 +83,7 @@ Future<void> checkLogin() async {
     globals.isLogin = true;
     globals.accountId = userModel.userId.toString();
     globals.accessToken = userModel.token.toString();
+    globals.avatar = userModel.profile!.photo ?? '';
   } else {
     globals.isLogin = false;
   }

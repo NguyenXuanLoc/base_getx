@@ -16,9 +16,9 @@ import '../utils/app_utils.dart';
 import 'app_network_image.dart';
 
 class ItemSearchWidget extends StatefulWidget {
-  final SearchResponse ob;
+  final DoctorResponse ob;
   final Function(int) callBackFavourite;
-  final Function(SearchResponse) callBackOpenDetail;
+  final Function(DoctorResponse) callBackOpenDetail;
 
   const ItemSearchWidget(
       {Key? key,

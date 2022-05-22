@@ -9,19 +9,17 @@ import 'package:docsify/components/item_loading.dart';
 import 'package:docsify/components/suggest_wiget.dart';
 import 'package:docsify/const/resource.dart';
 import 'package:docsify/data/model/rating_response.dart';
+import 'package:docsify/data/model/search_response.dart';
 import 'package:docsify/generated/app_translation.dart';
 import 'package:docsify/services/globals.dart';
 import 'package:docsify/theme/app_styles.dart';
 import 'package:docsify/theme/colors.dart';
 import 'package:docsify/utils/app_utils.dart';
-import 'package:docsify/utils/log_utils.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_html/shims/dart_ui_real.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
-import 'package:readmore/readmore.dart';
+import 'package:docsify/services/globals.dart' as globals;
 
 import '../controllers/tab_search_controller.dart';
 
@@ -103,7 +101,7 @@ class TabSearchView extends GetView<TabSearchController> {
                               borderRadius: BorderRadius.only(
                                   bottomLeft: Radius.circular(5.h),
                                   topLeft: Radius.circular(5.h))),
-                          onPress: () => controller.switchTab(),
+                          onPress: () => controller.switchTab(true),
                         )),
                     Obx(() => AppButton(
                           width: 130.w,
@@ -119,7 +117,7 @@ class TabSearchView extends GetView<TabSearchController> {
                                   bottomRight: Radius.circular(5.h))),
                           materialTapTargetSize:
                               MaterialTapTargetSize.shrinkWrap,
-                          onPress: () => controller.switchTab(),
+                          onPress: () => controller.switchTab(false),
                         )),
                   ],
                 ),
@@ -136,67 +134,69 @@ class TabSearchView extends GetView<TabSearchController> {
   }
 
   Widget doctorWidget() {
-    return Obx(() => controller.lDoctor.isEmpty
-        ? Container(
-            child: Text(
-              LocaleKeys.not_result.tr,
-              style: typoMediumTextRegular,
-            ),
-            padding: EdgeInsets.only(top: 20.h),
-          )
-        : ListView.separated(
-            scrollDirection: Axis.vertical,
-            shrinkWrap: true,
-            primary: false,
-            physics: const NeverScrollableScrollPhysics(),
-            itemBuilder: (context, index) {
-              if (index == controller.lDoctor.length) {
-                return const ItemLoading();
-              }
-              return itemDoctors(controller.lDoctor[index], index, context);
-            },
-            itemCount: controller.isReadEndDoctor.value &&
-                    controller.lDoctor.length > 3
-                ? controller.lDoctor.length + 1
-                : controller.lDoctor.length,
-            separatorBuilder: (BuildContext context, int index) {
-              return SizedBox(
-                height: 20.h,
-              );
-            },
-          ));
+    return Obx(
+        () => controller.lDoctor.isEmpty && !controller.isLoadDoctor.value
+            ? Container(
+                child: Text(
+                  LocaleKeys.not_result.tr,
+                  style: typoMediumTextRegular,
+                ),
+                padding: EdgeInsets.only(top: 20.h),
+              )
+            : ListView.separated(
+                scrollDirection: Axis.vertical,
+                shrinkWrap: true,
+                primary: false,
+                physics: const NeverScrollableScrollPhysics(),
+                itemBuilder: (context, index) {
+                  if (index == controller.lDoctor.length) {
+                    return const ItemLoading();
+                  }
+                  return itemDoctors(controller.lDoctor[index], index, context);
+                },
+                itemCount: (!controller.isReadEndDoctor.value &&
+                        controller.lDoctor.length > 3)
+                    ? controller.lDoctor.length + 1
+                    : controller.lDoctor.length,
+                separatorBuilder: (BuildContext context, int index) {
+                  return SizedBox(
+                    height: 20.h,
+                  );
+                },
+              ));
   }
 
   Widget ratingWidget() {
-    return Obx(() => controller.lRating.isEmpty
-        ? Container(
-            child: Text(
-              LocaleKeys.not_result.tr,
-              style: typoMediumTextRegular,
-            ),
-            padding: EdgeInsets.only(top: 20.h),
-          )
-        : ListView.separated(
-            scrollDirection: Axis.vertical,
-            shrinkWrap: true,
-            primary: false,
-            physics: const NeverScrollableScrollPhysics(),
-            itemBuilder: (context, index) {
-              if (index == controller.lRating.length) {
-                return const ItemLoading();
-              }
-              return itemRating(controller.lRating[index], index, context);
-            },
-            itemCount: controller.isReadEndLatestRating.value &&
-                    controller.lRating.length > 3
-                ? controller.lRating.length + 1
-                : controller.lRating.length,
-            separatorBuilder: (BuildContext context, int index) {
-              return SizedBox(
-                height: 20.h,
-              );
-            },
-          ));
+    return Obx(
+        () => (controller.lRating.isEmpty && !controller.isLoadRating.value)
+            ? Container(
+                child: Text(
+                  LocaleKeys.not_result.tr,
+                  style: typoMediumTextRegular,
+                ),
+                padding: EdgeInsets.only(top: 20.h),
+              )
+            : ListView.separated(
+                scrollDirection: Axis.vertical,
+                shrinkWrap: true,
+                primary: false,
+                physics: const NeverScrollableScrollPhysics(),
+                itemBuilder: (context, index) {
+                  if (index == controller.lRating.length) {
+                    return const ItemLoading();
+                  }
+                  return itemRating(controller.lRating[index], index, context);
+                },
+                itemCount: (!controller.isReadEndLatestRating.value &&
+                        controller.lRating.length > 3)
+                    ? controller.lRating.length + 1
+                    : controller.lRating.length,
+                separatorBuilder: (BuildContext context, int index) {
+                  return SizedBox(
+                    height: 20.h,
+                  );
+                },
+              ));
   }
 
   Widget searchWidget(BuildContext context) {
@@ -230,17 +230,23 @@ class TabSearchView extends GetView<TabSearchController> {
         ),
         const Spacer(),
         InkWell(
-          child: SvgPicture.asset(
-            R.assetsSvgAvatarSvg,
-            width: 35.w,
-          ),
+          child: globals.avatar.isNotEmpty
+              ? SizedBox(
+                  width: 40.w,
+                  height: 40.w,
+                  child: ClipOval(child: AppNetworkImage(
+                    errorSource: globals.urlAvatarError,
+                    source: globals.avatar,
+                  ),),
+                )
+              : SvgPicture.asset(R.assetsSvgIconAppBarSvg),
           onTap: () => Get.toNamed(Routes.LOGIN),
         )
       ],
     );
   }
 
-  Widget itemDoctors(RatingResponse ob, int index, BuildContext context) {
+  Widget itemDoctors(DoctorResponse ob, int index, BuildContext context) {
     return Container(
       width: MediaQuery.of(context).size.width,
       child: InkWell(
@@ -252,38 +258,41 @@ class TabSearchView extends GetView<TabSearchController> {
               child: SizedBox(
                 height: 40.h,
                 width: 40.h,
-                child: AppNetworkImage(source: ob.photos![1]),
+                child: AppNetworkImage(
+                  source: ob.doctorProfile!.avatar,
+                  errorSource: urlAvatarError,
+                ),
               ),
             ),
             SizedBox(
               height: 5.h,
             ),
             AppText(
-              ob.userName!,
+              ob.doctorName!,
               style: typoMediumTextBold,
             ),
             SizedBox(
               height: 5.h,
             ),
             AppText(
-              ob.rComment.toString(),
+              ob.doctorProfile!.specialization.toString(),
               style: typoMediumTextRegular.copyWith(
                   fontSize: 15.sp, color: colorText70),
             ),
             Image.asset(
-              Utils.getNumberRating(double.parse(ob.vote.toString())),
+              Utils.getNumberRating(ob.doctorRateAvg!),
               width: 90.w,
             ),
             SizedBox(
               height: 10.h,
             ),
             AppText(
-              ob.rComment.toString(),
+              ob.doctorProfile!.about.toString(),
               style: typoMediumTextRegular.copyWith(fontSize: 17.sp),
             )
           ],
         ),
-        onTap: () => controller.openDoctorDetail(ob),
+        onTap: () => controller.openDoctorDetail(doctorResponse: ob),
       ),
       padding: EdgeInsets.all(10.h),
       color: colorWhite,
@@ -335,12 +344,14 @@ class TabSearchView extends GetView<TabSearchController> {
                         borderRadius: BorderRadius.all(Radius.circular(7.w))),
                     padding: EdgeInsets.all(10.h),
                     width: MediaQuery.of(context).size.width,
-                    child: AppReadMoreWidget(message:  ob.rComment.toString(),))
+                    child: AppReadMoreWidget(
+                      message: ob.rComment.toString(),
+                    ))
               ],
             ))
           ],
         ),
-        onTap: () => controller.openDoctorDetail(ob),
+        onTap: () => controller.openDoctorDetail(ratingResponse: ob),
       ),
       padding: EdgeInsets.all(10.h),
       color: colorWhite,

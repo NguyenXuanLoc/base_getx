@@ -1,7 +1,6 @@
 import 'package:docsify/config/constant.dart';
 import 'package:docsify/data/model/user_model.dart';
 import 'package:docsify/services/globals.dart' as globals;
-import 'package:docsify/utils/log_utils.dart';
 import 'package:get_storage/get_storage.dart';
 
 class StorageUtils {
