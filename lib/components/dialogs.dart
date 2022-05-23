@@ -1,11 +1,15 @@
 import 'package:docsify/app/routes/app_pages.dart';
+import 'package:docsify/components/active_code_dialog.dart';
 import 'package:docsify/components/app_button.dart';
 import 'package:docsify/components/app_text.dart';
+import 'package:docsify/components/app_text_button.dart';
+import 'package:docsify/components/app_text_field.dart';
 import 'package:docsify/const/resource.dart';
 import 'package:docsify/generated/app_translation.dart';
 import 'package:docsify/theme/app_styles.dart';
 import 'package:docsify/theme/colors.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
@@ -35,6 +39,26 @@ class Dialogs {
                   ),
                 )
               ],
+            ),
+          );
+        });
+  }
+
+  static Future<bool?> showActiveCode(
+      String email, BuildContext context, VoidCallback quitCallBack) async {
+    return await showGeneralDialog(
+        barrierDismissible: false,
+        context: context,
+        barrierLabel:
+            MaterialLocalizations.of(context).modalBarrierDismissLabel,
+        barrierColor: Colors.black45,
+        transitionDuration: const Duration(milliseconds: 200),
+        pageBuilder: (BuildContext buildContext, Animation animation,
+            Animation secondaryAnimation) {
+          return WillPopScope(
+            onWillPop: () async => false,
+            child: ActiveCodeDialog(
+              email: email,
             ),
           );
         });

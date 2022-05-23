@@ -42,12 +42,7 @@ class SearchController extends GetxController {
   final isDefaultView = false.obs;
   final isReadEnd = false.obs;
   var paging = 0;
-  final listSort = [
-    'Price: lowest price',
-    'Price: highest price',
-    'Rating worst rating',
-    'Rating best rating'
-  ];
+  final listSort = ['Rating worst rating', 'Rating best rating'];
   final sortValue = ''.obs;
 
   @override
@@ -124,15 +119,11 @@ class SearchController extends GetxController {
   }
 
   String getSortKey(String value) {
-    switch (value) {
-      case 'Price: lowest price':
-        return ApiKey.price_desc;
-      case 'Price: highest price':
-        return ApiKey.price_asc;
-      case 'Rating worst rating':
-        return ApiKey.rate_desc;
+    if (value == 'Rating worst rating') {
+      return ApiKey.rate_desc;
+    } else {
+      return ApiKey.rate_asc;
     }
-    return ApiKey.rate_asc;
   }
 
   void handlePaging() {

@@ -40,7 +40,7 @@ class RegisterStep2Controller extends GetxController {
   }
 
   void updateProfile(BuildContext context) async {
-    if (checkValid()) {
+    if (isAgree.value && checkValid()) {
       var userModel = await StorageUtils.getUser();
       var userId = userModel?.userId;
       if (userId != null) {
@@ -57,7 +57,7 @@ class RegisterStep2Controller extends GetxController {
           if (email == 'true') {
             Get.toNamed(Routes.LOGIN);
           } else {
-            Get.toNamed(Routes.ACTIVE_CODE, arguments: email);
+            Dialogs.showActiveCode(email,context, () { });
           }
         }
       }

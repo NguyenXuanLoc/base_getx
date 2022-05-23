@@ -1,3 +1,5 @@
+import 'package:flutter_html/shims/dart_ui_real.dart';
+
 class StorageKey {
   StorageKey._();
 
@@ -6,6 +8,8 @@ class StorageKey {
 }
 
 class MessageKey {
+  static const String egCodeIsValid = 'Twoja sesja wygasła';
+  static const String plCodeIsValid = 'Your code is invalid';
   static const String need_active_account =
       'Aby się zalogować, najpierw aktywuj konto';
 }

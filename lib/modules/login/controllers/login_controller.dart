@@ -13,6 +13,7 @@ import 'package:docsify/utils/storage_utils.dart';
 import 'package:docsify/utils/toast_utils.dart';
 import 'package:email_validator/email_validator.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
 import 'package:get/get.dart';
 import 'package:google_sign_in/google_sign_in.dart';
@@ -73,8 +74,7 @@ class LoginController extends GetxController {
       if (result.error != null) {
         toast(result.error);
         if (result.error == MessageKey.need_active_account) {
-          Get.toNamed(Routes.ACTIVE_CODE,
-              arguments: emailController.value.text);
+          Dialogs.showActiveCode(emailController.value.text, context, () {});
         }
       } else if (result.data != null) {
         var userModel = UserResponse.fromJson(result.data['data']);

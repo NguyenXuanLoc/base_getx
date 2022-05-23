@@ -103,6 +103,8 @@ class LocaleKeys {
   static const last_search = 'last_search';
   static const suggestion = 'suggestion';
   static const famous_doctor = 'famous_doctor';
+  static const active_success = 'active_success';
+  static const you_has_been_activated_success = 'you_has_been_activated_success';
 }
 
 class Locales {
@@ -147,7 +149,7 @@ class Locales {
     'please_input_phone_number': 'Please enter your phone number',
     'please_input_date_of_birth': 'Please enter your Date of birth',
     'please_input_valid_phone_number': 'Please enter valid phone number',
-    'register_success': 'Register\nsuccessful',
+    'register_success': 'Register successful',
     'message_sent_active_code':
         'We have sent activation code to your email. Please check and fill bellow to activate your account',
     'fill_active_code_here': 'Fill activation code here',
@@ -192,5 +194,7 @@ class Locales {
     'last_search': 'LAST SEARCH',
     'suggestion': 'Suggestions',
     'famous_doctor': 'Famous Doctor',
+    'active_success': 'Activate successful',
+    'you_has_been_activated_success': 'Your account has been activated successfully. ',
   };
 }

@@ -5,6 +5,7 @@ import 'package:docsify/components/app_read_more_widget.dart';
 import 'package:docsify/components/app_scalford.dart';
 import 'package:docsify/components/app_text.dart';
 import 'package:docsify/components/app_text_field.dart';
+import 'package:docsify/components/dialogs.dart';
 import 'package:docsify/components/item_loading.dart';
 import 'package:docsify/components/suggest_wiget.dart';
 import 'package:docsify/const/resource.dart';
@@ -34,7 +35,7 @@ class TabSearchView extends GetView<TabSearchController> {
           automaticallyImplyLeading: false,
           elevation: 1,
           backgroundColor: colorWhite,
-          title: titleWidget(),
+          title: titleWidget(context),
           toolbarHeight: 50.h,
         ),
         body: RefreshIndicator(
@@ -217,7 +218,7 @@ class TabSearchView extends GetView<TabSearchController> {
     );
   }
 
-  Widget titleWidget() {
+  Widget titleWidget(BuildContext context) {
     return Row(
       children: [
         SvgPicture.asset(R.assetsSvgIconAppBarSvg),
@@ -234,12 +235,14 @@ class TabSearchView extends GetView<TabSearchController> {
               ? SizedBox(
                   width: 40.w,
                   height: 40.w,
-                  child: ClipOval(child: AppNetworkImage(
-                    errorSource: globals.urlAvatarError,
-                    source: globals.avatar,
-                  ),),
+                  child: ClipOval(
+                    child: AppNetworkImage(
+                      errorSource: globals.urlAvatarError,
+                      source: globals.avatar,
+                    ),
+                  ),
                 )
-              : SvgPicture.asset(R.assetsSvgIconAppBarSvg),
+              : SvgPicture.asset(R.assetsSvgAvatarSvg),
           onTap: () => Get.toNamed(Routes.LOGIN),
         )
       ],
