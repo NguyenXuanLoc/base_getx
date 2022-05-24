@@ -27,6 +27,7 @@ class AppTextField extends StatefulWidget {
   final MaxLengthEnforcement? maxLengthEnforcement;
   final bool? enable;
   final double? height;
+  final bool isShowErrorText;
 
   const AppTextField(
       {this.controller,
@@ -51,7 +52,8 @@ class AppTextField extends StatefulWidget {
       this.onSubmitted,
       this.maxLengthEnforcement,
       this.enable,
-      this.height})
+      this.height,
+      this.isShowErrorText = true})
       : super(key: key);
 
   @override
@@ -70,35 +72,47 @@ class _AppTextFieldState extends State<AppTextField> {
 
   @override
   Widget build(BuildContext context) {
-    return TextField(
-      enabled: widget.enable,
-      readOnly: widget.readOnly ?? false,
-      maxLengthEnforcement: widget.maxLengthEnforcement,
-      focusNode: widget.focusNode,
-      controller: widget.controller,
-      style: widget.textStyle?.copyWith(height: widget.height) ??
-          styleTextField.copyWith(height: widget.height),
-      obscureText: widget.obscureText ?? false,
-      keyboardType: widget.keyboardType,
-      textInputAction: widget.textInputAction,
-      maxLength: widget.maxLength,
-      autofocus: widget.autofocus ?? false,
-      autocorrect: false,
-      maxLines: widget.keyboardType == TextInputType.multiline ? 4 : 1,
-      onEditingComplete: widget.onEditingComplete,
-      onChanged: widget.onChanged,
-      onSubmitted: (text) {
-        if (widget.onSubmitted != null) widget.onSubmitted!(text);
-      },
-      onTap: widget.onTap,
-      decoration: decorTextField.copyWith(
-          hintText: widget.hintText,
-          errorText: widget.errorText,
-          errorStyle: typoNormalTextRegular.copyWith(
-              color: colorSemanticRed100, fontSize: 11.sp),
-          prefixIcon: widget.prefixIcon,
-          suffixIcon: widget.suffixIcon,
-          hintStyle: widget.hintStyle),
+    return Wrap(
+      runSpacing: 10,
+      children: [
+        TextField(
+          enabled: widget.enable,
+          readOnly: widget.readOnly ?? false,
+          maxLengthEnforcement: widget.maxLengthEnforcement,
+          focusNode: widget.focusNode,
+          controller: widget.controller,
+          style: widget.textStyle?.copyWith(height: widget.height) ??
+              styleTextField.copyWith(height: widget.height),
+          obscureText: widget.obscureText ?? false,
+          keyboardType: widget.keyboardType,
+          textInputAction: widget.textInputAction,
+          maxLength: widget.maxLength,
+          autofocus: widget.autofocus ?? false,
+          autocorrect: false,
+          maxLines: widget.keyboardType == TextInputType.multiline ? 4 : 1,
+          onEditingComplete: widget.onEditingComplete,
+          onChanged: widget.onChanged,
+          onSubmitted: (text) {
+            if (widget.onSubmitted != null) widget.onSubmitted!(text);
+          },
+          onTap: widget.onTap,
+          decoration: decorTextField.copyWith(
+              /*contentPadding: EdgeInsets.only(),*/
+              hintText: widget.hintText,
+              prefixIcon: widget.prefixIcon,
+              suffixIcon: widget.suffixIcon,
+              hintStyle: widget.hintStyle),
+        ),
+        Text(
+            widget.isShowErrorText
+                ? (widget.errorText != null &&
+                        widget.errorText.toString().isNotEmpty)
+                    ? widget.errorText!
+                    : ' '
+                : '',
+            style: typoNormalTextRegular.copyWith(
+                color: colorSemanticRed100, fontSize: 11.sp))
+      ],
     );
   }
 }

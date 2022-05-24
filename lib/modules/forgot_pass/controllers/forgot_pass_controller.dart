@@ -19,12 +19,10 @@ class ForgotPassController extends GetxController {
 
   void showQuitDialog(BuildContext context) {
     Utils.hideKeyboard(context);
-    Dialogs.showQuitForgotPassDialog(
-        context, () => Get.offAllNamed(Routes.HOME));
   }
 
   void handleForgotPass(BuildContext context) async {
-    var email = emailController.value.text;
+    var email = emailController.value.text.replaceAll(" ",'');
     bool isValid = true;
     if (email.isEmpty) {
       errorEmail.value = LocaleKeys.please_input_email.tr;

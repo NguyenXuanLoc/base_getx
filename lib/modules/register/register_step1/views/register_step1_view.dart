@@ -246,7 +246,7 @@ class RegisterStep1View extends GetView<RegisterStep1Controller> {
     return AppBar(
       elevation: 1,
       backgroundColor: colorWhite,
-      title: Text(
+      title: AppText(
         LocaleKeys.register.tr,
         style: typoLargeTextBold,
       ),
@@ -259,7 +259,7 @@ class RegisterStep1View extends GetView<RegisterStep1Controller> {
           )),
       actions: [
         IconButton(
-            onPressed: () => controller.showQuitDialog(context),
+            onPressed: () => Get.back(),
             icon: const Icon(
               Icons.clear,
               color: colorBlack,

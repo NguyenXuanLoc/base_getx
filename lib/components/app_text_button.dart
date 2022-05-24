@@ -16,6 +16,7 @@ class AppTextButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return TextButton(
+      style: ButtonStyle(padding: MaterialStateProperty.all(EdgeInsets.zero)),
       onPressed: onPressed,
       child: Text(
         buttonTitle ?? '',

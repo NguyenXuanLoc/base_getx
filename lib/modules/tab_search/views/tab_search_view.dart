@@ -91,8 +91,8 @@ class TabSearchView extends GetView<TabSearchController> {
                     Obx(() => AppButton(
                           width: 130.w,
                           backgroundColor: (controller.currentIndex.value == 0)
-                              ? colorGrey20
-                              : colorWhite,
+                              ? colorWhite
+                              : colorGrey20,
                           title: LocaleKeys.doctors.tr,
                           // onPress: () => controller.actionSearch(),
                           textStyle: typoNormalTextBold,
@@ -107,8 +107,8 @@ class TabSearchView extends GetView<TabSearchController> {
                     Obx(() => AppButton(
                           width: 130.w,
                           backgroundColor: (controller.currentIndex.value == 0)
-                              ? colorWhite
-                              : colorGrey20,
+                              ? colorGrey20
+                              : colorWhite,
                           title: LocaleKeys.lastest_rating.tr,
                           // onPress: () => controller.actionSearch(),
                           textStyle: typoNormalTextBold,
@@ -255,43 +255,54 @@ class TabSearchView extends GetView<TabSearchController> {
       child: InkWell(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
-          mainAxisSize: MainAxisSize.max,
           children: [
-            ClipOval(
-              child: SizedBox(
-                height: 40.h,
-                width: 40.h,
-                child: AppNetworkImage(
-                  source: ob.doctorProfile!.avatar,
-                  errorSource: urlAvatarError,
+            Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisSize: MainAxisSize.max,
+              children: [
+                ClipOval(
+                  child: SizedBox(
+                    height: 40.h,
+                    width: 40.h,
+                    child: AppNetworkImage(
+                      source: ob.doctorProfile!.avatar,
+                      errorSource: urlAvatarError,
+                    ),
+                  ),
                 ),
+                SizedBox(
+                  width: 10.h,
+                ),
+                Column(
+                  mainAxisSize: MainAxisSize.min,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    AppText(
+                      ob.doctorName!,
+                      style: typoMediumTextBold,
+                    ),
+                    SizedBox(
+                      height: 5.h,
+                    ),
+                    AppText(
+                      ob.doctorProfile!.specialization.toString(),
+                      style: typoMediumTextRegular.copyWith(
+                          fontSize: 15.sp, color: colorText70),
+                    ),
+                    Image.asset(
+                      Utils.getNumberRating(ob.doctorRateAvg!),
+                      width: 90.w,
+                    ),
+                  ],
+                ),
+              ],
+            ),
+            Padding(
+              padding: EdgeInsets.only(left: 10.w, right: 10.w, top: 10.h),
+              child: AppReadMoreWidget(
+                style: typoNormalTextRegular,
+                message: ob.doctorProfile!.about.toString(),
               ),
-            ),
-            SizedBox(
-              height: 5.h,
-            ),
-            AppText(
-              ob.doctorName!,
-              style: typoMediumTextBold,
-            ),
-            SizedBox(
-              height: 5.h,
-            ),
-            AppText(
-              ob.doctorProfile!.specialization.toString(),
-              style: typoMediumTextRegular.copyWith(
-                  fontSize: 15.sp, color: colorText70),
-            ),
-            Image.asset(
-              Utils.getNumberRating(ob.doctorRateAvg!),
-              width: 90.w,
-            ),
-            SizedBox(
-              height: 10.h,
-            ),
-            AppText(
-              ob.doctorProfile!.about.toString(),
-              style: typoMediumTextRegular.copyWith(fontSize: 17.sp),
             )
           ],
         ),

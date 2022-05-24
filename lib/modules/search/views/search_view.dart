@@ -130,7 +130,8 @@ class SearchView extends GetView<SearchController> {
                       )
                     ],
                   ),
-                  onTap: () => controller.openDoctorDetail(controller.listFamousDoctor[index]),
+                  onTap: () => controller
+                      .openDoctorDetail(controller.listFamousDoctor[index]),
                 ),
               ),
               itemCount: controller.listFamousDoctor.length,
@@ -269,7 +270,7 @@ class SearchView extends GetView<SearchController> {
         ),
         Obx(() => Container(
             margin: EdgeInsets.only(left: 10.w, right: 10.w, bottom: 15.h),
-            height: 33.h,
+            height: 37.h,
             child: DropdownButtonHideUnderline(
               child: DropdownButton2(
                 isExpanded: true,
@@ -351,13 +352,13 @@ class SearchView extends GetView<SearchController> {
         bottom: 10.h,
       ),
       padding:
-          EdgeInsets.only(top: 10.h, left: 12.w, right: 12.w, bottom: 15.h),
+          EdgeInsets.only(top: 20.h, left: 12.w, right: 12.w, bottom: 20.h),
       child: Column(
         children: [
           Row(
             children: [
               Obx(() => AppButton(
-                    backgroundColor: (controller.isCity.value == true)
+                    backgroundColor: (controller.isCity.value == false)
                         ? colorGrey20
                         : colorWhite,
                     title: LocaleKeys.offline.tr,
@@ -369,7 +370,7 @@ class SearchView extends GetView<SearchController> {
                             BorderRadius.only(topLeft: Radius.circular(5.h))),
                   )),
               Obx(() => AppButton(
-                    backgroundColor: (controller.isCity.value == true)
+                    backgroundColor: (controller.isCity.value == false)
                         ? colorWhite
                         : colorGrey20,
                     title: LocaleKeys.online.tr,
@@ -383,16 +384,22 @@ class SearchView extends GetView<SearchController> {
             ],
           ),
           Container(
-            padding: EdgeInsets.all(10.h),
+            padding: EdgeInsets.only(
+                left: 10.w, right: 10.w, top: 20.h, bottom: 20.h),
             child: Wrap(
               runSpacing: 15.h,
               children: [
-                AppText(
-                  LocaleKeys.fill_doctor.tr,
-                  textAlign: TextAlign.start,
-                  style: typoMediumTextBold,
+                Obx(
+                  () => Visibility(
+                      visible: controller.isCity.value,
+                      child: AppText(
+                        LocaleKeys.fill_doctor.tr,
+                        textAlign: TextAlign.start,
+                        style: typoMediumTextBold,
+                      )),
                 ),
                 AppTextField(
+                  isShowErrorText: false,
                   controller: controller.queryController,
                   hintText: LocaleKeys.category_or_doctor_name.tr,
                   textStyle: typoSmallTextBold.copyWith(
@@ -403,63 +410,60 @@ class SearchView extends GetView<SearchController> {
                       fontSize: 14.sp),
                 ),
                 Obx(() => Visibility(
-                      child: SizedBox(
-                        height: 37.h,
-                        child: TypeAheadField(
-                          hideSuggestionsOnKeyboardHide: false,
-                          textFieldConfiguration: TextFieldConfiguration(
-                              controller: controller.cityController,
-                              autofocus: false,
-                              style: typoSmallTextBold.copyWith(
-                                  color: colorText80,
-                                  fontWeight: FontWeight.w400),
-                              decoration: InputDecoration(
-                                  focusColor: colorGrey20,
-                                  hintText: LocaleKeys.address.tr,
-                                  labelStyle: styleTextField.copyWith(
-                                      fontWeight: FontWeight.w400,
-                                      color: colorText80,
-                                      fontSize: 10.sp),
-                                  hintStyle: styleTextField.copyWith(
-                                      fontWeight: FontWeight.w400,
-                                      color: colorText80,
-                                      fontSize: 14.sp),
-                                  suffixIcon: const Icon(
-                                    Icons.keyboard_arrow_down,
-                                    color: colorBlack,
-                                    size: 20,
-                                  ),
-                                  focusedBorder: OutlineInputBorder(
-                                      borderSide: const BorderSide(
-                                          color: colorBlack, width: 0.7),
-                                      borderRadius: BorderRadius.all(
-                                          Radius.circular(7.h))),
-                                  border: OutlineInputBorder(
-                                      borderRadius: BorderRadius.all(
-                                          Radius.circular(7.h))))),
-                          itemBuilder: (context, CityResponse suggestion) {
-                            return ListTile(
-                              leading: const Icon(Icons.pin_drop_outlined),
-                              title: Text(
-                                suggestion.city!,
-                                style: typoSmallTextRegular,
-                              ),
-                            );
-                          },
-                          noItemsFoundBuilder: (c) => AppText(
-                            LocaleKeys.not_result.tr,
-                            style: typoSmallTextRegular,
-                          ),
-                          onSuggestionSelected: (CityResponse city) =>
-                              controller.setCity(city),
-                          suggestionsCallback: (pattern) {
-                            return controller.filterCity(pattern);
-                          },
+                      child: TypeAheadField(
+                        hideSuggestionsOnKeyboardHide: false,
+                        textFieldConfiguration: TextFieldConfiguration(
+                            controller: controller.cityController,
+                            autofocus: false,
+                            style: typoSmallTextBold.copyWith(
+                                color: colorText80,
+                                fontWeight: FontWeight.w400),
+                            decoration: InputDecoration(
+                                contentPadding: EdgeInsets.all(8.w),
+                                focusColor: colorGrey20,
+                                hintText: LocaleKeys.address.tr,
+                                labelStyle: styleTextField.copyWith(
+                                    fontWeight: FontWeight.w400,
+                                    color: colorText80,
+                                    fontSize: 10.sp),
+                                hintStyle: styleTextField.copyWith(
+                                    fontWeight: FontWeight.w400,
+                                    color: colorText80,
+                                    fontSize: 14.sp),
+                                suffixIcon: const Icon(
+                                  Icons.keyboard_arrow_down,
+                                  color: colorBlack,
+                                  size: 20,
+                                ),
+                                focusedBorder: OutlineInputBorder(
+                                    borderSide: const BorderSide(
+                                        color: colorBlack, width: 0.7),
+                                    borderRadius:
+                                        BorderRadius.all(Radius.circular(7.h))),
+                                border: OutlineInputBorder(
+                                    borderRadius: BorderRadius.all(
+                                        Radius.circular(7.h))))),
+                        itemBuilder: (context, CityResponse suggestion) {
+                          return ListTile(
+                            leading: const Icon(Icons.pin_drop_outlined),
+                            title: Text(
+                              suggestion.city!,
+                              style: typoSmallTextRegular,
+                            ),
+                          );
+                        },
+                        noItemsFoundBuilder: (c) => AppText(
+                          LocaleKeys.not_result.tr,
+                          style: typoSmallTextRegular,
                         ),
+                        onSuggestionSelected: (CityResponse city) =>
+                            controller.setCity(city),
+                        suggestionsCallback: (pattern) {
+                          return controller.filterCity(pattern);
+                        },
                       ),
                       visible: controller.isCity.value,
                     )),
-                searchWidget(context)
               ],
             ),
             decoration: BoxDecoration(
@@ -469,12 +473,6 @@ class SearchView extends GetView<SearchController> {
                     bottomRight: Radius.circular(10.h),
                     topRight: Radius.circular(10.h))),
           ),
-          SizedBox(
-            height: 15.h,
-          ),
-          SuggestWidget(
-              listSuggestion: controller.listSuggestion,
-              callBack: (text) => controller.handleSuggest(text))
         ],
       ),
     );

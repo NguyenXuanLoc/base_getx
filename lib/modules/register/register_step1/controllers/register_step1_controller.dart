@@ -6,6 +6,7 @@ import 'package:docsify/generated/app_translation.dart';
 import 'package:docsify/modules/login/controllers/login_controller.dart';
 import 'package:docsify/utils/app_utils.dart';
 import 'package:docsify/utils/connection_utils.dart';
+import 'package:docsify/utils/log_utils.dart';
 import 'package:docsify/utils/storage_utils.dart';
 import 'package:docsify/utils/toast_utils.dart';
 import 'package:email_validator/email_validator.dart';
@@ -42,7 +43,7 @@ class RegisterStep1Controller extends GetxController {
   Future<void> handleRegister(BuildContext context) async {
     if (isValidInfo()) {
       Utils.hideKeyboard(context);
-      var email = emailController.value.text;
+      var email = emailController.value.text.replaceAll(' ', '');
       var pass = passController.value.text;
       Dialogs.showLoadingDialog(context);
       var result =
@@ -54,10 +55,11 @@ class RegisterStep1Controller extends GetxController {
         var userModel = UserResponse.fromJson(result.data['data']);
         await StorageUtils.saveUser(userModel);
         Get.toNamed(Routes.REGISTER_STEP2,
-            arguments: emailController.value.text);
+            arguments: emailController.value.text.replaceAll(' ', ''));
       }
     }
   }
+
   void showQuitDialog(BuildContext context) {
     Utils.hideKeyboard(context);
     Dialogs.showQuitForgotPassDialog(
@@ -65,7 +67,9 @@ class RegisterStep1Controller extends GetxController {
   }
 
   bool isValidInfo() {
-    var email = emailController.value.text;
+    var email = emailController.value.text.replaceAll(' ', '');
+    logE("TAG Ú VALÍD");
+    emailController.text = email;
     var pass = passController.value.text;
     var rePass = rePassController.value.text;
     var isValid = true;

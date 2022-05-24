@@ -46,7 +46,8 @@ class LoginController extends GetxController {
   }
 
   void handleLoginByAccount(BuildContext context) async {
-    var email = emailController.value.text;
+    var email = emailController.value.text.replaceAll(' ', '');
+    emailController.text=email;
     var pass = passController.value.text;
     bool isValid = true;
     if (email.isEmpty) {
@@ -74,21 +75,25 @@ class LoginController extends GetxController {
       if (result.error != null) {
         toast(result.error);
         if (result.error == MessageKey.need_active_account) {
-          Dialogs.showActiveCode(emailController.value.text, context, () {});
+          Dialogs.showActiveCode(
+              emailController.value.text.replaceAll(" ", ""), context, () {});
         }
       } else if (result.data != null) {
         var userModel = UserResponse.fromJson(result.data['data']);
-        await StorageUtils.saveUser(userModel);
-        toast(result.message.toString());
-        Get.toNamed(Routes.HOME);
+        if(userModel.role == MessageKey.user){
+          await StorageUtils.saveUser(userModel);
+          toast(result.message.toString());
+          Get.toNamed(Routes.HOME);
+        }else {
+          toast(result.message.toString());
+        }
       }
     }
   }
 
   void showQuitDialog(BuildContext context) {
     Utils.hideKeyboard(context);
-    Dialogs.showQuitForgotPassDialog(
-        context, () => Get.offAllNamed(Routes.HOME));
+    Get.back();
   }
 
   Future<void> handleLogoutByFacebook() async {

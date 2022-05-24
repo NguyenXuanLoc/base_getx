@@ -142,7 +142,7 @@ class Locales {
     'business_name': 'Business name',
     'phone_number': 'Phone Number',
     'i_agree_term': 'Accept Terms......',
-    'birth_date': 'Birth Date',
+    'birth_date': 'Date of Birth',
     'input_email_to_reset_pass':
         'Please input your email in order to reset your password',
     'please_input_your_name': 'Please enter your Name',

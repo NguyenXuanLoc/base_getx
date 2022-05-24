@@ -153,7 +153,8 @@ class RegisterStep2View extends GetView<RegisterStep2Controller> {
                         width: MediaQuery.of(context).size.width,
                         title: LocaleKeys.create_account.tr,
                         onPress: () => controller.updateProfile(context),
-                        backgroundColor: colorBlue80,
+                        backgroundColor:
+                            controller.isAgree.value ? colorBlue80 : colorBlue100,
                       ))
                 ],
               ),

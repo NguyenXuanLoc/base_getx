@@ -109,6 +109,7 @@ class LoginView extends GetView<LoginController> {
                               color: colorText80,
                               fontSize: 16.sp),
                         )),
+
                     Align(
                       alignment: Alignment.centerLeft,
                       child: AppTextButton(

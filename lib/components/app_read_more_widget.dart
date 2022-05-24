@@ -7,15 +7,17 @@ import '../theme/colors.dart';
 
 class AppReadMoreWidget extends StatelessWidget {
   final String message;
+  final TextStyle? style;
 
-  const AppReadMoreWidget({Key? key, required this.message}) : super(key: key);
+  const AppReadMoreWidget({Key? key, required this.message, this.style})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return ReadMoreText(
       message,
       trimLines: 3,
-      style: typoSmallTextRegular.copyWith(fontSize: 14.3.sp),
+      style: style ?? typoSmallTextRegular.copyWith(fontSize: 14.3.sp),
       colorClickableText: colorBlue80,
       trimMode: TrimMode.Line,
       lessStyle: typoSmallTextBold.copyWith(
