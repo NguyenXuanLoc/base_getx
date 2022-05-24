@@ -7,6 +7,7 @@ import 'package:docsify/components/app_text_field.dart';
 import 'package:docsify/generated/app_translation.dart';
 import 'package:docsify/theme/app_styles.dart';
 import 'package:docsify/theme/colors.dart';
+import 'package:docsify/utils/app_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -20,149 +21,153 @@ class RegisterStep2View extends GetView<RegisterStep2Controller> {
 
   @override
   Widget build(BuildContext context) {
-    return AppScaffold(
-      backgroundColor: colorBackgroundGrey10,
-      appbar: appBarWidget(context),
-      body: SingleChildScrollView(
-        child: Column(
-          children: [
-            SizedBox(
-              height: 20.h,
-            ),
-            Row(
-              children: [
-                SizedBox(
-                  width: 15.h,
-                ),
-                AppText(
-                  LocaleKeys.create_account.tr,
-                  style:
-                      typoLargeTextBold.copyWith(fontWeight: FontWeight.w700),
-                ),
-                const Spacer(),
-                AppText(
-                  LocaleKeys.step.tr,
-                  style: typoSmallTextRegular.copyWith(
-                      fontWeight: FontWeight.w500),
-                ),
-                SizedBox(
-                  width: 5.w,
-                ),
-                Container(
-                  width: 20.w,
-                  height: 20.w,
-                  alignment: Alignment.center,
-                  child: const Icon(
-                    Icons.check,
-                    size: 13,
-                    color: colorWhite,
-                  ),
-                  decoration: BoxDecoration(
-                      color: colorBlue40,
-                      borderRadius: BorderRadius.all(
-                        Radius.circular(20.w),
-                      )),
-                ),
-                SizedBox(
-                  width: 10.w,
-                ),
-                Container(
-                  width: 20.w,
-                  height: 20.w,
-                  alignment: Alignment.center,
-                  child: AppText(
-                    '2',
-                    style: typoSmallTextRegular.copyWith(color: colorText5),
-                  ),
-                  decoration: BoxDecoration(
-                      color: colorBlue40,
-                      borderRadius: BorderRadius.all(
-                        Radius.circular(20.w),
-                      )),
-                ),
-                SizedBox(
-                  width: 15.h,
-                ),
-              ],
-            ),
-            SizedBox(
-              height: 40.h,
-            ),
-            Container(
-              decoration: BoxDecoration(
-                  color: colorWhite,
-                  borderRadius: BorderRadius.all(Radius.circular(10.h))),
-              padding: EdgeInsets.all(15.w),
-              margin: EdgeInsets.only(left: 15.h, right: 15.h),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
+    return GestureDetector(
+      onTap: () => Utils.hideKeyboard(context),
+      child: AppScaffold(
+        backgroundColor: colorBackgroundGrey10,
+        appbar: appBarWidget(context),
+        body: SingleChildScrollView(
+          child: Column(
+            children: [
+              SizedBox(
+                height: 20.h,
+              ),
+              Row(
                 children: [
-                  itemTextTitle(LocaleKeys.full_name.tr),
                   SizedBox(
-                    height: 5.h,
+                    width: 15.h,
                   ),
-                  Obx(() => itemTextFiled(
-                        controller.fullNameController,
-                        controller.errorFullName.value,
-                      )),
-                  itemTextTitle(LocaleKeys.phone_number.tr),
-                  SizedBox(
-                    height: 5.h,
+                  AppText(
+                    LocaleKeys.create_account.tr,
+                    style:
+                        typoLargeTextBold.copyWith(fontWeight: FontWeight.w700),
                   ),
-                  Obx(() => itemTextFiled(controller.phoneNumberController,
-                      controller.errorPhoneNumber.value,
-                      textInputType: TextInputType.phone)),
-                  itemTextTitle(LocaleKeys.birth_date.tr),
-                  SizedBox(
-                    height: 5.h,
-                  ),
-                  Obx(() => itemTextFiled(controller.birthDateController,
-                      controller.errorBirthDate.value,
-                      readOnly: true,
-                      onTap: () => controller.pickDate(context))),
-                  SizedBox(
-                    height: 15.h,
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Obx(() => AppCheckBox(
-                          icon: const Icon(
-                            Icons.check,
-                            size: 15,
-                            color: colorBlue80,
-                          ),
-                          value: controller.isAgree.value,
-                          onChanged: (value) => controller.handleTerm())),
-                      AppText(
-                        LocaleKeys.i_agree_term.tr,
-                        style: typoSmallTextRegular,
-                      )
-                    ],
+                  const Spacer(),
+                  AppText(
+                    LocaleKeys.step.tr,
+                    style: typoSmallTextRegular.copyWith(
+                        fontWeight: FontWeight.w500),
                   ),
                   SizedBox(
-                    height: 15.h,
+                    width: 5.w,
                   ),
-                  Obx(() => AppButton(
-                        disable: !controller.isAgree.value,
-                        borderRadius: 6.h,
-                        textStyle: typoNormalTextBold.copyWith(
-                            color: colorText5, fontWeight: FontWeight.w700),
-                        height: 40.h,
-                        width: MediaQuery.of(context).size.width,
-                        title: LocaleKeys.create_account.tr,
-                        onPress: () => controller.updateProfile(context),
-                        backgroundColor:
-                            controller.isAgree.value ? colorBlue80 : colorBlue100,
-                      ))
+                  Container(
+                    width: 20.w,
+                    height: 20.w,
+                    alignment: Alignment.center,
+                    child: const Icon(
+                      Icons.check,
+                      size: 13,
+                      color: colorWhite,
+                    ),
+                    decoration: BoxDecoration(
+                        color: colorBlue40,
+                        borderRadius: BorderRadius.all(
+                          Radius.circular(20.w),
+                        )),
+                  ),
+                  SizedBox(
+                    width: 10.w,
+                  ),
+                  Container(
+                    width: 20.w,
+                    height: 20.w,
+                    alignment: Alignment.center,
+                    child: AppText(
+                      '2',
+                      style: typoSmallTextRegular.copyWith(color: colorText5),
+                    ),
+                    decoration: BoxDecoration(
+                        color: colorBlue40,
+                        borderRadius: BorderRadius.all(
+                          Radius.circular(20.w),
+                        )),
+                  ),
+                  SizedBox(
+                    width: 15.h,
+                  ),
                 ],
               ),
-            ),
-            SizedBox(
-              height: 30.h,
-            ),
-          ],
+              SizedBox(
+                height: 40.h,
+              ),
+              Container(
+                decoration: BoxDecoration(
+                    color: colorWhite,
+                    borderRadius: BorderRadius.all(Radius.circular(10.h))),
+                padding: EdgeInsets.all(15.w),
+                margin: EdgeInsets.only(left: 15.h, right: 15.h),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    itemTextTitle(LocaleKeys.full_name.tr),
+                    SizedBox(
+                      height: 5.h,
+                    ),
+                    Obx(() => itemTextFiled(
+                          controller.fullNameController,
+                          controller.errorFullName.value,
+                        )),
+                    itemTextTitle(LocaleKeys.phone_number.tr),
+                    SizedBox(
+                      height: 5.h,
+                    ),
+                    Obx(() => itemTextFiled(controller.phoneNumberController,
+                        controller.errorPhoneNumber.value,
+                        textInputType: TextInputType.phone)),
+                    itemTextTitle(LocaleKeys.birth_date.tr),
+                    SizedBox(
+                      height: 5.h,
+                    ),
+                    Obx(() => itemTextFiled(controller.birthDateController,
+                        controller.errorBirthDate.value,
+                        readOnly: true,
+                        onTap: () => controller.pickDate(context))),
+                    SizedBox(
+                      height: 15.h,
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Obx(() => AppCheckBox(
+                            icon: const Icon(
+                              Icons.check,
+                              size: 15,
+                              color: colorBlue80,
+                            ),
+                            value: controller.isAgree.value,
+                            onChanged: (value) => controller.handleTerm())),
+                        AppText(
+                          LocaleKeys.i_agree_term.tr,
+                          style: typoSmallTextRegular,
+                        )
+                      ],
+                    ),
+                    SizedBox(
+                      height: 15.h,
+                    ),
+                    Obx(() => AppButton(
+                          disable: !controller.isAgree.value,
+                          borderRadius: 6.h,
+                          textStyle: typoNormalTextBold.copyWith(
+                              color: colorText5, fontWeight: FontWeight.w700),
+                          height: 40.h,
+                          width: MediaQuery.of(context).size.width,
+                          title: LocaleKeys.create_account.tr,
+                          onPress: () => controller.updateProfile(context),
+                          backgroundColor: controller.isAgree.value
+                              ? colorBlue80
+                              : colorBlue100,
+                        ))
+                  ],
+                ),
+              ),
+              SizedBox(
+                height: 30.h,
+              ),
+            ],
+          ),
         ),
       ),
     );

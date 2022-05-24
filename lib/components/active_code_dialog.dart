@@ -9,6 +9,7 @@ import 'package:docsify/data/provider/user_provider.dart';
 import 'package:docsify/generated/app_translation.dart';
 import 'package:docsify/theme/app_styles.dart';
 import 'package:docsify/theme/colors.dart';
+import 'package:docsify/utils/app_utils.dart';
 import 'package:docsify/utils/toast_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -101,21 +102,25 @@ class _ActiveCodeDialogState extends State<ActiveCodeDialog> {
 
   @override
   Widget build(BuildContext context) {
-    return Center(
-      child: Material(
-          child: Container(
-        width: MediaQuery.of(context).size.width - 5.w,
-        height: 340.h,
-        padding:
-            EdgeInsets.only(left: 10.w, right: 10.w, top: 10.h, bottom: 10.h),
-        color: Colors.white,
-        child: isActiveCodeSuggest ? activeSuccessWidget() : activeCodeWidget(),
-      )),
+    return GestureDetector(
+      child: Center(
+        child: Material(
+            child: Container(
+          width: MediaQuery.of(context).size.width - 5.w,
+          padding:
+              EdgeInsets.only(left: 10.w, right: 10.w, top: 10.h, bottom: 10.h),
+          color: Colors.white,
+          child:
+              isActiveCodeSuggest ? activeSuccessWidget() : activeCodeWidget(),
+        )),
+      ),
+      onTap: () => Utils.hideKeyboard(context),
     );
   }
 
   Widget activeCodeWidget() {
     return Column(
+      mainAxisSize: MainAxisSize.min,
       children: [
         Align(
           alignment: Alignment.centerRight,
@@ -146,25 +151,23 @@ class _ActiveCodeDialogState extends State<ActiveCodeDialog> {
         SizedBox(
           height: 15.h,
         ),
-        SizedBox(
-          child: TextField(
-            controller: codeController,
-            keyboardType: TextInputType.number,
-            decoration: InputDecoration(
-                focusedErrorBorder: const OutlineInputBorder(
-                    borderSide: BorderSide(color: colorGrey80)),
-                errorBorder: const OutlineInputBorder(
-                    borderSide: BorderSide(color: colorGrey80)),
-                focusedBorder: const OutlineInputBorder(
-                    borderSide: BorderSide(color: colorGrey80)),
-                enabledBorder: const OutlineInputBorder(
-                    borderSide: BorderSide(color: colorGrey80)),
-                border: const OutlineInputBorder(
-                    borderSide: BorderSide(color: colorGrey20)),
-                hintText: LocaleKeys.fill_active_code_here.tr,
-                errorText: errorCode),
-          ),
-          height: 55.h,
+        TextField(
+          controller: codeController,
+          keyboardType: TextInputType.number,
+          decoration: InputDecoration(
+              contentPadding: EdgeInsets.all(10),
+              focusedErrorBorder: const OutlineInputBorder(
+                  borderSide: BorderSide(color: colorGrey80)),
+              errorBorder: const OutlineInputBorder(
+                  borderSide: BorderSide(color: colorGrey80)),
+              focusedBorder: const OutlineInputBorder(
+                  borderSide: BorderSide(color: colorGrey80)),
+              enabledBorder: const OutlineInputBorder(
+                  borderSide: BorderSide(color: colorGrey80)),
+              border: const OutlineInputBorder(
+                  borderSide: BorderSide(color: colorGrey20)),
+              hintText: LocaleKeys.fill_active_code_here.tr,
+              errorText: errorCode),
         ),
         AppButton(
           borderRadius: 6.h,
@@ -199,6 +202,7 @@ class _ActiveCodeDialogState extends State<ActiveCodeDialog> {
 
   Widget activeSuccessWidget() {
     return Column(
+      mainAxisSize: MainAxisSize.min,
       children: [
         Align(
           alignment: Alignment.centerRight,

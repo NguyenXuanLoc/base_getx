@@ -5,20 +5,19 @@ import 'package:docsify/components/app_text.dart';
 import 'package:docsify/components/app_text_field.dart';
 import 'package:docsify/components/item_loading.dart';
 import 'package:docsify/components/item_search.dart';
-import 'package:docsify/components/suggest_wiget.dart';
 import 'package:docsify/const/resource.dart';
 import 'package:docsify/data/model/city_response.dart';
 import 'package:docsify/generated/app_translation.dart';
 import 'package:docsify/services/globals.dart';
 import 'package:docsify/theme/app_styles.dart';
 import 'package:docsify/theme/colors.dart';
-import 'package:docsify/utils/log_utils.dart';
+import 'package:docsify/utils/app_utils.dart';
+import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:get/get.dart';
-import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter_typeahead/flutter_typeahead.dart';
+import 'package:get/get.dart';
 
 import '../controllers/search_controller.dart';
 
@@ -28,54 +27,58 @@ class SearchView extends GetView<SearchController> {
   @override
   Widget build(BuildContext context) {
     controller.setContext(context);
-    return AppScaffold(
-        backgroundColor: colorBackgroundGrey10,
-        appbar: AppBar(
-          elevation: 1,
-          backgroundColor: colorWhite,
-          title: Text(
-            LocaleKeys.search.tr,
-            style: typoLargeTextBold,
+    return GestureDetector(
+      onTap: () => Utils.hideKeyboard(context),
+      child: AppScaffold(
+          backgroundColor: colorBackgroundGrey10,
+          appbar: AppBar(
+            elevation: 1,
+            backgroundColor: colorWhite,
+            title: Text(
+              LocaleKeys.search.tr,
+              style: typoLargeTextBold,
+            ),
+            centerTitle: true,
+            actions: [
+              IconButton(
+                  onPressed: () => Get.back(),
+                  icon: const Icon(
+                    Icons.clear,
+                    color: colorBlack,
+                  ))
+            ],
+            toolbarHeight: 50.h,
           ),
-          centerTitle: true,
-          actions: [
-            IconButton(
-                onPressed: () => Get.back(),
-                icon: const Icon(
-                  Icons.clear,
-                  color: colorBlack,
-                ))
-          ],
-          toolbarHeight: 50.h,
-        ),
-        body: ListView(
-          controller: controller.scrollController,
-          children: [
-            searchGroupWidget(context),
-            Obx(
-              () => Visibility(
-                  visible: controller.isDefaultView.value,
-                  child: famousDoctorWidget()),
-            ),
-            Obx(
-              () => Visibility(
-                  visible: controller.isDefaultView.value,
-                  child: lastSearchWidget()),
-            ),
-            Obx(
-              () => Visibility(
-                  visible: controller.isDefaultView.value,
-                  child: suggestionWidget()),
-            ),
-            Obx(() => Visibility(
-                  child: sortWidget(context),
-                  visible: !controller.isDefaultView.value,
-                )),
-            // test(context),
-            Obx(() => Visibility(
-                child: listSearch(), visible: !controller.isDefaultView.value))
-          ],
-        ));
+          body: ListView(
+            controller: controller.scrollController,
+            children: [
+              searchGroupWidget(context),
+              Obx(
+                () => Visibility(
+                    visible: controller.isDefaultView.value,
+                    child: famousDoctorWidget()),
+              ),
+              Obx(
+                () => Visibility(
+                    visible: controller.isDefaultView.value,
+                    child: lastSearchWidget()),
+              ),
+              Obx(
+                () => Visibility(
+                    visible: controller.isDefaultView.value,
+                    child: suggestionWidget()),
+              ),
+              Obx(() => Visibility(
+                    child: sortWidget(context),
+                    visible: !controller.isDefaultView.value,
+                  )),
+              // test(context),
+              Obx(() => Visibility(
+                  child: listSearch(),
+                  visible: !controller.isDefaultView.value))
+            ],
+          )),
+    );
   }
 
   Widget famousDoctorWidget() {
@@ -419,7 +422,7 @@ class SearchView extends GetView<SearchController> {
                                 color: colorText80,
                                 fontWeight: FontWeight.w400),
                             decoration: InputDecoration(
-                                contentPadding: EdgeInsets.all(8.w),
+                                contentPadding: EdgeInsets.only(left: 15.w),
                                 focusColor: colorGrey20,
                                 hintText: LocaleKeys.address.tr,
                                 labelStyle: styleTextField.copyWith(

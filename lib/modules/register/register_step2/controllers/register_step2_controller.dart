@@ -104,7 +104,7 @@ class RegisterStep2Controller extends GetxController {
     DatePicker.showDatePicker(context,
         showTitleActions: true,
         minTime: DateTime(1900, 3, 5),
-        maxTime: DateTime(time.year + 10, 12),
+        maxTime: DateTime(time.year , time.month,time.day),
         onChanged: (date) {}, onConfirm: (date) {
       birthDateController.obs.value.text =
           "${date.year}-${date.month}-${date.day}";

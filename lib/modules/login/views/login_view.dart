@@ -8,6 +8,7 @@ import 'package:docsify/const/resource.dart';
 import 'package:docsify/generated/app_translation.dart';
 import 'package:docsify/theme/app_styles.dart';
 import 'package:docsify/theme/colors.dart';
+import 'package:docsify/utils/app_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -20,234 +21,240 @@ class LoginView extends GetView<LoginController> {
 
   @override
   Widget build(BuildContext context) {
-    return AppScaffold(
-        backgroundColor: colorBackgroundGrey20,
-        appbar: appBarWidget(context),
-        body: SingleChildScrollView(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Container(
-                decoration: BoxDecoration(
-                    color: colorBackgroundColor,
-                    borderRadius: BorderRadius.all(Radius.circular(10.h))),
-                padding: EdgeInsets.only(
-                    left: 20.h, right: 20.h, top: 5.h, bottom: 5.h),
-                margin: EdgeInsets.only(
-                    left: 12.h, right: 12.h, bottom: 12.h, top: 40.h),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    SizedBox(
-                      height: 20.h,
-                    ),
-                    AppText(
-                      LocaleKeys.have_account.tr,
-                      textAlign: TextAlign.center,
-                      style: typoNormalTextBold.copyWith(
-                          fontWeight: FontWeight.w600),
-                    ),
-                    SizedBox(
-                      height: 15.h,
-                    ),
-                    Align(
-                      alignment: Alignment.centerLeft,
-                      child: Text(
-                        LocaleKeys.email_address.tr,
-                        style: typoSmallTextBold.copyWith(
-                            fontSize: 14.sp,
-                            color: colorText80,
-                            fontWeight: FontWeight.w400),
+    return GestureDetector(
+      onTap: () => Utils.hideKeyboard(context),
+      child: AppScaffold(
+          backgroundColor: colorBackgroundGrey20,
+          appbar: appBarWidget(context),
+          body: SingleChildScrollView(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Container(
+                  decoration: BoxDecoration(
+                      color: colorBackgroundColor,
+                      borderRadius: BorderRadius.all(Radius.circular(10.h))),
+                  padding: EdgeInsets.only(
+                      left: 20.h, right: 20.h, top: 5.h, bottom: 5.h),
+                  margin: EdgeInsets.only(
+                      left: 12.h, right: 12.h, bottom: 12.h, top: 40.h),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      SizedBox(
+                        height: 20.h,
                       ),
-                    ),
-                    SizedBox(
-                      height: 5.h,
-                    ),
-                    Obx(() => AppTextField(
-                          textInputAction: TextInputAction.next,
-                          controller: controller.emailController,
-                          errorText: controller.errorEmail.value,
-                          textStyle: typoSmallTextBold.copyWith(
-                              color: colorText80, fontWeight: FontWeight.w400),
-                          hintStyle: styleTextField.copyWith(
-                              fontWeight: FontWeight.w700,
+                      AppText(
+                        LocaleKeys.have_account.tr,
+                        textAlign: TextAlign.center,
+                        style: typoNormalTextBold.copyWith(
+                            fontWeight: FontWeight.w600),
+                      ),
+                      SizedBox(
+                        height: 15.h,
+                      ),
+                      Align(
+                        alignment: Alignment.centerLeft,
+                        child: Text(
+                          LocaleKeys.email_address.tr,
+                          style: typoSmallTextBold.copyWith(
+                              fontSize: 14.sp,
                               color: colorText80,
-                              fontSize: 16.sp),
-                        )),
-                    Align(
-                      alignment: Alignment.centerLeft,
-                      child: Text(
-                        LocaleKeys.pass.tr,
-                        style: typoSmallTextBold.copyWith(
-                            fontSize: 14.sp,
-                            color: colorText80,
-                            fontWeight: FontWeight.w400),
-                      ),
-                    ),
-                    SizedBox(
-                      height: 5.h,
-                    ),
-                    Obx(() => AppTextField(
-                          controller: controller.passController,
-                          errorText: controller.errorPass.value,
-                          suffixIcon: IconButton(
-                            icon: Icon(
-                              controller.isHidePass.value
-                                  ? Icons.visibility_off_outlined
-                                  : Icons.visibility_outlined,
-                              color: colorNeutralDark60,
-                            ),
-                            onPressed: () => controller.showHidePass(),
-                          ),
-                          obscureText: controller.isHidePass.value,
-                          textStyle: typoSmallTextBold.copyWith(
-                              color: colorText80, fontWeight: FontWeight.w400),
-                          hintStyle: styleTextField.copyWith(
-                              fontWeight: FontWeight.w700,
-                              color: colorText80,
-                              fontSize: 16.sp),
-                        )),
-
-                    Align(
-                      alignment: Alignment.centerLeft,
-                      child: AppTextButton(
-                        buttonTitle: LocaleKeys.forgot_pass.tr,
-                        onPressed: () => controller
-                            .handleAction(LoginAction.FORGOT_PASSWORD),
-                        textStyle: typoNormalTextBold.copyWith(
-                            fontSize: 14.sp,
-                            fontWeight: FontWeight.w100,
-                            color: colorBlue80,
-                            decoration: TextDecoration.underline),
-                      ),
-                    ),
-                    SizedBox(
-                      height: 5.h,
-                    ),
-                    AppButton(
-                      borderRadius: 6.h,
-                      textStyle: typoMediumTextBold.copyWith(color: colorText5),
-                      height: 43.h,
-                      width: MediaQuery.of(context).size.width,
-                      title: LocaleKeys.login.tr,
-                      onPress: () => controller.handleLoginByAccount(context),
-                      backgroundColor: colorBlue80,
-                    ),
-                    SizedBox(
-                      height: 10.h,
-                    ),
-                    Stack(
-                      children: [
-                        Container(
-                          alignment: Alignment.center,
-                          height: 20.h,
-                          child: const AppDotsLine(),
+                              fontWeight: FontWeight.w400),
                         ),
-                        Container(
-                          height: 20.h,
-                          alignment: Alignment.center,
-                          child: AppText(
-                            "  ${LocaleKeys.or.tr}  ",
-                            style: typoSmallTextRegular.copyWith(
-                                backgroundColor: colorWhite,
+                      ),
+                      SizedBox(
+                        height: 5.h,
+                      ),
+                      Obx(() => AppTextField(
+                            textInputAction: TextInputAction.next,
+                            controller: controller.emailController,
+                            errorText: controller.errorEmail.value,
+                            textStyle: typoSmallTextBold.copyWith(
+                                color: colorText80,
                                 fontWeight: FontWeight.w400),
-                          ),
-                        )
-                      ],
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        SizedBox(
-                          width: 130.w,
-                          child: OutlinedButton.icon(
-                            onPressed: () =>
-                                controller.handleFacebookSignIn(context),
-                            icon: SvgPicture.asset(
-                              R.assetsSvgFacebookSvg,
-                              width: 12.w,
-                            ),
-                            label: AppText(
-                              LocaleKeys.facebook.tr,
-                              style: typoSmallTextBold,
-                            ),
-                          ),
+                            hintStyle: styleTextField.copyWith(
+                                fontWeight: FontWeight.w700,
+                                color: colorText80,
+                                fontSize: 16.sp),
+                          )),
+                      Align(
+                        alignment: Alignment.centerLeft,
+                        child: Text(
+                          LocaleKeys.pass.tr,
+                          style: typoSmallTextBold.copyWith(
+                              fontSize: 14.sp,
+                              color: colorText80,
+                              fontWeight: FontWeight.w400),
                         ),
-                        SizedBox(
-                          width: 20.w,
+                      ),
+                      SizedBox(
+                        height: 5.h,
+                      ),
+                      Obx(() => AppTextField(
+                            controller: controller.passController,
+                            errorText: controller.errorPass.value,
+                            suffixIcon: IconButton(
+                              icon: Icon(
+                                controller.isHidePass.value
+                                    ? Icons.visibility_off_outlined
+                                    : Icons.visibility_outlined,
+                                color: colorNeutralDark60,
+                              ),
+                              onPressed: () => controller.showHidePass(),
+                            ),
+                            obscureText: controller.isHidePass.value,
+                            textStyle: typoSmallTextBold.copyWith(
+                                color: colorText80,
+                                fontWeight: FontWeight.w400),
+                            hintStyle: styleTextField.copyWith(
+                                fontWeight: FontWeight.w700,
+                                color: colorText80,
+                                fontSize: 16.sp),
+                          )),
+                      Align(
+                        alignment: Alignment.centerLeft,
+                        child: AppTextButton(
+                          buttonTitle: LocaleKeys.forgot_pass.tr,
+                          onPressed: () => controller
+                              .handleAction(LoginAction.FORGOT_PASSWORD),
+                          textStyle: typoNormalTextBold.copyWith(
+                              fontSize: 14.sp,
+                              fontWeight: FontWeight.w100,
+                              color: colorBlue80,
+                              decoration: TextDecoration.underline),
                         ),
-                        SizedBox(
-                          width: 130.w,
-                          child: OutlinedButton.icon(
-                            onPressed: () =>
-                                controller.handleGoogleSignIn(context),
-                            icon: SvgPicture.asset(
-                              R.assetsSvgGoogleSvg,
-                              width: 20.w,
-                            ),
-                            label: AppText(
-                              LocaleKeys.google.tr,
-                              style: typoSmallTextBold,
-                            ),
-                          ),
-                        )
-                      ],
-                    )
-                  ],
-                ),
-              ),
-              Container(
-                width: MediaQuery.of(context).size.width,
-                decoration: BoxDecoration(
-                    color: colorBackgroundColor,
-                    borderRadius: BorderRadius.all(Radius.circular(10.h))),
-                padding: EdgeInsets.only(
-                    left: 20.h, right: 20.h, top: 25.h, bottom: 25.h),
-                margin: EdgeInsets.only(
-                    left: 12.h, right: 12.h, top: 5.h, bottom: 5.h),
-                child: Column(
-                  children: [
-                    AppText(
-                      LocaleKeys.here_for_first_time.tr,
-                      style: typoMediumTextBold.copyWith(
-                          fontWeight: FontWeight.w600, color: colorText80),
-                    ),
-                    SizedBox(
-                      height: 15.h,
-                    ),
-                    AppButton(disable: false,
-                        padding: EdgeInsets.only(
-                            left: 20.w, right: 20.r, top: 12.h, bottom: 12.h),
+                      ),
+                      SizedBox(
+                        height: 5.h,
+                      ),
+                      AppButton(
                         borderRadius: 6.h,
+                        textStyle:
+                            typoMediumTextBold.copyWith(color: colorText5),
+                        height: 43.h,
                         width: MediaQuery.of(context).size.width,
-                        side: const BorderSide(
-                            color: colorSemanticRed100, width: 1),
-                        decoration: BoxDecoration(
-                            borderRadius: BorderRadius.all(
-                              Radius.circular(10.h),
+                        title: LocaleKeys.login.tr,
+                        onPress: () => controller.handleLoginByAccount(context),
+                        backgroundColor: colorBlue80,
+                      ),
+                      SizedBox(
+                        height: 10.h,
+                      ),
+                      Stack(
+                        children: [
+                          Container(
+                            alignment: Alignment.center,
+                            height: 20.h,
+                            child: const AppDotsLine(),
+                          ),
+                          Container(
+                            height: 20.h,
+                            alignment: Alignment.center,
+                            child: AppText(
+                              "  ${LocaleKeys.or.tr}  ",
+                              style: typoSmallTextRegular.copyWith(
+                                  backgroundColor: colorWhite,
+                                  fontWeight: FontWeight.w400),
                             ),
-                            border: Border.all(
-                                width: 100.h, color: colorSemanticRed100)),
-                        title: LocaleKeys.create_account.tr,
-                        textStyle: typoMediumTextBold.copyWith(
-                            fontSize: 17.sp,
-                            fontWeight: FontWeight.w600,
-                            color: colorSemanticRed100),
-                        onPress: () =>
-                            controller.handleAction(LoginAction.REGISTER)),
-                  ],
+                          )
+                        ],
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          SizedBox(
+                            width: 130.w,
+                            child: OutlinedButton.icon(
+                              onPressed: () =>
+                                  controller.handleFacebookSignIn(context),
+                              icon: SvgPicture.asset(
+                                R.assetsSvgFacebookSvg,
+                                width: 12.w,
+                              ),
+                              label: AppText(
+                                LocaleKeys.facebook.tr,
+                                style: typoSmallTextBold,
+                              ),
+                            ),
+                          ),
+                          SizedBox(
+                            width: 20.w,
+                          ),
+                          SizedBox(
+                            width: 130.w,
+                            child: OutlinedButton.icon(
+                              onPressed: () =>
+                                  controller.handleGoogleSignIn(context),
+                              icon: SvgPicture.asset(
+                                R.assetsSvgGoogleSvg,
+                                width: 20.w,
+                              ),
+                              label: AppText(
+                                LocaleKeys.google.tr,
+                                style: typoSmallTextBold,
+                              ),
+                            ),
+                          )
+                        ],
+                      )
+                    ],
+                  ),
                 ),
-              ),
-              SizedBox(
-                height: 40.h,
-              ),
-              // actionWidget()
-            ],
-          ),
-        ));
+                Container(
+                  width: MediaQuery.of(context).size.width,
+                  decoration: BoxDecoration(
+                      color: colorBackgroundColor,
+                      borderRadius: BorderRadius.all(Radius.circular(10.h))),
+                  padding: EdgeInsets.only(
+                      left: 20.h, right: 20.h, top: 25.h, bottom: 25.h),
+                  margin: EdgeInsets.only(
+                      left: 12.h, right: 12.h, top: 5.h, bottom: 5.h),
+                  child: Column(
+                    children: [
+                      AppText(
+                        LocaleKeys.here_for_first_time.tr,
+                        style: typoMediumTextBold.copyWith(
+                            fontWeight: FontWeight.w600, color: colorText80),
+                      ),
+                      SizedBox(
+                        height: 15.h,
+                      ),
+                      AppButton(
+                          disable: false,
+                          padding: EdgeInsets.only(
+                              left: 20.w, right: 20.r, top: 12.h, bottom: 12.h),
+                          borderRadius: 6.h,
+                          width: MediaQuery.of(context).size.width,
+                          side: const BorderSide(
+                              color: colorSemanticRed100, width: 1),
+                          decoration: BoxDecoration(
+                              borderRadius: BorderRadius.all(
+                                Radius.circular(10.h),
+                              ),
+                              border: Border.all(
+                                  width: 100.h, color: colorSemanticRed100)),
+                          title: LocaleKeys.create_account.tr,
+                          textStyle: typoMediumTextBold.copyWith(
+                              fontSize: 17.sp,
+                              fontWeight: FontWeight.w600,
+                              color: colorSemanticRed100),
+                          onPress: () =>
+                              controller.handleAction(LoginAction.REGISTER)),
+                    ],
+                  ),
+                ),
+                SizedBox(
+                  height: 40.h,
+                ),
+                // actionWidget()
+              ],
+            ),
+          )),
+    );
   }
 
   Widget titleWidget() {
