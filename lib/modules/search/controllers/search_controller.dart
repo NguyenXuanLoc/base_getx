@@ -9,6 +9,7 @@ import 'package:docsify/data/provider/search_provider.dart';
 import 'package:docsify/generated/app_translation.dart';
 import 'package:docsify/services/globals.dart' as globals;
 import 'package:docsify/utils/app_utils.dart';
+import 'package:docsify/utils/log_utils.dart';
 import 'package:docsify/utils/snack_bar_utils.dart';
 import 'package:docsify/utils/toast_utils.dart';
 import 'package:flutter/cupertino.dart';
@@ -17,6 +18,10 @@ import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 
 import '../../../data/model/city_response.dart';
+
+import 'package:geocoding/geocoding.dart';
+import 'package:geolocator/geolocator.dart';
+import 'dart:async';
 
 enum ACTION_SEARCH { ONLINE, OFFLINE }
 
@@ -44,6 +49,7 @@ class SearchController extends GetxController {
   var paging = 0;
   final listSort = ['Rating worst rating', 'Rating best rating'];
   final sortValue = ''.obs;
+  late StreamSubscription<Position> streamSubscription;
 
   @override
   void onInit() {
@@ -72,6 +78,7 @@ class SearchController extends GetxController {
       queryController.obs.value.text = query;
       handleSearch(query);
     }
+    getLocation();
     handlePaging();
     super.onReady();
   }
@@ -221,6 +228,39 @@ class SearchController extends GetxController {
       int id = 0}) async {
     AppDatabase.instance.create(InfoDoctorModel(
         id: id, name: name, avatar: avatar, specialization: specialization));
+  }
+
+  getLocation() async {
+    bool serviceEnabled;
+    LocationPermission permission;
+    serviceEnabled = await Geolocator.isLocationServiceEnabled();
+    if (!serviceEnabled) {
+      await Geolocator.openLocationSettings();
+      return Future.error('Location services are disabled.');
+    }
+    permission = await Geolocator.checkPermission();
+    if (permission == LocationPermission.denied) {
+      permission = await Geolocator.requestPermission();
+      if (permission == LocationPermission.denied) {
+        return Future.error('Location permissions are denied');
+      }
+    }
+    if (permission == LocationPermission.deniedForever) {
+      return Future.error(
+          'Location permissions are permanently denied, we cannot request permissions.');
+    }
+    streamSubscription =
+        Geolocator.getPositionStream().listen((Position position) {
+      getAddressFromLatLang(position);
+      streamSubscription.cancel();
+    });
+  }
+
+  Future<void> getAddressFromLatLang(Position position) async {
+    List<Placemark> placemark =
+        await placemarkFromCoordinates(position.latitude, position.longitude);
+    Placemark place = placemark[0];
+    cityController.text = place.administrativeArea ?? "";
   }
 
   @override
