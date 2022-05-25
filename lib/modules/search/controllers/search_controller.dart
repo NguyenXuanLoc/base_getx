@@ -53,7 +53,11 @@ class SearchController extends GetxController {
   void onInit() {
     sortValue.value = listSort[0];
     searchOnChange.debounceTime(const Duration(seconds: 2)).listen((query) {
-      if (query.isNotEmpty) handleSearch(query);
+      if (query.isNotEmpty) {
+        handleSearch(query);
+      } else if (isCity.value) {
+        handleSearch(query);
+      }
     });
     try {
       query = Get.arguments;
