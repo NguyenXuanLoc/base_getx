@@ -31,8 +31,20 @@ class SearchProvider extends BaseProvider {
   }
 
   Future<ApiResult> getFamousDoctor({int from = 0, int size = 3}) async {
-    var queryParam = {ApiKey.from: from.toString(), ApiKey.size: size.toString()};
+    var queryParam = {
+      ApiKey.from: from.toString(),
+      ApiKey.size: size.toString()
+    };
     return await GET('search/doctor/dashboard', queryParam: queryParam);
+  }
+
+  Future<ApiResult> getCity() async {
+    return await GET('search/city/vn');
+  }
+
+  Future<ApiResult> addDoctorFavourite(int doctorId, String userId) async{
+    var body = {ApiKey.doctor_id: doctorId.toString()};
+    return await POST('doctor/users/favourites/$userId', body);
   }
 
   Future<ApiResult> getDoctorRatingLatest(

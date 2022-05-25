@@ -104,7 +104,9 @@ class LocaleKeys {
   static const suggestion = 'suggestion';
   static const famous_doctor = 'famous_doctor';
   static const active_success = 'active_success';
-  static const you_has_been_activated_success = 'you_has_been_activated_success';
+  static const you_has_been_activated_success =
+      'you_has_been_activated_success';
+  static const you_must_login = 'you_must_login';
 }
 
 class Locales {
@@ -195,6 +197,8 @@ class Locales {
     'suggestion': 'Suggestions',
     'famous_doctor': 'Famous Doctor',
     'active_success': 'Activate successful',
-    'you_has_been_activated_success': 'Your account has been activated successfully. ',
+    'you_has_been_activated_success':
+        'Your account has been activated successfully. ',
+    'you_must_login': 'You must login.',
   };
 }

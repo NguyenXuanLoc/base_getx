@@ -5,7 +5,6 @@ import 'package:docsify/components/app_text.dart';
 import 'package:docsify/components/app_text_field.dart';
 import 'package:docsify/components/item_loading.dart';
 import 'package:docsify/components/item_search.dart';
-import 'package:docsify/const/resource.dart';
 import 'package:docsify/data/model/city_response.dart';
 import 'package:docsify/generated/app_translation.dart';
 import 'package:docsify/services/globals.dart';
@@ -15,7 +14,6 @@ import 'package:docsify/utils/app_utils.dart';
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter_typeahead/flutter_typeahead.dart';
 import 'package:get/get.dart';
 
@@ -28,7 +26,9 @@ class SearchView extends GetView<SearchController> {
   Widget build(BuildContext context) {
     controller.setContext(context);
     return GestureDetector(
-      onTap: () => Utils.hideKeyboard(context),
+      onTap: () {
+        Utils.hideKeyboard(context);
+      },
       child: AppScaffold(
           backgroundColor: colorBackgroundGrey10,
           appbar: AppBar(
@@ -316,36 +316,48 @@ class SearchView extends GetView<SearchController> {
   }
 
   Widget listSearch() {
-    return ((controller.listSearch.isEmpty && !controller.isLoading.value)
+    return controller.isLoading.value && controller.listSearch.isEmpty
         ? Container(
             alignment: Alignment.center,
             padding: EdgeInsets.only(top: 20.h),
-            child: AppText(
-              LocaleKeys.not_result.tr,
-              style: typoMediumTextRegular,
+            child: const CircularProgressIndicator(
+              strokeWidth: 2,
+              color: colorBlue80,
             ),
           )
-        : Obx(() => ListView.separated(
-              physics: const NeverScrollableScrollPhysics(),
-              shrinkWrap: true,
-              primary: false,
-              itemBuilder: (context, index) {
-                if (index == controller.listSearch.length) {
-                  return const ItemLoading();
-                }
-                return ItemSearchWidget(
-                  ob: controller.listSearch[index],
-                  callBackOpenDetail: (ob) => controller.openDoctorDetail(ob),
-                  callBackFavourite: (id) {},
-                );
-              },
-              separatorBuilder: (context, index) => Container(
-                height: 20.h,
-              ),
-              itemCount: controller.isReadEnd.value
-                  ? controller.listSearch.length
-                  : controller.listSearch.length + 1,
-            )));
+        : (controller.listSearch.isEmpty && !controller.isLoading.value)
+            ? Container(
+                alignment: Alignment.center,
+                padding: EdgeInsets.only(top: 20.h),
+                child: AppText(
+                  LocaleKeys.not_result.tr,
+                  style: typoMediumTextRegular,
+                ),
+              )
+            : Obx(() => ListView.separated(
+                  physics: const NeverScrollableScrollPhysics(),
+                  shrinkWrap: true,
+                  primary: false,
+                  itemBuilder: (context, index) {
+                    if (index == controller.listSearch.length) {
+                      return const ItemLoading();
+                    }
+                    return ItemSearchWidget(
+                      ob: controller.listSearch[index],
+                      callBackOpenDetail: (ob) =>
+                          controller.openDoctorDetail(ob),
+                      callBackFavourite: (id) => controller.addDoctorFavourite(
+                          controller.listSearch[index].doctorId!),
+                    );
+                  },
+                  separatorBuilder: (context, index) => Container(
+                    height: 20.h,
+                  ),
+                  itemCount: !controller.isReadEnd.value &&
+                          controller.listSearch.length > 1
+                      ? controller.listSearch.length + 1
+                      : controller.listSearch.length,
+                ));
   }
 
   Widget searchGroupWidget(BuildContext context) {
@@ -402,6 +414,7 @@ class SearchView extends GetView<SearchController> {
                       )),
                 ),
                 AppTextField(
+                  onChanged: (query) => controller.getQuerySearch(query),
                   isShowErrorText: false,
                   controller: controller.queryController,
                   hintText: LocaleKeys.category_or_doctor_name.tr,
@@ -450,7 +463,7 @@ class SearchView extends GetView<SearchController> {
                           return ListTile(
                             leading: const Icon(Icons.pin_drop_outlined),
                             title: Text(
-                              suggestion.city!,
+                              suggestion.name!,
                               style: typoSmallTextRegular,
                             ),
                           );
@@ -476,34 +489,6 @@ class SearchView extends GetView<SearchController> {
                     bottomRight: Radius.circular(10.h),
                     topRight: Radius.circular(10.h))),
           ),
-        ],
-      ),
-    );
-  }
-
-  Widget searchWidget(BuildContext context) {
-    return MaterialButton(
-      height: 40.h,
-      shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.all(Radius.circular(7.h))),
-      color: colorBlue90,
-      minWidth: MediaQuery.of(context).size.width,
-      onPressed: () => controller.handleSearch(
-        controller.queryController.value.text,
-      ),
-      child: Wrap(
-        runSpacing: 15.w,
-        spacing: 15.w,
-        children: [
-          SvgPicture.asset(
-            R.assetsSvgSearchSvg,
-            width: 20.w,
-            color: colorWhite,
-          ),
-          Text(
-            LocaleKeys.search.tr,
-            style: typoSmallTextBold.copyWith(color: colorText5),
-          )
         ],
       ),
     );

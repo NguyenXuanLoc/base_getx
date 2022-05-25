@@ -7,6 +7,7 @@ class StorageUtils {
   static Future<void> saveUser(UserResponse ob) async {
     globals.accessToken = ob.token;
     globals.accountId = ob.userId.toString();
+    globals.isLogin = true;
     await GetStorage().write(StorageKey.AccountInfo, ob.toJson());
   }
 
@@ -16,6 +17,7 @@ class StorageUtils {
       var result = UserResponse.fromJson(userString);
       globals.accessToken = result.token;
       globals.accountId = result.userId.toString();
+      globals.isLogin = false;
       return result;
     } catch (ex) {
       return null;

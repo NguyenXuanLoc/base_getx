@@ -1,9 +1,12 @@
 import 'package:docsify/const/resource.dart';
+import 'package:docsify/generated/app_translation.dart';
+import 'package:docsify/theme/colors.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 
 class Utils {
- static String getNumberRating(double rate) {
+  static String getNumberRating(double rate) {
     if (rate == 0) return R.assetsPngRate0Png;
     if (rate >= 0 && rate <= 0.5) {
       return R.assetsPngRate05Png;
@@ -171,5 +174,16 @@ class Utils {
 
   bool checkFormat(String regex, String checkedString) {
     return RegExp(regex).hasMatch(checkedString);
+  }
+
+  static void snackBarMessage(String message,
+      {Color? backgroundColor, SnackPosition? position, Color? colorText}) {
+    Get.snackbar(LocaleKeys.notify.tr, message,
+        snackStyle: SnackStyle.FLOATING,
+        backgroundColor: backgroundColor ?? colorBackgroundWhite,
+        colorText: colorText ?? colorText100,
+        animationDuration: const Duration(seconds: 1),
+        duration: const Duration(seconds: 2),
+        snackPosition: position ?? SnackPosition.BOTTOM);
   }
 }

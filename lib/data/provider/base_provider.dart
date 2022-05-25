@@ -124,7 +124,6 @@ class BaseProvider extends GetConnect {
       Logger().d(response.body);
       if (response.isOk && response.body != null) {
         var result = response.body;
-        logE("TAG RESULT: ${result}");
         return ApiResult<dynamic>(
             data: result,
             statusCode: response.statusCode,

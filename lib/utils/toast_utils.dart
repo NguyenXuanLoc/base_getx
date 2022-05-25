@@ -7,15 +7,16 @@ import 'package:get/get_core/src/get_main.dart';
 import 'package:get/get_navigation/get_navigation.dart';
 import 'package:get/get_utils/get_utils.dart';
 
-void toast(String message) {
+void toast(String? message) {
 /*
   Get.snackbar(LocaleKeys.not_result.tr, message,
       backgroundColor: colorBackgroundWhite,
       animationDuration: Duration(seconds: 1),duration: Duration(seconds: 1),
       snackPosition: SnackPosition.BOTTOM);
 */
+  if (message == null) return;
   Fluttertoast.showToast(
-    msg: message,
+    msg: message ?? "",
     toastLength: Toast.LENGTH_SHORT,
     gravity: ToastGravity.CENTER,
     timeInSecForIosWeb: 1,

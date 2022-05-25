@@ -1,4 +1,4 @@
-import 'dart:convert';
+import 'dart:async';
 
 import 'package:docsify/components/dialogs.dart';
 import 'package:docsify/config/constant.dart';
@@ -8,20 +8,18 @@ import 'package:docsify/data/model/search_response.dart';
 import 'package:docsify/data/provider/search_provider.dart';
 import 'package:docsify/generated/app_translation.dart';
 import 'package:docsify/services/globals.dart' as globals;
+import 'package:docsify/theme/colors.dart';
 import 'package:docsify/utils/app_utils.dart';
 import 'package:docsify/utils/log_utils.dart';
-import 'package:docsify/utils/snack_bar_utils.dart';
 import 'package:docsify/utils/toast_utils.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:get/get.dart';
-
-import '../../../data/model/city_response.dart';
-
 import 'package:geocoding/geocoding.dart';
 import 'package:geolocator/geolocator.dart';
-import 'dart:async';
+import 'package:get/get.dart';
+import 'package:rxdart/rxdart.dart';
+
+import '../../../data/model/city_response.dart';
 
 enum ACTION_SEARCH { ONLINE, OFFLINE }
 
@@ -33,7 +31,6 @@ class SearchController extends GetxController {
   final cityController = TextEditingController();
   final errorQuery = ''.obs;
 
-  final listSuggestion = globals.listSuggestion.obs;
   final searchProvider = SearchProvider();
   final listSearch = List<DoctorResponse>.empty(growable: true).obs;
   final listFamousDoctor = List<DoctorResponse>.empty(growable: true).obs;
@@ -47,19 +44,24 @@ class SearchController extends GetxController {
   final isDefaultView = false.obs;
   final isReadEnd = false.obs;
   var paging = 0;
-  final listSort = ['Rating worst rating', 'Rating best rating'];
+  final listSort = ['Rating best rating', 'Rating worst rating'];
   final sortValue = ''.obs;
   late StreamSubscription<Position> streamSubscription;
+  final searchOnChange = BehaviorSubject<String>();
 
   @override
   void onInit() {
     sortValue.value = listSort[0];
+    searchOnChange.debounceTime(const Duration(seconds: 2)).listen((query) {
+      if (query.isNotEmpty) handleSearch(query);
+    });
     try {
       query = Get.arguments;
-      if (query.isNotEmpty)
+      if (query.isNotEmpty) {
         isDefaultView.value = false;
-      else
+      } else {
         isDefaultView.value = true;
+      }
     } catch (ex) {
       isDefaultView.value = true;
     }
@@ -83,14 +85,18 @@ class SearchController extends GetxController {
     super.onReady();
   }
 
+  void getQuerySearch(String query) {
+    searchOnChange.add(query);
+  }
+
   void getCity() async {
-    String response = await rootBundle.loadString('assets/json/city.json');
-    var result = json.decode(response);
-    listCity.value = cityResponseFromJson(result);
+    var result = await searchProvider.getCity();
+    listCity.value = cityResponseFromJson(result.data['data']);
   }
 
   void setCity(CityResponse cityResponse) {
-    cityController.text = cityResponse.city!;
+    cityController.text = cityResponse.name!;
+    handleSearch(queryController.text, city: cityController.text);
   }
 
   void setCategory(String category) {
@@ -101,7 +107,7 @@ class SearchController extends GetxController {
   List<CityResponse> filterCity(String text) {
     var result = <CityResponse>[];
     for (var e in listCity) {
-      if (e.city!.toLowerCase().contains(text.toLowerCase())) {
+      if (e.name!.toLowerCase().contains(text.toLowerCase())) {
         result.add(e);
       }
     }
@@ -120,9 +126,7 @@ class SearchController extends GetxController {
 
   void handleSort(String value) {
     sortValue.value = value;
-    if (queryController.text.isNotEmpty) {
-      handleSearch(queryController.text);
-    }
+    handleSearch(queryController.text);
   }
 
   String getSortKey(String value) {
@@ -130,6 +134,24 @@ class SearchController extends GetxController {
       return ApiKey.rate_desc;
     } else {
       return ApiKey.rate_asc;
+    }
+  }
+
+  Future<void> addDoctorFavourite(int doctorId) async {
+    if (globals.isLogin) {
+      Dialogs.showLoadingDialog(context);
+      var result =
+          await searchProvider.addDoctorFavourite(doctorId, globals.accountId);
+      Dialogs.hideLoadingDialog();
+      if (result.error != null) {
+        toast(result.error);
+      } else
+        toast(result.message);
+    } else {
+      Utils.snackBarMessage(LocaleKeys.you_must_login.tr,
+          backgroundColor: colorSemanticRed60,
+          position: SnackPosition.TOP,
+          colorText: colorWhite);
     }
   }
 
@@ -148,11 +170,6 @@ class SearchController extends GetxController {
     });
   }
 
-  void handleSuggest(String suggest) {
-    queryController.text = suggest;
-    handleSearch(suggest);
-  }
-
   void getFamousDoctor() async {
     isLoadingFamous.value = true;
     var result = await searchProvider.getFamousDoctor();
@@ -168,52 +185,49 @@ class SearchController extends GetxController {
 
   void handleSearch(String query,
       {String city = '', bool isPaging = false}) async {
-    if (query.isNotEmpty) {
-      if (isCity.value == true && cityController.text.isNotEmpty) {
-        city = cityController.text;
-        print("TAG city: $city");
-      }
-      isDefaultView.value = false;
-      if (!isPaging) paging = 0;
-      var sort = getSortKey(sortValue.value);
-      if (context != null) Utils.hideKeyboard(context!);
-      isLoading.value = true;
-      if (!isPaging) Dialogs.showLoadingDialog(context);
-      var result = await searchProvider.searchDoctor(
-          query: query, city: city, sort: sort, from: paging);
-      if (!isPaging) Dialogs.hideLoadingDialog();
-      isLoading.value = false;
-      if (result.error != null) {
-        toast(result.error.toString());
-      } else {
-        var listResult =
-            DoctorResponseFromJson(result.data['data']['search_result']);
-        if (listResult.isEmpty) {
-          isReadEnd.value = true;
-        } else {
-          isReadEnd.value = false;
-        }
-        if (!isPaging) {
-          listSearch.value = listResult;
-        } else {
-          listSearch.addAll(listResult);
-        }
-        update();
-      }
+    if (!isPaging) listSearch.value = [];
+    if (isCity.value == true && cityController.text.isNotEmpty) {
+      city = cityController.text;
+    }
+    if (context != null) Utils.hideKeyboard(context!);
+    isDefaultView.value = false;
+    if (!isPaging) paging = 0;
+    var sort = getSortKey(sortValue.value);
+    isLoading.value = true;
+    var result = await searchProvider.searchDoctor(
+        query: query, city: city, sort: sort, from: paging);
+    isLoading.value = false;
+    if (result.error != null) {
+      toast(result.error.toString());
     } else {
-      SnackBarUtils.message(LocaleKeys.please_input_keyword.tr);
+      var listResult =
+          DoctorResponseFromJson(result.data['data']['search_result']);
+      if (listResult.isEmpty) {
+        isReadEnd.value = true;
+      } else {
+        isReadEnd.value = false;
+      }
+      if (!isPaging) {
+        listSearch.value = listResult;
+      } else {
+        listSearch.addAll(listResult);
+      }
+      update();
     }
   }
 
   void actionSearch(bool isShowCity) {
     if (isShowCity) {
       isCity.value = true;
+      handleSearch(queryController.text, city: cityController.text);
     } else {
       isCity.value = false;
+      if (queryController.text.isNotEmpty) handleSearch(queryController.text);
     }
   }
 
   void openDoctorDetail(DoctorResponse ob) {
+    if (context != null) Utils.hideKeyboard(context!);
     saveDoctor(
         name: ob.doctorName!,
         avatar: ob.doctorProfile!.avatar![0],
