@@ -236,6 +236,7 @@ class RegisterStep1View extends GetView<RegisterStep1Controller> {
       bool readOnly = false,
       VoidCallback? onTap}) {
     return AppTextField(
+      maxLength: 50,
       onTap: () {
         if (onTap != null) onTap.call();
       },
