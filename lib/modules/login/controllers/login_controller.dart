@@ -62,7 +62,7 @@ class LoginController extends GetxController {
     if (pass.isEmpty) {
       isValid = false;
       errorPass.value = LocaleKeys.please_input_pass.tr;
-    } else if (pass.length < 6) {
+    } else if (pass.length < 8 || !Utils.validatePassword(pass)) {
       isValid = false;
       errorPass.value = LocaleKeys.please_input_valid_pass.tr;
     } else {

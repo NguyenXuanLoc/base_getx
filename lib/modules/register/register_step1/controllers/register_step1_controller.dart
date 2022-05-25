@@ -68,7 +68,6 @@ class RegisterStep1Controller extends GetxController {
 
   bool isValidInfo() {
     var email = emailController.value.text.replaceAll(' ', '');
-    logE("TAG Ú VALÍD");
     emailController.text = email;
     var pass = passController.value.text;
     var rePass = rePassController.value.text;
@@ -85,7 +84,7 @@ class RegisterStep1Controller extends GetxController {
     if (pass.isEmpty) {
       errorPass.value = LocaleKeys.please_input_pass.tr;
       isValid = false;
-    } else if (pass.length < 6) {
+    } else if (pass.length < 8 || !Utils.validatePassword(pass)) {
       errorPass.value = LocaleKeys.please_input_valid_pass.tr;
       isValid = false;
     } else {
@@ -94,7 +93,7 @@ class RegisterStep1Controller extends GetxController {
     if (rePass.isEmpty) {
       errorRePass.value = LocaleKeys.please_enter_confirm_pass.tr;
       isValid = false;
-    } else if (rePass.length < 6) {
+    } else if (rePass.length < 6 || !Utils.validatePassword(rePass)) {
       errorRePass.value = LocaleKeys.please_input_valid_pass.tr;
       isValid = false;
     } else {
@@ -107,6 +106,7 @@ class RegisterStep1Controller extends GetxController {
     }
     return isValid;
   }
+
 
   void changeHidePass() {
     isHidePass.value = !isHidePass.value;

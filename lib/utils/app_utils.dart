@@ -1,6 +1,7 @@
 import 'package:docsify/const/resource.dart';
 import 'package:docsify/generated/app_translation.dart';
 import 'package:docsify/theme/colors.dart';
+import 'package:docsify/utils/log_utils.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
@@ -185,5 +186,12 @@ class Utils {
         animationDuration: const Duration(seconds: 1),
         duration: const Duration(seconds: 2),
         snackPosition: position ?? SnackPosition.BOTTOM);
+  }
+
+static  bool validatePassword(String value) {
+    String pattern = r'^(?=.*?[a-z])(?=.*?[0-9]).{8,}$';
+    RegExp regExp = new RegExp(pattern);
+    logE("regExp.hasMatch(value);: ${regExp.hasMatch(value)}");
+    return regExp.hasMatch(value);
   }
 }
