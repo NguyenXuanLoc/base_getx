@@ -2,6 +2,7 @@ import 'package:docsify/app/routes/app_pages.dart';
 import 'package:docsify/components/app_button.dart';
 import 'package:docsify/components/app_text.dart';
 import 'package:docsify/components/app_text_button.dart';
+import 'package:docsify/components/app_text_field.dart';
 import 'package:docsify/components/dialogs.dart';
 import 'package:docsify/config/constant.dart';
 import 'package:docsify/const/resource.dart';
@@ -47,7 +48,7 @@ class _ActiveCodeDialogState extends State<ActiveCodeDialog> {
     if (code.isEmpty) {
       isValid = false;
       errorCode = LocaleKeys.please_input_your_code.tr;
-    } else if (code.length != 6) {
+    } else if (code.length < 6) {
       isValid = false;
       errorCode = LocaleKeys.please_input_valid_code.tr;
     } else {
@@ -155,19 +156,30 @@ class _ActiveCodeDialogState extends State<ActiveCodeDialog> {
           controller: codeController,
           keyboardType: TextInputType.number,
           decoration: InputDecoration(
-              contentPadding: EdgeInsets.all(10),
-              focusedErrorBorder: const OutlineInputBorder(
-                  borderSide: BorderSide(color: colorGrey80)),
-              errorBorder: const OutlineInputBorder(
-                  borderSide: BorderSide(color: colorGrey80)),
-              focusedBorder: const OutlineInputBorder(
-                  borderSide: BorderSide(color: colorGrey80)),
-              enabledBorder: const OutlineInputBorder(
-                  borderSide: BorderSide(color: colorGrey80)),
-              border: const OutlineInputBorder(
-                  borderSide: BorderSide(color: colorGrey20)),
-              hintText: LocaleKeys.fill_active_code_here.tr,
-              errorText: errorCode),
+            contentPadding: EdgeInsets.all(7.w),
+            focusedErrorBorder: const OutlineInputBorder(
+                borderSide: BorderSide(color: colorGrey80)),
+            errorBorder: const OutlineInputBorder(
+                borderSide: BorderSide(color: colorGrey80)),
+            focusedBorder: const OutlineInputBorder(
+                borderSide: BorderSide(color: colorGrey80)),
+            enabledBorder: const OutlineInputBorder(
+                borderSide: BorderSide(color: colorGrey80)),
+            border: const OutlineInputBorder(
+                borderSide: BorderSide(color: colorGrey20)),
+          ),
+        ),
+        SizedBox(
+          height: 10.h,
+        ),
+        Align(
+          child: Text(errorCode.toString().isNotEmpty ? errorCode : ' ',
+              style: typoNormalTextRegular.copyWith(
+                  color: colorSemanticRed100, fontSize: 11.sp)),
+          alignment: Alignment.centerLeft,
+        ),
+        SizedBox(
+          height: 3.h,
         ),
         AppButton(
           borderRadius: 6.h,

@@ -80,7 +80,7 @@ class LoginController extends GetxController {
         }
       } else if (result.data != null) {
         var userModel = UserResponse.fromJson(result.data['data']);
-        if(userModel.role == MessageKey.user){
+        if(userModel.role!.toLowerCase() == MessageKey.user){
           await StorageUtils.saveUser(userModel);
           toast(result.message.toString());
           Get.toNamed(Routes.HOME);
